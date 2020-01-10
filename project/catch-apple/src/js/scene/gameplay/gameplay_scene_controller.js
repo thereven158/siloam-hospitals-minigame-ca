@@ -2,11 +2,12 @@ import GameplaySceneView from './gameplay_scene_view';
 import ScreenUtility from '../../module/screen/screen_utility';
 import SpawnerController from '../../subcontroller/spawner_controller';
 import Apple from '../../subcontroller/apple';
+import ResultView from '../setting/result_view';
 
 export default class GameplaySceneController extends Phaser.Scene {
 	constructor() {
         super({key: 'GameScene'});
-        
+        this.Bgm = null;
     }
 
     init = ()=>{
@@ -38,65 +39,79 @@ export default class GameplaySceneController extends Phaser.Scene {
 
     }
 
-    create = ()=>{
+    create = ()=>{        
+
         this.view = new GameplaySceneView(this).create();
+        this.view.onClickPause(this.clickPause);
         this.spawner = new SpawnerController(this);
         this.spawner.create();
 
         this.physics.world.setBoundsCollision(true, true, true, false);
         this.view.basket.setCollideWorldBounds(true);
 
-        this.input.setDraggable(this.view.basket);
-
-        this.input.on('drag', function (pointer, gameObject, dragX) {
-
-            this.view.basket.x = Phaser.Math.Clamp(pointer.x, 
-                0 + this.view.basket.displayWidth / 2, 
-                this.ScreenUtility.GameWidth - this.view.basket.displayWidth / 2);
-
-        }, this);
-
         var downX, upX, downY, upY, threshold = 50;
 
-        // this.input.on('pointerdown', function (pointer){
-        //     downX = pointer.x;
-        //     downY = pointer.y;
+        this.input.on('pointerdown', function (pointer){
+            downX = pointer.x;
+            downY = pointer.y;
 
-        // }, this);
+        }, this);
         
-        // this.input.on('pointerup', function (pointer) {
-        //     upX = pointer.x;
-        //     upY = pointer.y;
-        //     if (upX < downX - threshold){
-        //         if(this.atMiddle){
-        //             this.view.basket.setVelocityX(-800);
-        //             this.atMiddle = false;
-        //             this.atLeft = true;
-        //         }else if(this.atRight){
-        //             this.view.basket.setVelocityX(-800);
-        //             this.atMiddle = true;
-        //             this.atRight = false;
-        //         }else{
-        //             this.view.basket.setVelocityX(0);
-        //         }
-                
-        //     } else if (upX > downX + threshold) {
-        //         if(this.atMiddle){
-        //             this.view.basket.setVelocityX(800);
-        //             this.atMiddle = false;
-        //             this.atRight = true;
-        //         }else if(this.atLeft){
-        //             this.view.basket.setVelocityX(800);
-        //             this.atMiddle = true;
-        //             this.atLeft = false;
-        //         }else{
-        //             this.view.basket.setVelocityX(0);
-        //         }
-        //     }
+        this.input.on('pointerup', function (pointer) {
+            upX = pointer.x;
+            upY = pointer.y;
             
-        // }, this);  
+            if (upX < downX - threshold){
+                if(this.atMiddle){
+                    this.view.moveToLeft();
+                    this.atMiddle = false;
+                    this.atLeft = true;
+                }else if(this.atRight){
+                    this.view.moveToMid();
+                    this.atMiddle = true;
+                    this.atRight = false;
+                }else{
+                    console.log("Nothing");
+                }
+                
+            } else if (upX > downX + threshold) {
+                if(this.atMiddle){
+                    this.view.moveToRight();
+                    this.atMiddle = false;
+                    this.atRight = true;
+                }else if(this.atLeft){
+                    this.view.moveToMid();
+                    this.atMiddle = true;
+                    this.atLeft = false;
+                }else{
+                    console.log("Nothing");
+                }
+            }
+
+            this.game.sound.play('swipe_sfx');
+            
+        }, this); 
+
+        if(this.Bgm == null){
+            this.Bgm = this.sound.add('ingame_music',{
+                loop:-1,
+                volume: 1
+            });
+            
+        }
+        this.Bgm.play();
 
         this.startGame();
+    }
+
+    clickPause = ()=>{
+
+        this.game.sound.play('audio_btn_click');
+        // this.scene.pause();
+        // this.scene.start('PauseScene');
+        
+        
+        // this.scene.pause();
     }
 
     startGame = ()=>{
@@ -136,6 +151,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         
     }
     gameUpdate(timestep, delta){
+        this.view.debby.x = this.view.basket.x + this.view.basket.displayWidth * 0.5;
         
     }
 
@@ -179,8 +195,9 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     hpDown(){
+        this.game.sound.play('catch_bad');
+        this.view.debby.setTexture('debby_sad');
         this.comboBreak();
-
         this.life -= 1;
 
         if(this.life == 0 && this.IsGameStarted){
@@ -193,12 +210,27 @@ export default class GameplaySceneController extends Phaser.Scene {
         else if(this.life == 2){
             this.view.life3.setTexture('unlife');
         }
+
+        this.time.addEvent({ 
+            delay: 1000, 
+            callback: this.setTextureDebby, 
+            callbackScope: this, 
+            loop: false 
+        });
     }
 
+    setTextureDebby(){
+        this.view.debby.setTexture('debby');
+    }
+
+
     addScore(){
+        this.game.sound.play('catch_good');
         this.score++;
         this.combo++;
         this.view.score.setText('' + this.score);
+        this.view.ComboTxt.setText('x' + this.combo);
+        this.view.comboTextTween();
     }
 
     comboBreak(){
@@ -207,10 +239,13 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.combo = 0;
         this.score = Math.trunc(this.score);
         this.view.score.setText('' + this.score);
+        this.view.ComboTxt.setText('');
     }
 
     gameOver = ()=>{
         this.IsGameStarted = false;
+        this.game.sound.play('game_over');
+        this.Bgm.stop();
 
         this.showResult();
     }
@@ -225,6 +260,7 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     showResult = ()=>{
-        
+        this.ResultView = new ResultView(this);
+        this.ResultView.Open();
     }
 }

@@ -176,6 +176,7 @@ export default class SpawnerController {
 
         let interval = setInterval(() => {
             this.spawn1 = this.scene.physics.add.image(this.point1X, this.point1Y, this.levelOneLeft[countah]);
+            // Phaser.Math.RND.pick('', );
             this.spawn1.displayHeight = 150;
             this.spawn1.displayWidth = 150;
             this.lvlOneLeftGroup.add(this.spawn1);

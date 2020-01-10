@@ -33,6 +33,10 @@ export default class BootSceneController extends Phaser.Scene{
                     {
 						key: "panton_bold",
 						path: CONFIG.BASE_ASSET_URL + "/fonts/Panton-Bold.otf"
+					},
+                    {
+						key: "helsinki",
+						path: CONFIG.BASE_ASSET_URL + "/fonts/helsinki.ttf"
 					}
 				])        
         ]).then(() =>{

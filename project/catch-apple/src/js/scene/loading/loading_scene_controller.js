@@ -9,7 +9,6 @@ export default class LoadingSceneController extends Phaser.Scene{
     constructor(){
         super('LoadingScene');
 
-        this.VoucherLoader = new LoadingVoucherController(this);
         this.TitleLoader = new LoadingTitleController(this);
         this.GameplayLoader = new LoadingGameplayController(this);
         this.AudioLoader = new LoadingAudioController(this);
@@ -59,7 +58,6 @@ export default class LoadingSceneController extends Phaser.Scene{
     }
 
     LoadResouces(){
-        this.VoucherLoader.loadResource();
         this.TitleLoader.loadResource();
         this.GameplayLoader.loadResource();
         this.AudioLoader.loadResource();
