@@ -14,6 +14,9 @@ export default class SpawnerController {
 
         this.spawnPoint = new SpawnPoint(this.scene).create();
 
+        this.goodStuff = [ 'good', 'good2', 'good3', 'good4', 'good5'];
+        this.badStuff = [ 'bad', 'bad2', 'bad3', 'bad4', 'bad5'];
+
         this.levelOneLeft = [];
         this.levelOneMid = [];
         this.levelOneRight = [];
@@ -158,6 +161,11 @@ export default class SpawnerController {
     LevelOne(){
         let countah = 1;
 
+        this.rand = Phaser.Math.Between(0, 4);
+
+        this.levelOneLeft[0] = this.goodStuff[this.rand];
+
+
         this.spawn1 = this.scene.physics.add.image(this.point1X, this.point1Y, this.levelOneLeft[0]);
         this.spawn1.displayHeight = 150;
         this.spawn1.displayWidth = 150;
@@ -175,8 +183,33 @@ export default class SpawnerController {
         this.lvlOneRightGroup.add(this.spawn3);
 
         let interval = setInterval(() => {
+            this.rand = Phaser.Math.Between(0, 4);
+
+            if(this.levelOneLeft[countah] == "good"){
+                this.levelOneLeft[countah] = this.goodStuff[this.rand];
+            }else if(this.levelOneLeft[countah] == "bad"){
+                this.levelOneLeft[countah] = this.badStuff[this.rand];
+            }else{
+                console.log("nothing");
+            }
+
+            if(this.levelOneMid[countah] == "good"){
+                this.levelOneMid[countah] = this.goodStuff[this.rand];
+            }else if(this.levelOneMid[countah] == "bad"){
+                this.levelOneMid[countah] = this.badStuff[this.rand];
+            }else{
+                console.log("nothing");
+            }
+            
+            if(this.levelOneRight[countah] == "good"){
+                this.levelOneRight[countah] = this.goodStuff[this.rand];
+            }else if(this.levelOneRight[countah] == "bad"){
+                this.levelOneRight[countah] = this.badStuff[this.rand];
+            }else{
+                console.log("nothing");
+            }
+
             this.spawn1 = this.scene.physics.add.image(this.point1X, this.point1Y, this.levelOneLeft[countah]);
-            // Phaser.Math.RND.pick('', );
             this.spawn1.displayHeight = 150;
             this.spawn1.displayWidth = 150;
             this.lvlOneLeftGroup.add(this.spawn1);
@@ -214,6 +247,32 @@ export default class SpawnerController {
         let countah = 0;
 
         let interval = setInterval(() => {
+            this.rand = Phaser.Math.Between(0, 4);
+
+            if(this.levelTwoLeft[countah] == "good"){
+                this.levelTwoLeft[countah] = this.goodStuff[this.rand];
+            }else if(this.levelTwoLeft[countah] == "bad"){
+                this.levelTwoLeft[countah] = this.badStuff[this.rand];
+            }else{
+                console.log("nothing");
+            }
+
+            if(this.levelTwoMid[countah] == "good"){
+                this.levelTwoMid[countah] = this.goodStuff[this.rand];
+            }else if(this.levelTwoMid[countah] == "bad"){
+                this.levelTwoMid[countah] = this.badStuff[this.rand];
+            }else{
+                console.log("nothing");
+            }
+            
+            if(this.levelTwoRight[countah] == "good"){
+                this.levelTwoRight[countah] = this.goodStuff[this.rand];
+            }else if(this.levelTwoRight[countah] == "bad"){
+                this.levelTwoRight[countah] = this.badStuff[this.rand];
+            }else{
+                console.log("nothing");
+            }
+
             this.spawn1 = this.scene.physics.add.image(this.point1X, this.point1Y, this.levelTwoLeft[countah]);
             this.spawn1.displayHeight = 150;
             this.spawn1.displayWidth = 150;

@@ -50,7 +50,7 @@ export default class LoadingSceneController extends Phaser.Scene{
 
     LoadBootResouces(){
         this.load.image('bg_loading',this.CreatePath('/images/loading/Background.png'));
-        this.load.image('loading_character',this.CreatePath('/images/loading/Character.png'));
+        this.load.image('loading_character',this.CreatePath('/images/uigame/ui_debby_groceries_title.png'));
         this.load.image('loading_emptybar',this.CreatePath('/images/loading/Loading-Bar-Empty.png'));
         this.load.image('loading_fullbar',this.CreatePath('/images/loading/Loading-Bar-Full.png'));
 

@@ -24,6 +24,16 @@ export default class LoadingTitleController {
         this.scene.load.image('icon_next',this.scene.CreatePath('/images/uigame/ui_icon_next.png'));
         this.scene.load.image('icon_play',this.scene.CreatePath('/images/uigame/ui_icon_play_b.png'));
         this.scene.load.image('icon_play_pressed',this.scene.CreatePath('/images/uigame/ui_icon_play.png'));
+        this.scene.load.image('icon_exit',this.scene.CreatePath('/images/uigame/ingame_ui_exit_icon.png'));
+        this.scene.load.image('icon_retry',this.scene.CreatePath('/images/uigame/ingame_ui_retry_icon.png'));
+        this.scene.load.image('icon_tutorial',this.scene.CreatePath('/images/uigame/ui_icon_tutorial.png'));
+        this.scene.load.image('icon_leaderboard',this.scene.CreatePath('/images/uigame/ui_icon_leaderboard.png'));
+        this.scene.load.image('banner_leaderboard',this.scene.CreatePath('/images/uigame/ui_illustration_long.png'));
+
+        this.scene.load.image('bg_top3',this.scene.CreatePath('/images/uigame/ui_panel_user_top.png'));
+        this.scene.load.image('bg_non_top3',this.scene.CreatePath('/images/uigame/ui_panel_user_regular.png'));
+        this.scene.load.image('bg_current',this.scene.CreatePath('/images/uigame/ui_panel_user_main.png'));
+        this.scene.load.image('bg_current_big',this.scene.CreatePath('/images/uigame/ui_panel_user_main_big.png'));
            
         this.scene.load.image('background_menu', this.scene.CreatePath('/images/env/ingame_env_background_main.png'));
         this.scene.load.image('background_tree', this.scene.CreatePath('/images/env/ingame_env_background_second.png'));

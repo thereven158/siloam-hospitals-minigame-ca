@@ -123,17 +123,53 @@ export default class ResultView extends Phaser.GameObjects.Container{
         this.TotalScore.setPosition(this.TopText.x, this.TotalTxt.y * 0.15);
         this.MainCloud.add(this.TotalScore);
 
-        this.buttonPlay = new Button(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY * 1.3, 'btn_play');
-        this.buttonPlay.Image.setScale(this.ScreenUtility.ScalePercentage * 0.8);
-        this.MainGroup.add(this.buttonPlay);
+        this.buttonRetry = new Button(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY * 1.3, 'btn_normal');
+        this.buttonRetry.setPressedTexture('btn_pressed');
+        this.MainGroup.add(this.buttonRetry);
 
-        this.buttonTutorial = new Button(this.scene, this.ScreenUtility.CenterX,  this.buttonPlay.y * 1.165, 'btn_tutorial');
-        this.buttonTutorial.Image.setScale(this.ScreenUtility.ScalePercentage * 0.8);
-        this.MainGroup.add(this.buttonTutorial);
+        this.IconRetry = new Image (this.scene, 0, 0, 'icon_retry');
+        this.IconRetry.setPosition(this.buttonRetry.x * 0.65, this.buttonRetry.y);
+        this.IconRetry.setDisplayWidth(this.IconRetry.displayWidth * 0.6, true);
+        this.MainGroup.add(this.IconRetry);
 
-        this.buttonLeaderboard = new Button(this.scene, this.ScreenUtility.CenterX,  this.buttonTutorial.y * 1.145, 'btn_leaderboard');
-        this.buttonLeaderboard.Image.setScale(this.ScreenUtility.ScalePercentage * 0.8);
+        this.RetryTxt = new Text(this.scene, 0, 0, 
+            "RETRY", 
+            { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
+            .setFontSizeRS(50);
+        this.RetryTxt.setPosition(this.buttonRetry.x * 1.1, this.buttonRetry.y);
+        this.MainGroup.add(this.RetryTxt);
+
+        this.buttonExit = new Button(this.scene, this.ScreenUtility.CenterX,  this.buttonRetry.y * 1.165, 'btn_normal');
+        this.buttonExit.setPressedTexture('btn_pressed');
+        this.MainGroup.add(this.buttonExit);
+
+        this.IconExit = new Image (this.scene, 0, 0, 'icon_exit');
+        this.IconExit.setPosition(this.buttonExit.x * 0.65, this.buttonExit.y);
+        this.IconExit.setDisplayWidth(this.IconExit.displayWidth * 0.6, true);
+        this.MainGroup.add(this.IconExit);
+
+        this.ExitTxt = new Text(this.scene, 0, 0, 
+            "EXIT", 
+            { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
+            .setFontSizeRS(50);
+        this.ExitTxt.setPosition(this.buttonExit.x * 1.1, this.buttonExit.y);
+        this.MainGroup.add(this.ExitTxt);
+
+        this.buttonLeaderboard = new Button(this.scene, this.ScreenUtility.CenterX,  this.buttonExit.y * 1.145, 'btn_normal');
+        this.buttonLeaderboard.setPressedTexture('btn_pressed');
         this.MainGroup.add(this.buttonLeaderboard);
+
+        this.IconLeaderboard = new Image (this.scene, 0, 0, 'icon_leaderboard');
+        this.IconLeaderboard.setPosition(this.buttonLeaderboard.x * 0.65, this.buttonLeaderboard.y);
+        this.IconLeaderboard.setDisplayWidth(this.IconLeaderboard.displayWidth, true);
+        this.MainGroup.add(this.IconLeaderboard);
+
+        this.LeaderboardTxt = new Text(this.scene, 0, 0, 
+            "LEADERBOARD", 
+            { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
+            .setFontSizeRS(50);
+        this.LeaderboardTxt.setPosition(this.buttonLeaderboard.x * 1.1, this.buttonLeaderboard.y);
+        this.MainGroup.add(this.LeaderboardTxt);
     }
 
     Open(){
@@ -170,11 +206,19 @@ export default class ResultView extends Phaser.GameObjects.Container{
         this.Background.alpha = 0;
     }
 
+    OnClickRetry(event){
+        this.buttonRetry.onClick(event);
+    }
+
     OnClickClose(event){
         this.BtnClose.onClick(event);
     }
 
-    OnClickMusic(event){
-        this.BtnMusic.onClick(event);
+    OnClickLeaderboard(event){
+        this.buttonLeaderboard.onClick(event);
+    }
+
+    OnClickExit(event){
+        this.buttonExit.onClick(event);
     }
 }

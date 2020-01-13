@@ -3,6 +3,7 @@ import ScreenUtility from '../../module/screen/screen_utility';
 import TitleSceneView from './title_scene_view';
 import TutorialView from '../setting/tutorial_view';
 import SettingView from '../setting/setting_view';
+import LeaderView from '../setting/leaderboard_view';
 
 export default class TitleSceneController extends Phaser.Scene {
 	constructor() {
@@ -28,6 +29,7 @@ export default class TitleSceneController extends Phaser.Scene {
         this.view.OnClickPlay(this.clickPlay);
         this.view.OnCLickTutorial(this.clickTutorial);
         this.view.OnCLickSetting(this.clickSetting);
+        this.view.OnClickLeaderboard(this.clickLeaderboard);
 
         if(this.Bgm == null){
             this.Bgm = this.sound.add('menu_music',{
@@ -59,6 +61,13 @@ export default class TitleSceneController extends Phaser.Scene {
         this.SettingView.Open();
     }
 
+    showLeaderboard = ()=>{
+        this.LeaderView = new LeaderView(this);
+        this.LeaderView.OnClickClose(this.clickCloseLeaderboard);
+        
+        this.LeaderView.Open();
+    }
+
     clickPlay = ()=>{
         this.Bgm.stop();
         this.game.sound.play('audio_btn_click');
@@ -69,10 +78,16 @@ export default class TitleSceneController extends Phaser.Scene {
         this.game.sound.play('audio_btn_click');
         this.showTutorial();
     }
+    
 
     clickSetting = ()=>{
         this.game.sound.play('audio_btn_click');
         this.showSetting();
+    }
+
+    clickLeaderboard = ()=>{
+        this.game.sound.play('audio_btn_click');
+        this.showLeaderboard();
     }
 
     clickMusicSetting = ()=>{
@@ -127,5 +142,10 @@ export default class TitleSceneController extends Phaser.Scene {
     clickCloseSetting = ()=>{
         this.game.sound.play('audio_btn_close');
         this.SettingView.Close();
+    }
+
+    clickCloseLeaderboard = ()=>{
+        this.game.sound.play('audio_btn_close');
+        this.LeaderView.Close();
     }
 }

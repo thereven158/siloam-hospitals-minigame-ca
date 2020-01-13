@@ -3,11 +3,14 @@ import ScreenUtility from '../../module/screen/screen_utility';
 import SpawnerController from '../../subcontroller/spawner_controller';
 import Apple from '../../subcontroller/apple';
 import ResultView from '../setting/result_view';
+import AdsView from '../setting/ads_view';
+import LeaderView from '../setting/leaderboard_view';
 
 export default class GameplaySceneController extends Phaser.Scene {
 	constructor() {
         super({key: 'GameScene'});
         this.Bgm = null;
+        this.gameoverBgm = null;
     }
 
     init = ()=>{
@@ -32,7 +35,8 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.atRight = false;
         this.score = 0;
         this.life = 3;
-        this.combo = 0;
+        this.comboCounter = 0;
+        this.comboScore = 0;
     }
 
     initAudio = ()=>{
@@ -62,6 +66,7 @@ export default class GameplaySceneController extends Phaser.Scene {
             upY = pointer.y;
             
             if (upX < downX - threshold){
+                this.game.sound.play('swipe_sfx');
                 if(this.atMiddle){
                     this.view.moveToLeft();
                     this.atMiddle = false;
@@ -75,6 +80,7 @@ export default class GameplaySceneController extends Phaser.Scene {
                 }
                 
             } else if (upX > downX + threshold) {
+                this.game.sound.play('swipe_sfx');
                 if(this.atMiddle){
                     this.view.moveToRight();
                     this.atMiddle = false;
@@ -87,8 +93,6 @@ export default class GameplaySceneController extends Phaser.Scene {
                     console.log("Nothing");
                 }
             }
-
-            this.game.sound.play('swipe_sfx');
             
         }, this); 
 
@@ -97,21 +101,25 @@ export default class GameplaySceneController extends Phaser.Scene {
                 loop:-1,
                 volume: 1
             });
-            
         }
+
+        if(this.gameoverBgm == null){
+            this.gameoverBgm = this.sound.add('game_over',{
+                loop:-1,
+                volume: 1
+            });
+        }
+
         this.Bgm.play();
 
         this.startGame();
     }
 
     clickPause = ()=>{
-
         this.game.sound.play('audio_btn_click');
-        // this.scene.pause();
+        
         // this.scene.start('PauseScene');
-        
-        
-        // this.scene.pause();
+        // this.scene.pause(); 
     }
 
     startGame = ()=>{
@@ -162,10 +170,10 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     onHitFood1 = (basket, food) =>{
-        if(this.spawner.spawn1.texture.key == "good"){
+        if(this.spawner.spawn1.texture.key == "good" || this.spawner.spawn1.texture.key == "good2" || this.spawner.spawn1.texture.key == "good3" || this.spawner.spawn1.texture.key == "good4" || this.spawner.spawn1.texture.key == "good5"){
             this.addScore();
             
-        }else if(this.spawner.spawn1.texture.key == "bad"){
+        }else if(this.spawner.spawn1.texture.key == "bad" || this.spawner.spawn1.texture.key == "bad2" || this.spawner.spawn1.texture.key == "bad3" || this.spawner.spawn1.texture.key == "bad4" || this.spawner.spawn1.texture.key == "bad5"){
             this.hpDown();
         }
 
@@ -173,10 +181,10 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     onHitFood2 = (basket, food) =>{
-        if(this.spawner.spawn2.texture.key == "good"){
+        if(this.spawner.spawn2.texture.key == "good" || this.spawner.spawn2.texture.key == "good2" || this.spawner.spawn2.texture.key == "good3" || this.spawner.spawn2.texture.key == "good4" || this.spawner.spawn2.texture.key == "good5"){
             this.addScore();
             
-        }else if(this.spawner.spawn2.texture.key == "bad"){
+        }else if(this.spawner.spawn2.texture.key == "bad" || this.spawner.spawn2.texture.key == "bad2" || this.spawner.spawn2.texture.key == "bad3" || this.spawner.spawn2.texture.key == "bad4" || this.spawner.spawn2.texture.key == "bad5"){
             this.hpDown();
         }
 
@@ -184,10 +192,10 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     onHitFood3 = (basket, food) =>{
-        if(this.spawner.spawn3.texture.key == "good"){
+        if(this.spawner.spawn3.texture.key == "good" || this.spawner.spawn3.texture.key == "good2" || this.spawner.spawn3.texture.key == "good3" || this.spawner.spawn3.texture.key == "good4" || this.spawner.spawn3.texture.key == "good5"){
             this.addScore();
             
-        }else if(this.spawner.spawn3.texture.key == "bad"){
+        }else if(this.spawner.spawn3.texture.key == "bad" || this.spawner.spawn3.texture.key == "bad2" || this.spawner.spawn3.texture.key == "bad3" || this.spawner.spawn3.texture.key == "bad4" || this.spawner.spawn3.texture.key == "bad5"){
             this.hpDown();
         }
 
@@ -227,31 +235,30 @@ export default class GameplaySceneController extends Phaser.Scene {
     addScore(){
         this.game.sound.play('catch_good');
         this.score++;
-        this.combo++;
+        this.comboCounter++;
         this.view.score.setText('' + this.score);
-        this.view.ComboTxt.setText('x' + this.combo);
+        this.view.ComboTxt.setText('x' + this.comboCounter);
         this.view.comboTextTween();
     }
 
     comboBreak(){
-        this.combo = this.combo / 3;
-        this.score += this.combo;
-        this.combo = 0;
+        this.comboCounter = this.comboCounter / 3;
+        this.score += this.comboCounter;
+        this.comboScore += this.comboCounter;
+        this.comboCounter = 0;
         this.score = Math.trunc(this.score);
+        this.comboScore = Math.trunc(this.comboScore);
         this.view.score.setText('' + this.score);
         this.view.ComboTxt.setText('');
     }
 
     gameOver = ()=>{
         this.IsGameStarted = false;
-        this.game.sound.play('game_over');
+
         this.Bgm.stop();
+        this.gameoverBgm.play();
 
         this.showResult();
-    }
-
-    restart = ()=>{
-        this.scene.restart();
     }
 
     backToTitle = ()=>{
@@ -262,5 +269,67 @@ export default class GameplaySceneController extends Phaser.Scene {
     showResult = ()=>{
         this.ResultView = new ResultView(this);
         this.ResultView.Open();
+        this.ResultView.OnClickRetry(this.Restart);
+        this.ResultView.OnClickExit(this.ExitGame);
+        this.ResultView.OnClickLeaderboard(this.clickLeaderboard);
+
+        this.ResultView.Score.setText(this.score - this.comboScore);
+        this.ResultView.ComboScore.setText(this.comboCounter * 3);
+        this.ResultView.BonusScore.setText(this.comboScore);
+        this.ResultView.TotalScore.setText(this.score);
+    }
+
+    showLeaderboard = ()=>{
+        this.LeaderView = new LeaderView(this);
+        this.LeaderView.OnClickClose(this.clickCloseLeaderboard);
+        
+        this.LeaderView.Open();
+    }
+
+    Restart = ()=>{
+        this.game.sound.play('audio_btn_click');
+        this.AdsView = new AdsView(this);
+        this.AdsView.Open();
+        this.AdsView.OnClickSkip(this.clickSkipRestart);
+
+        this.gameoverBgm.stop();
+
+        
+    }
+
+    clickSkipRestart = ()=>{
+        this.game.sound.play('audio_btn_close');
+        this.AdsView.Close();
+        this.scene.restart();
+
+        this.scene.stop();
+        this.scene.start('TitleScene');
+    }
+
+    clickSkipExit = ()=>{
+        this.game.sound.play('audio_btn_close');
+        this.AdsView.Close();
+
+        this.scene.stop();
+        this.scene.start('TitleScene');
+    }
+
+    clickLeaderboard = ()=>{
+        this.game.sound.play('audio_btn_click');
+        this.showLeaderboard();
+    }
+
+    clickCloseLeaderboard = ()=>{
+        this.game.sound.play('audio_btn_close');
+        this.LeaderView.Close();
+    }
+
+    ExitGame = ()=>{
+        this.game.sound.play('audio_btn_click');
+        this.AdsView = new AdsView(this);
+        this.AdsView.Open();
+        this.AdsView.OnClickSkip(this.clickSkipExit);
+
+        this.gameoverBgm.stop();
     }
 }
