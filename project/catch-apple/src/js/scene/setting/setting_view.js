@@ -29,21 +29,16 @@ export default class SettingView extends Phaser.GameObjects.Container{
             this.ScreenUtility.GameHeight);
         this.add(this.Background);
 
-        this.bgTree = new Image (this.scene, 
+        this.BgTree = new Image (this.scene, 
             this.ScreenUtility.CenterX, 
             this.ScreenUtility.GameHeight, 
             'background_tree');
-        this.add(this.bgTree);
+        this.add(this.BgTree);
 
         this.Blackground = new Image(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'bg_black').setInteractive();
 		this.Blackground.setDisplaySize(this.ScreenUtility.GameWidth, this.ScreenUtility.GameHeight);
         this.Blackground.setAlpha(0.5);
         this.add(this.Blackground);
-
-        // this.topCloud = new Image(this.scene, 0, 0, 'window-top');
-        // this.topCloud.setPosition(this.ScreenUtility.CenterX, 0);
-        // this.topCloud.setDisplaySize(this.topCloud.displayWidth, this.topCloud.displayHeight * 4);
-        // this.add(this.topCloud);
 
         this.MainGroup = this.scene.add.container(0,0);
         this.add(this.MainGroup);

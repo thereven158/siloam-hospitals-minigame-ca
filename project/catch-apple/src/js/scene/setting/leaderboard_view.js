@@ -82,26 +82,26 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         this.TopText.setPosition(this.BannerImage.x * 1.05, this.BannerImage.y);
         this.MainGroup.add(this.TopText);
 
-        this.RankTxt = new Text(this.scene, 0, 0, 
+        this.TxtRank = new Text(this.scene, 0, 0, 
             "RANK", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.RankTxt.setPosition(this.BannerImage.x * 0.5, this.BannerImage.y * 1.4);
-        this.MainGroup.add(this.RankTxt);
+        this.TxtRank.setPosition(this.BannerImage.x * 0.5, this.BannerImage.y * 1.4);
+        this.MainGroup.add(this.TxtRank);
 
-        this.NameTxt = new Text(this.scene, 0, 0, 
+        this.TxtName = new Text(this.scene, 0, 0, 
             "NAME", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.NameTxt.setPosition(this.RankTxt.x * 1.5, this.RankTxt.y);
-        this.MainGroup.add(this.NameTxt);
+        this.TxtName.setPosition(this.TxtRank.x * 1.5, this.TxtRank.y);
+        this.MainGroup.add(this.TxtName);
 
-        this.ScoreTxt = new Text(this.scene, 0, 0, 
+        this.TxtScore = new Text(this.scene, 0, 0, 
             "SCORE", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.ScoreTxt.setPosition(this.ContentContainer.displayWidth * 1.05, this.RankTxt.y);
-        this.MainGroup.add(this.ScoreTxt);
+        this.TxtScore.setPosition(this.ContentContainer.displayWidth * 1.05, this.TxtRank.y);
+        this.MainGroup.add(this.TxtScore);
 
         let temp1 = 1.6;
         for(let i = 0; i < 3; i++){
@@ -113,7 +113,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
                 "", 
                 { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
                 .setFontSizeRS(40);
-            this.Number.setPosition(this.RankTxt.x, this.topThree.y);
+            this.Number.setPosition(this.TxtRank.x, this.topThree.y);
             this.Number.setText(i + 1);
             this.MainGroup.add(this.Number);
 
@@ -121,7 +121,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
                 "", 
                 { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
                 .setFontSizeRS(40);
-            this.NumberScore.setPosition(this.ScoreTxt.x, this.topThree.y);
+            this.NumberScore.setPosition(this.TxtScore.x, this.topThree.y);
             this.NumberScore.setText(this.topThreeScore[i]);
             this.MainGroup.add(this.NumberScore);
 
@@ -151,7 +151,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
                     "", 
                     { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
                     .setFontSizeRS(40);
-                this.Number.setPosition(this.RankTxt.x, this.topTen.y);
+                this.Number.setPosition(this.TxtRank.x, this.topTen.y);
                 this.Number.setText(i + 4);
                 this.MainGroup.add(this.Number);
 
@@ -159,7 +159,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
                     "", 
                     { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
                     .setFontSizeRS(40);
-                this.NumberScore.setPosition(this.ScoreTxt.x, this.topTen.y);
+                this.NumberScore.setPosition(this.TxtScore.x, this.topTen.y);
                 this.NumberScore.setText(this.topTenScore[i]);
                 this.MainGroup.add(this.NumberScore);
 

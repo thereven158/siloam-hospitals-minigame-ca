@@ -29,11 +29,11 @@ export default class AdsView extends Phaser.GameObjects.Container{
             this.ScreenUtility.GameHeight);
         this.add(this.Background);
 
-        this.bgTree = new Image (this.scene, 
+        this.BgTree = new Image (this.scene, 
             this.ScreenUtility.CenterX, 
             this.ScreenUtility.GameHeight, 
             'background_tree');
-        this.add(this.bgTree);
+        this.add(this.BgTree);
 
         this.Blackground = new Image(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'bg_black').setInteractive();
 		this.Blackground.setDisplaySize(this.ScreenUtility.GameWidth, this.ScreenUtility.GameHeight);
@@ -64,26 +64,17 @@ export default class AdsView extends Phaser.GameObjects.Container{
         this.BtnSkip.setPosition(this.ContentContainer.displayWidth * 1.025, this.TopText.y);
         this.MainGroup.add(this.BtnSkip);
 
-        this.SkipTxt = new Text(this.scene, 0, 0, 
+        this.TxtSkip = new Text(this.scene, 0, 0, 
             "Skip", 
             { align:'center', fontFamily: 'helsinki', color: '#ffffff' })
             .setFontSizeRS(50);
-        this.SkipTxt.setPosition(this.BtnSkip.x * 0.95, this.BtnSkip.y);
-        this.MainGroup.add(this.SkipTxt);
+        this.TxtSkip.setPosition(this.BtnSkip.x * 0.95, this.BtnSkip.y);
+        this.MainGroup.add(this.TxtSkip);
 
-        // this.ContentText = new Text(this.scene, 0, 0, 
-        //     "Swipe layar ke kiri atau kanan untuk mengendalikan Debby ke kiri atau kanan", 
-        //     { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
-        //     .setFontSizeRS(40);
-        // this.ContentText.setPosition(this.ContentContainer.x, this.TitleText.y * 1.15);
-        // this.ContentText.setWordWrapWidth(this.ContentContainer.displayWidth);
-        // this.MainGroup.add(this.ContentText);
-
-        this.videoAds = this.scene.add.video(this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'cusotm');
-        this.videoAds.setDisplaySize(this.ContentContainer.displayWidth, this.ContentContainer.displayHeight * 0.7);
-        this.videoAds.play(true);
-        this.MainGroup.add(this.videoAds);
-        
+        this.VideoAds = this.scene.add.video(this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'cusotm');
+        this.VideoAds.setDisplaySize(this.ContentContainer.displayWidth, this.ContentContainer.displayHeight * 0.7);
+        this.VideoAds.play(true);
+        this.MainGroup.add(this.VideoAds);
     }
 
     Open(){
