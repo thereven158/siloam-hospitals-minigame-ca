@@ -24,6 +24,7 @@ export default class TitleSceneController extends Phaser.Scene {
         ScreenUtility.ResetGameScreen();
         this.ScreenUtility = ScreenUtility.getInstance();
     }
+    
     create = ()=>{
         this.view = new TitleSceneView(this).create();
         this.view.OnClickPlay(this.clickPlay);

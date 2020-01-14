@@ -1,27 +1,41 @@
 import ScreenUtility from '../../module/screen/screen_utility';
 
-import PauseSceneView from './pause_scene_view';
+import PauseView from './pause_scene_view';
 
 
 export default class PauseSceneController extends Phaser.Scene {
 	constructor() {
         super({key: 'PauseScene'});
-        
     }
 
-    create = ()=>{
+    init(){
+        this.initPause();
+    }
+
+    initPause = ()=>{
         ScreenUtility.ResetGameScreen();
         this.ScreenUtility = ScreenUtility.getInstance();
 
-        this.PauseView = new PauseSceneView(this);
-        this.PauseView.create();
+    }
+    
+    create = ()=>{
+        this.view = new PauseView(this);
+        this.view.create();
+
+        this.view.OnClickMainmenu(this.clickMainmenu);
+        this.view.OnClickResume(this.clickResume);
+        this.view.OnClickClose(this.clickResume);
     }
 
     update = ()=>{
 
     }
 
-    clickPlay = ()=>{
+    clickMainmenu = ()=>{
+        this.scene.start('TitleScene');
+    }
 
+    clickResume = ()=>{
+        this.scene.switch('GameScene');
     }
 }
