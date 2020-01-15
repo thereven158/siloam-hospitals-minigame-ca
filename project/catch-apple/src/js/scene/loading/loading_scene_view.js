@@ -23,12 +23,14 @@ export default class LoadingSceneView{
       this.Background =  new Image(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'bg_loading');
       this.Background.setDisplaySize(this.ScreenUtility.GameWidth, this.ScreenUtility.GameHeight);
       
-      this.Character = new Image(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'loading_character');
+      this.Character = new Image(this.scene, 
+        this.ScreenUtility.CenterX, 
+        this.ScreenUtility.CenterY - this.ScreenUtility.CenterY * 0.5, 'loading_character');
       this.Character.setDisplayWidth(this.ScreenUtility.GameWidth * 0.5, true);
 
       this.EmptyBar = new Image(this.scene, 0, 0, 'loading_emptybar');
       this.EmptyBar.setDisplayWidth(this.ScreenUtility.GameWidth * 0.8, true);
-      this.EmptyBar.setPosition(this.ScreenUtility.CenterX, this.Character.y + (this.Character.displayHeight *0.5) +  (this.EmptyBar.displayHeight *0.5) )
+      this.EmptyBar.setPosition(this.ScreenUtility.CenterX, this.ScreenUtility.CenterY * 1.5)
 
       this.FullBar = new Image(this.scene, 0,0, 'loading_fullbar');
       this.FullBar.setDisplaySize(this.EmptyBar.displayWidth, this.EmptyBar.displayHeight);
@@ -37,8 +39,8 @@ export default class LoadingSceneView{
 
       this.FullBarWidth = this.FullBar.displayWidth;
 
-      this.LoadingText = new Text(this.scene, this.ScreenUtility.CenterX, this.FullBar.y + this.FullBar.displayHeight, "Loading..."
-        ,{align:'center', fontFamily: 'panton', color: '#f9d023'}).setFontSizeR(40);
+      this.LoadingText = new Text(this.scene, this.ScreenUtility.CenterX * 0.5, this.FullBar.y - this.FullBar.displayHeight, "Loading..."
+        ,{align:'center', fontFamily: 'helsinki', color: '#1849A0'}).setFontSizeR(70);
         
       this.LoadingText.setOrigin(0.5,0.5);
     }

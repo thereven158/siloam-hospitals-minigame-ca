@@ -62,6 +62,7 @@ export default class SettingView extends Phaser.GameObjects.Container{
 
         this.BtnClose = new Button (this.scene, 0, 0, 'btn_close');
         this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.235, this.TopText.y);
+        this.BtnClose.setPressedTexture('btn_close_pressed');
         this.MainGroup.add(this.BtnClose);
 
         this.BtnMusic = new Button (this.scene, 0, 0, 'sound_on');

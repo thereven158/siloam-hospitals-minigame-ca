@@ -37,6 +37,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.life = 3;
         this.comboCounter = 0;
         this.comboScore = 0;
+        this.adsShowed = false;
     }
 
     initAudio = ()=>{
@@ -118,7 +119,8 @@ export default class GameplaySceneController extends Phaser.Scene {
     clickPause = ()=>{
         this.game.sound.play('audio_btn_click');
         
-        this.scene.switch('PauseScene');
+        // this.scene.switch('PauseScene');
+        this.showResult();
     }
 
     startGame = ()=>{
@@ -143,20 +145,12 @@ export default class GameplaySceneController extends Phaser.Scene {
         if(this.spawner.spawn1.y > this.ScreenUtility.GameHeight || this.spawner.spawn2.y > this.ScreenUtility.GameHeight){
             this.destroyObj();
         } 
-
-        // if(this.view.basket.x <= this.spawner.point1X){
-        //     this.view.basket.setVelocityX(0);
-        //     this.view.basket.x = this.spawner.point1X + 1;
-        // }else if(this.view.basket.x >= this.spawner.point2X - 2 && this.view.basket.x <= this.spawner.point2X + 2){
-        //     this.view.basket.setVelocityX(0);
-        //     this.view.basket.x = this.spawner.point2X + 1;
-        // }else if(this.view.basket.x >= this.spawner.point3X){
-        //     this.view.basket.setVelocityX(0);
-        //     this.view.basket.x = this.spawner.point3X - 1;
-        // }
-
         
+        if(this.adsShowed == true){
+            this.AdsView.TxtSkip.setText(5 - this.timerEvent.getElapsedSeconds().toString().substr(0, 1));
+        }
     }
+
     gameUpdate(timestep, delta){
         this.view.debby.x = this.view.basket.x + this.view.basket.displayWidth * 0.5;
         
@@ -289,15 +283,22 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.game.sound.play('audio_btn_click');
         this.AdsView = new AdsView(this);
         this.AdsView.Open();
-        this.AdsView.OnClickSkip(this.clickSkipRestart);
-
+        this.adsShowed = true;
+        
         this.gameoverBgm.stop();
 
-        
+        this.timerEvent = this.time.delayedCall(5000, this.eventCanClick, [], this);
+    }
+
+    eventCanClick = ()=>{
+        this.AdsView.OnClickSkip(this.clickSkipRestart);
+        this.adsShowed = false;
+        this.timerEvent.remove();
     }
 
     clickSkipRestart = ()=>{
         this.game.sound.play('audio_btn_close');
+        
         this.AdsView.Close();
         this.scene.restart();
 
@@ -307,6 +308,7 @@ export default class GameplaySceneController extends Phaser.Scene {
 
     clickSkipExit = ()=>{
         this.game.sound.play('audio_btn_close');
+        this.adsShowed = false;
         this.AdsView.Close();
 
         this.scene.stop();

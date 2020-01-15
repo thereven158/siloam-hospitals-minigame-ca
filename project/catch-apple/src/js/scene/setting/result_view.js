@@ -123,39 +123,39 @@ export default class ResultView extends Phaser.GameObjects.Container{
         this.TotalScore.setPosition(this.TopText.x, this.TotalTxt.y * 0.15);
         this.MainCloud.add(this.TotalScore);
 
-        this.buttonRetry = new Button(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY * 1.3, 'btn_normal');
-        this.buttonRetry.setPressedTexture('btn_pressed');
-        this.MainGroup.add(this.buttonRetry);
+        this.BtnRetry = new Button(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY * 1.3, 'btn_normal');
+        this.BtnRetry.setPressedTexture('btn_pressed');
+        this.MainGroup.add(this.BtnRetry);
 
         this.IconRetry = new Image (this.scene, 0, 0, 'icon_retry');
-        this.IconRetry.setPosition(this.buttonRetry.x * 0.65, this.buttonRetry.y);
+        this.IconRetry.setPosition(this.BtnRetry.x * 0.65, this.BtnRetry.y);
         this.IconRetry.setDisplayWidth(this.IconRetry.displayWidth * 0.6, true);
         this.MainGroup.add(this.IconRetry);
 
-        this.RetryTxt = new Text(this.scene, 0, 0, 
+        this.TxtRetry = new Text(this.scene, 0, 0, 
             "RETRY", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(50);
-        this.RetryTxt.setPosition(this.buttonRetry.x * 1.1, this.buttonRetry.y);
-        this.MainGroup.add(this.RetryTxt);
+        this.TxtRetry.setPosition(this.BtnRetry.x * 1.1, this.BtnRetry.y);
+        this.MainGroup.add(this.TxtRetry);
 
-        this.buttonExit = new Button(this.scene, this.ScreenUtility.CenterX,  this.buttonRetry.y * 1.165, 'btn_normal');
-        this.buttonExit.setPressedTexture('btn_pressed');
-        this.MainGroup.add(this.buttonExit);
+        this.BtnExit = new Button(this.scene, this.ScreenUtility.CenterX,  this.BtnRetry.y * 1.165, 'btn_normal');
+        this.BtnExit.setPressedTexture('btn_pressed');
+        this.MainGroup.add(this.BtnExit);
 
         this.IconExit = new Image (this.scene, 0, 0, 'icon_exit');
-        this.IconExit.setPosition(this.buttonExit.x * 0.65, this.buttonExit.y);
+        this.IconExit.setPosition(this.BtnExit.x * 0.65, this.BtnExit.y);
         this.IconExit.setDisplayWidth(this.IconExit.displayWidth * 0.6, true);
         this.MainGroup.add(this.IconExit);
 
-        this.ExitTxt = new Text(this.scene, 0, 0, 
+        this.TxtExit = new Text(this.scene, 0, 0, 
             "EXIT", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(50);
-        this.ExitTxt.setPosition(this.buttonExit.x * 1.1, this.buttonExit.y);
-        this.MainGroup.add(this.ExitTxt);
+        this.TxtExit.setPosition(this.BtnExit.x * 1.1, this.BtnExit.y);
+        this.MainGroup.add(this.TxtExit);
 
-        this.buttonLeaderboard = new Button(this.scene, this.ScreenUtility.CenterX,  this.buttonExit.y * 1.145, 'btn_normal');
+        this.buttonLeaderboard = new Button(this.scene, this.ScreenUtility.CenterX,  this.BtnExit.y * 1.145, 'btn_normal');
         this.buttonLeaderboard.setPressedTexture('btn_pressed');
         this.MainGroup.add(this.buttonLeaderboard);
 
@@ -207,7 +207,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
     }
 
     OnClickRetry(event){
-        this.buttonRetry.onClick(event);
+        this.BtnRetry.onClick(event);
     }
 
     OnClickClose(event){
@@ -219,6 +219,6 @@ export default class ResultView extends Phaser.GameObjects.Container{
     }
 
     OnClickExit(event){
-        this.buttonExit.onClick(event);
+        this.BtnExit.onClick(event);
     }
 }
