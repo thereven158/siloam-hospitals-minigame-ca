@@ -56,7 +56,7 @@ export default class TitleSceneController extends Phaser.Scene {
 
     showSetting = ()=>{
         this.SettingView = new SettingView(this);
-        this.SettingView.OnClickClose(this.clickCloseSetting)
+        this.SettingView.OnClickClose(this.clickCloseSetting);
         this.SettingView.OnClickMusic(this.clickMusicSetting);
         
         this.SettingView.Open();
@@ -92,39 +92,41 @@ export default class TitleSceneController extends Phaser.Scene {
     }
 
     clickMusicSetting = ()=>{
-        if(this.music == true){
-            this.music = false;
-            this.Bgm.setMute(true);
-            this.SettingView.BtnMusic.Image.setTexture('sound_off');
-        }else{
-            this.music = true;
-            this.Bgm.setMute(false);
-            this.SettingView.BtnMusic.Image.setTexture('sound_on');
-        }
+        
     }
 
     clickNext = ()=>{
         this.game.sound.play('audio_btn_click');
         if(this.counterNext == 0){
-            this.TutorialView.TitleText.setText("SCORE & HEALTH POINT");
-            this.TutorialView.ContentText.setText("Untuk mendapatkan point, tangkap buah dan sayur.");
-            this.TutorialView.ContentText2.setText("");
-            this.TutorialView.ImageContent.setTexture('tutorial2');
+            this.TutorialView.SetDescription(
+                "SCORE & HEALTH POINT",
+                "Untuk mendapatkan point, tangkap buah dan sayur.",
+                "",
+                'tutorial2',
+                'btn_normal',
+                'icon_next',
+                "NEXT"
+            );
         }else if(this.counterNext == 1){
-            this.TutorialView.TitleText.setText("SCORE & HEALTH POINT");
-            this.TutorialView.ContentText.setText("Menangkap junk food atau gagal menangkap buah / sayur dapat mengurangi health point.");
-            this.TutorialView.ContentText2.setText("Game berakhir jika health point habis.");
-            this.TutorialView.ContentText.setPosition(this.TutorialView.ContentContainer.x, this.TutorialView.TitleText.y * 1.2);
-            this.TutorialView.ImageContent.setTexture('tutorial3');
+            this.TutorialView.SetDescription(
+                "SCORE & HEALTH POINT",
+                "Menangkap junk food atau gagal menangkap buah / sayur dapat mengurangi health point.",
+                "Game berakhir jika health point habis.",
+                'tutorial3',
+                'btn_normal',
+                'icon_next',
+                "NEXT"
+            );
         }else{
-            this.TutorialView.TitleText.setText("BONUS SCORE");
-            this.TutorialView.ContentText.setText("Setiap kali kamu berhasil menangkap buah dan sayur berutur-turut, akan muncul combo.");
-            this.TutorialView.ContentText2.setText("Semakin banyak combo, semakin besar point bonus yang didapat.");
-            this.TutorialView.ImageContent.setTexture('tutorial4');
-            this.TutorialView.IconNext.setTexture('icon_play');
-            this.TutorialView.BtnNext.Image.setTexture('btn_play_pressed');
-            this.TutorialView.BtnTxt.setText("Play");
-            this.TutorialView.BtnTxt.setColor('#ffffff');;
+            this.TutorialView.SetDescription(
+                "BONUS SCORE",
+                "Setiap kali kamu berhasil menangkap buah dan sayur berutur-turut, akan muncul combo.",
+                "Semakin banyak combo, semakin besar point bonus yang didapat.",
+                'tutorial4',
+                'btn_play_pressed',
+                'icon_play',
+                "PLAY"
+            );
             
             this.TutorialView.OnClickNext(this.clickPlay);
         }
@@ -135,7 +137,7 @@ export default class TitleSceneController extends Phaser.Scene {
     clickCloseTutorial = ()=>{
         this.counterNext = 0;
         this.TutorialView.OnClickNext(this.clickNext);
-        this.TutorialView.ContentText2.setText("");
+        this.TutorialView.TxtContent2.setText("");
         this.game.sound.play('audio_btn_close');
         this.TutorialView.Close();
     }

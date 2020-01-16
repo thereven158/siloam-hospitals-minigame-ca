@@ -10,7 +10,7 @@ export default class LoadingTitleController {
 
      loadResource(){
         this.scene.load.image('btn_play', this.scene.CreatePath('/images/uigame/ui_button_play_effect.png'));
-        this.scene.load.image('btn_setting', this.scene.CreatePath('/images/uigame/ui_button_setting.png'));
+        this.scene.load.image('btn_setting', this.scene.CreatePath('/images/uigame/ui_button_settings.png'));
         this.scene.load.image('btn_tutorial', this.scene.CreatePath('/images/uigame/ui_button_tutorial.png'));
         this.scene.load.image('btn_leaderboard', this.scene.CreatePath('/images/uigame/ui_button_leaderboard.png'));
         this.scene.load.image('main_picture', this.scene.CreatePath('/images/uigame/ui_debby_groceries_title.png'));
@@ -20,6 +20,9 @@ export default class LoadingTitleController {
         this.scene.load.image('btn_normal',this.scene.CreatePath('/images/uigame/ui_button_regular.png'));
         this.scene.load.image('btn_pressed',this.scene.CreatePath('/images/uigame/ui_button_regular_pressed.png'));
         this.scene.load.image('btn_play_pressed',this.scene.CreatePath('/images/uigame/ui_button_regular_on.png'));
+        this.scene.load.image('btn_close_pressed',this.scene.CreatePath('/images/uigame/ui_button_close_pressed.png'));
+        this.scene.load.image('btn_setting_pressed',this.scene.CreatePath('/images/uigame/ui_button_settings_pressed.png'));
+        this.scene.load.image('btn_skip_pressed',this.scene.CreatePath('/images/uigame/ui_button_close_skip_pressed.png'));
 
         this.scene.load.image('icon_next',this.scene.CreatePath('/images/uigame/ui_icon_next.png'));
         this.scene.load.image('icon_play',this.scene.CreatePath('/images/uigame/ui_icon_play_b.png'));

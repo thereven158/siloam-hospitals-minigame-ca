@@ -53,15 +53,16 @@ export default class AdsView extends Phaser.GameObjects.Container{
         this.ContentContainer.displayHeight = contentHeight;
         this.MainGroup.add(this.ContentContainer);
 
-        this.TopText = new Text(this.scene, 0, 0, 
+        this.TxtTop = new Text(this.scene, 0, 0, 
             "ADS", 
             { align:'center', fontFamily: 'helsinki', color: '#ffffff' })
             .setFontSizeRS(90);
-        this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.4, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.5 - this.TopText.displayHeight);
-        this.MainGroup.add(this.TopText);
+        this.TxtTop.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.4, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.5 - this.TxtTop.displayHeight);
+        this.MainGroup.add(this.TxtTop);
 
         this.BtnSkip = new Button (this.scene, 0, 0, 'btn_skip');
-        this.BtnSkip.setPosition(this.ContentContainer.displayWidth * 1.025, this.TopText.y);
+        this.BtnSkip.setPosition(this.ContentContainer.displayWidth * 1.025, this.TxtTop.y);
+        this.BtnSkip.IsEnabled = false;
         this.MainGroup.add(this.BtnSkip);
 
         this.TxtSkip = new Text(this.scene, 0, 0, 
@@ -75,6 +76,7 @@ export default class AdsView extends Phaser.GameObjects.Container{
         this.VideoAds.setDisplaySize(this.ContentContainer.displayWidth, this.ContentContainer.displayHeight * 0.7);
         this.VideoAds.play(true);
         this.MainGroup.add(this.VideoAds);
+
     }
 
     Open(){
@@ -104,6 +106,9 @@ export default class AdsView extends Phaser.GameObjects.Container{
 
     OnClickSkip(event){
         this.BtnSkip.onClick(event);
+        this.BtnSkip.IsEnabled = true;
+        this.BtnSkip.setPressedTexture('btn_skip_pressed');
+        this.TxtSkip.setText("SKIP");
     }
     
 }

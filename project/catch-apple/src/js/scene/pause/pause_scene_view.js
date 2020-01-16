@@ -14,7 +14,6 @@ export default class PauseSceneView {
 
     /** @return {PauseSceneView} */
     create = ()=>{
-        this.initScreen();
 
         this.Background = new Image (this.scene, 
             this.ScreenUtility.CenterX, 
@@ -31,11 +30,6 @@ export default class PauseSceneView {
         this.Blackground = new Image(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'bg_black').setInteractive();
 		this.Blackground.setDisplaySize(this.ScreenUtility.GameWidth, this.ScreenUtility.GameHeight);
         this.Blackground.setAlpha(0.5);
-
-        // this.topCloud = new Image(this.scene, 0, 0, 'window-top');
-        // this.topCloud.setPosition(this.ScreenUtility.CenterX, 0);
-        // this.topCloud.setDisplaySize(this.topCloud.displayWidth, this.topCloud.displayHeight * 4);
-        // this.add(this.topCloud);
 
         this.ContentContainer = new Image(this.scene, this.ScreenUtility.CenterX , this.ScreenUtility.CenterY, 'small_container');
 
@@ -54,9 +48,11 @@ export default class PauseSceneView {
         
         this.BtnClose = new Button (this.scene, 0, 0, 'btn_close');
         this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.235, this.TopText.y);
+        this.BtnClose.setPressedTexture('btn_close_pressed');
         
         this.BtnResume = new Button (this.scene, 0, 0, 'btn_normal');
         this.BtnResume.setPosition(this.ContentContainer.x, this.ContentContainer.y * 0.9);
+        this.BtnResume.setPressedTexture('btn_pressed');
 
         this.IconResume = new Image (this.scene, 0, 0, 'icon_play_pressed');
         this.IconResume.setPosition(this.BtnResume.x * 0.65, this.BtnResume.y);
@@ -69,6 +65,7 @@ export default class PauseSceneView {
         this.TxtResume.setPosition(this.BtnResume.x * 1.1, this.BtnResume.y);
         
         this.BtnMainmenu = new Button (this.scene, 0, 0, 'btn_normal');
+        this.BtnMainmenu.setPressedTexture('btn_pressed');
         this.BtnMainmenu.setPosition(this.ContentContainer.x, this.ContentContainer.y * 1.1);
 
         this.IconMainmenu = new Image (this.scene, 0, 0, 'icon_mainmenu');

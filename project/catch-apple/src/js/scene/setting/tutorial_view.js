@@ -29,11 +29,11 @@ export default class TutorialView extends Phaser.GameObjects.Container{
             this.ScreenUtility.GameHeight);
         this.add(this.Background);
 
-        this.bgTree = new Image (this.scene, 
+        this.BgTree = new Image (this.scene, 
             this.ScreenUtility.CenterX, 
             this.ScreenUtility.GameHeight, 
             'background_tree');
-        this.add(this.bgTree);
+        this.add(this.BgTree);
 
         this.Blackground = new Image(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'bg_black').setInteractive();
 		this.Blackground.setDisplaySize(this.ScreenUtility.GameWidth, this.ScreenUtility.GameHeight);
@@ -47,7 +47,7 @@ export default class TutorialView extends Phaser.GameObjects.Container{
 
         let contentWidth = (this.ScreenUtility.GameWidth * 0.7);
         let maxHeight = contentWidth * (this.ContentContainer.height / this.ContentContainer.width);
-        let contentHeight = (this.ScreenUtility.GameHeight < (maxHeight * 1.1) ) ? this.ScreenUtility.GameHeight * 0.7 : maxHeight;
+        let contentHeight = (this.ScreenUtility.GameHeight < (maxHeight * 1.1) ) ? this.ScreenUtility.GameHeight * 0.5 : maxHeight;
 
         this.ContentContainer.displayWidth = contentWidth;
         this.ContentContainer.displayHeight = contentHeight;
@@ -62,6 +62,7 @@ export default class TutorialView extends Phaser.GameObjects.Container{
 
         this.BtnClose = new Button (this.scene, 0, 0, 'btn_close');
         this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
+        this.BtnClose.setPressedTexture('btn_close_pressed');
         this.MainGroup.add(this.BtnClose);
 
         this.ImageContent = new Image(this.scene, this.ContentContainer.x, this.ContentContainer.y, 'tutorial');
@@ -69,28 +70,28 @@ export default class TutorialView extends Phaser.GameObjects.Container{
         this.ImageContent.setPosition(this.ContentContainer.x, this.ContentContainer.y * 0.65);
         this.MainGroup.add(this.ImageContent);
 
-        this.TitleText = new Text(this.scene, 0, 0, 
+        this.TxtTitle = new Text(this.scene, 0, 0, 
             "DEBBY CONTROL", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.TitleText.setPosition(this.ContentContainer.x, this.ImageContent.y * 1.45);
-        this.MainGroup.add(this.TitleText);
+        this.TxtTitle.setPosition(this.ContentContainer.x, this.ContentContainer.y * 0.97);
+        this.MainGroup.add(this.TxtTitle);
 
-        this.ContentText = new Text(this.scene, 0, 0, 
+        this.TxtContent = new Text(this.scene, 0, 0, 
             "Swipe layar ke kiri atau kanan untuk mengendalikan Debby ke kiri atau kanan", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.ContentText.setPosition(this.ContentContainer.x, this.TitleText.y * 1.15);
-        this.ContentText.setWordWrapWidth(this.ContentContainer.displayWidth);
-        this.MainGroup.add(this.ContentText);
+        this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.15);
+        this.TxtContent.setWordWrapWidth(contentWidth);
+        this.MainGroup.add(this.TxtContent);
 
-        this.ContentText2 = new Text(this.scene, 0, 0, 
+        this.TxtContent2 = new Text(this.scene, 0, 0, 
             "", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.ContentText2.setPosition(this.ContentContainer.x, this.ContentText.y * 1.2);
-        this.ContentText2.setWordWrapWidth(this.ContentContainer.displayWidth);
-        this.MainGroup.add(this.ContentText2);
+        this.TxtContent2.setPosition(this.ContentContainer.x, this.TxtContent.y * 1.2);
+        this.TxtContent2.setWordWrapWidth(contentWidth);
+        this.MainGroup.add(this.TxtContent2);
 
         this.BtnNext = new Button (this.scene, 0, 0, 'btn_normal');
         this.BtnNext.setPosition(this.ContentContainer.x, this.ContentContainer.y * 1.5);
@@ -102,12 +103,12 @@ export default class TutorialView extends Phaser.GameObjects.Container{
         this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);
         this.MainGroup.add(this.IconNext);
 
-        this.BtnTxt = new Text(this.scene, 0, 0, 
+        this.TxtBtn = new Text(this.scene, 0, 0, 
             "NEXT", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(70);
-        this.BtnTxt.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
-        this.MainGroup.add(this.BtnTxt);
+        this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
+        this.MainGroup.add(this.TxtBtn);
     }
 
     Open(){
@@ -134,6 +135,16 @@ export default class TutorialView extends Phaser.GameObjects.Container{
         });
         this.Blackground.alpha = 0;
         this.Background.alpha = 0;
+    }
+
+    SetDescription(txtTitle, txtContent, txtContent2, textureImgContent, textureBtn, textureIconBtn, txtBtn){
+        this.TxtTitle.setText(txtTitle);
+        this.TxtContent.setText(txtContent);
+        this.TxtContent2.setText(txtContent2);
+        this.ImageContent.setTexture(textureImgContent);
+        this.BtnNext.Image.setTexture(textureBtn);
+        this.IconNext.setTexture(textureIconBtn);
+        this.TxtBtn.setText(txtBtn);
     }
 
     OnClickNext(event){
