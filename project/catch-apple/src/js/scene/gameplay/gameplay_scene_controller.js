@@ -119,8 +119,7 @@ export default class GameplaySceneController extends Phaser.Scene {
     clickPause = ()=>{
         this.game.sound.play('audio_btn_click');
         
-        // this.scene.switch('PauseScene');
-        this.showResult();
+        this.scene.switch('PauseScene');
     }
 
     startGame = ()=>{
