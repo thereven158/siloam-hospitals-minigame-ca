@@ -13,12 +13,14 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.gameoverBgm = null;
     }
 
-    init = ()=>{
-        console.log('game screen')
+    init = (data)=>{
+        console.log('game screen', data);
 
         this.initGame();
         this.initGameData();
         this.initAudio();
+        this.music = data.music;
+        this.sfx = data.sfx;
     }
 
     initGame = ()=>{
@@ -41,11 +43,14 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     initAudio = ()=>{
-
+        this.audioClick = this.sound.add('audio_btn_click');
+        this.audioClose = this.sound.add('audio_btn_close');
+        this.audioSwipe = this.sound.add('swipe_sfx');
+        this.audioGoodCatch = this.sound.add('catch_good');
+        this.audioBadCatch = this.sound.add('catch_bad');
     }
 
     create = ()=>{        
-
         this.view = new GameplaySceneView(this).create();
         this.view.onClickPause(this.clickPause);
         this.spawner = new SpawnerController(this);
@@ -67,7 +72,7 @@ export default class GameplaySceneController extends Phaser.Scene {
             upY = pointer.y;
             
             if (upX < downX - threshold){
-                this.game.sound.play('swipe_sfx');
+                this.audioSwipe.play();
                 if(this.atMiddle){
                     this.view.moveToLeft();
                     this.atMiddle = false;
@@ -81,7 +86,7 @@ export default class GameplaySceneController extends Phaser.Scene {
                 }
                 
             } else if (upX > downX + threshold) {
-                this.game.sound.play('swipe_sfx');
+                this.audioSwipe.play();
                 if(this.atMiddle){
                     this.view.moveToRight();
                     this.atMiddle = false;
@@ -111,15 +116,28 @@ export default class GameplaySceneController extends Phaser.Scene {
             });
         }
 
-        this.Bgm.play();
+        if(this.music == true){
+            this.Bgm.play();
+        }else{
+            this.Bgm.mute = true;
+            this.gameoverBgm.mute = true;
+        }
+
+        if(this.sfx == true){
+            this.unMuteAllSfx();
+        }else{
+            this.muteAllSfx();
+        }
 
         this.startGame();
     }
 
     clickPause = ()=>{
-        this.game.sound.play('audio_btn_click');
+        this.audioClick.play();
         
-        this.scene.switch('PauseScene');
+        // this.scene.switch('PauseScene', { music: this.music, sfx: this.sfx });
+        this.scene.launch('PauseScene', { music: this.music, sfx: this.sfx });
+        this.scene.pause();
     }
 
     startGame = ()=>{
@@ -153,6 +171,21 @@ export default class GameplaySceneController extends Phaser.Scene {
     gameUpdate(timestep, delta){
         this.view.debby.x = this.view.basket.x + this.view.basket.displayWidth * 0.5;
         
+    }
+
+    muteAllSfx(){
+        this.audioClick.mute = true;
+        this.audioClose.mute = true;
+        this.audioSwipe.mute = true;
+        this.audioGoodCatch.mute = true;
+        this.audioBadCatch.mute = true;
+    }
+
+    unMuteAllSfx(){
+        this.audioClick.mute = false;
+        this.audioClose.mute = false;
+        this.audioSwipe.mute = false;
+        this.audioBadCatch.mute = false;
     }
 
     destroyObj(){
@@ -195,7 +228,7 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     hpDown(){
-        this.game.sound.play('catch_bad');
+        this.audioBadCatch.play();
         this.view.debby.setTexture('debby_sad');
         this.comboBreak();
         this.life -= 1;
@@ -224,7 +257,7 @@ export default class GameplaySceneController extends Phaser.Scene {
 
 
     addScore(){
-        this.game.sound.play('catch_good');
+        this.audioGoodCatch.play();
         this.score++;
         this.comboCounter++;
         this.view.score.setText('' + this.score);
@@ -262,6 +295,7 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     backToTitle = ()=>{
+        this.gameoverBgm.stop();
         this.scene.launch('TitleScene');
         this.scene.stop();
     }
@@ -287,7 +321,7 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     Restart = ()=>{
-        this.game.sound.play('audio_btn_click');
+        this.audioClick.play();
         this.AdsView = new AdsView(this);
         this.AdsView.Open();
         this.adsShowed = true;
@@ -297,6 +331,15 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.timerEvent = this.time.delayedCall(5000, this.eventCanClick, [], this);
     }
 
+    ExitGame = ()=>{
+        this.audioClick.play();
+        this.AdsView = new AdsView(this);
+        this.AdsView.Open();
+        this.AdsView.OnClickSkip(this.clickSkipExit);
+
+        this.gameoverBgm.stop();
+    }
+
     eventCanClick = ()=>{
         this.AdsView.OnClickSkip(this.clickSkipRestart);
         this.adsShowed = false;
@@ -304,40 +347,31 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     clickSkipRestart = ()=>{
-        this.game.sound.play('audio_btn_close');
+        this.audioClose.play();
         
         this.AdsView.Close();
         this.scene.restart();
 
         this.scene.stop();
-        this.scene.start('TitleScene');
+        this.scene.start('TitleScene', { music: this.music, sfx: this.sfx });
     }
 
     clickSkipExit = ()=>{
-        this.game.sound.play('audio_btn_close');
+        this.audioClose.play();
         this.adsShowed = false;
         this.AdsView.Close();
 
         this.scene.stop();
-        this.scene.start('TitleScene');
+        this.scene.start('TitleScene', { music: this.music, sfx: this.sfx });
     }
 
     clickLeaderboard = ()=>{
-        this.game.sound.play('audio_btn_click');
+        this.audioClick.play();
         this.showLeaderboard();
     }
 
     clickCloseLeaderboard = ()=>{
-        this.game.sound.play('audio_btn_close');
+        this.audioClose.play();
         this.LeaderView.Close();
-    }
-
-    ExitGame = ()=>{
-        this.game.sound.play('audio_btn_click');
-        this.AdsView = new AdsView(this);
-        this.AdsView.Open();
-        this.AdsView.OnClickSkip(this.clickSkipExit);
-
-        this.gameoverBgm.stop();
     }
 }
