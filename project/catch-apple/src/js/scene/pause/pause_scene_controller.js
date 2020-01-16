@@ -8,14 +8,24 @@ export default class PauseSceneController extends Phaser.Scene {
         super({key: 'PauseScene'});
     }
 
-    init(){
+    init = (data)=>{
+        console.log('pause scene', data)
+
         this.initPause();
+        this.initAudio();
+        this.music = data.music;
+        this.sfx = data.sfx;
+        console.log(this.sfx);
     }
 
     initPause = ()=>{
         ScreenUtility.ResetGameScreen();
         this.ScreenUtility = ScreenUtility.getInstance();
+    }
 
+    initAudio = ()=>{
+        this.audioClick = this.sound.add('audio_btn_click');
+        this.audioClose = this.sound.add('audio_btn_close');
     }
     
     create = ()=>{
@@ -24,7 +34,13 @@ export default class PauseSceneController extends Phaser.Scene {
 
         this.view.OnClickMainmenu(this.clickMainmenu);
         this.view.OnClickResume(this.clickResume);
-        this.view.OnClickClose(this.clickResume);
+        this.view.OnClickClose(this.clickClose);
+
+        if(this.sfx == true){
+            this.unMuteAllSfx();
+        }else{
+            this.muteAllSfx();
+        }
     }
 
     update = ()=>{
@@ -32,12 +48,33 @@ export default class PauseSceneController extends Phaser.Scene {
     }
 
     clickMainmenu = ()=>{
-        this.game.sound.play('audio_btn_click');
+        this.audioClick.play();
+
+        this.scene.stop('GameScene');
         this.scene.start('TitleScene');
     }
 
     clickResume = ()=>{
-        this.game.sound.play('audio_btn_click');
-        this.scene.switch('GameScene');
+        this.audioClick.play();
+
+        this.scene.resume('GameScene');
+        this.scene.stop();
+    }
+
+    clickClose = ()=>{
+        this.audioClose.play();
+
+        this.scene.resume('GameScene');
+        this.scene.stop();
+    }
+
+    muteAllSfx(){
+        this.audioClick.mute = true;
+        this.audioClose.mute = true;
+    }
+
+    unMuteAllSfx(){
+        this.audioClick.mute = false;
+        this.audioClose.mute = false;
     }
 }

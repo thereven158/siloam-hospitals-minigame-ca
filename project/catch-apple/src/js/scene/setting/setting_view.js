@@ -131,4 +131,8 @@ export default class SettingView extends Phaser.GameObjects.Container{
     OnClickMusic(event){
         this.BtnMusic.onClick(event);
     }
+
+    OnClickSfx(event){
+        this.BtnSfx.onClick(event);
+    }
 }

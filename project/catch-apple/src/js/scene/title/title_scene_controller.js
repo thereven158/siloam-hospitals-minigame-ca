@@ -14,10 +14,26 @@ export default class TitleSceneController extends Phaser.Scene {
         this.counterNext = 0;
     }
 
-    init(){
-        console.log('title screen')
+    init = (data)=>{
+        console.log('title screen', data);
 
         this.initTitle();
+        this.initAudio();
+        this.music = data.music;
+        this.sfx = data.sfx;
+
+        if(this.music == null){
+            this.music = true;
+        }
+
+        if(this.sfx == null){
+            this.sfx = true;
+        }
+    }
+
+    initAudio(){
+        this.audioClick = this.sound.add('audio_btn_click');
+        this.audioClose = this.sound.add('audio_btn_close');
     }
 
     initTitle = ()=>{
@@ -40,6 +56,16 @@ export default class TitleSceneController extends Phaser.Scene {
             
         }
         this.Bgm.play();
+
+        if(this.music == false){
+            this.Bgm.mute = true;
+        }
+
+        if(this.sfx == true){
+            this.unMuteAllSfx();
+        }else{
+            this.muteAllSfx();
+        }
     }
 
     update = ()=>{
@@ -58,6 +84,15 @@ export default class TitleSceneController extends Phaser.Scene {
         this.SettingView = new SettingView(this);
         this.SettingView.OnClickClose(this.clickCloseSetting);
         this.SettingView.OnClickMusic(this.clickMusicSetting);
+        this.SettingView.OnClickSfx(this.clickSfxSetting);
+
+        if(this.music == false){
+            this.SettingView.BtnMusic.Image.setTexture('sound_off');
+        }
+
+        if(this.sfx == false){
+            this.SettingView.BtnSfx.Image.setTexture('sound_off');
+        }
         
         this.SettingView.Open();
     }
@@ -71,32 +106,64 @@ export default class TitleSceneController extends Phaser.Scene {
 
     clickPlay = ()=>{
         this.Bgm.stop();
-        this.game.sound.play('audio_btn_click');
-        this.scene.start('GameScene');
+        this.audioClick.play();
+        this.scene.start('GameScene', { music: this.music, sfx: this.sfx });
     }
 
     clickTutorial = ()=>{
-        this.game.sound.play('audio_btn_click');
+        this.audioClick.play();
         this.showTutorial();
     }
     
 
     clickSetting = ()=>{
-        this.game.sound.play('audio_btn_click');
+        this.audioClick.play();
         this.showSetting();
     }
 
     clickLeaderboard = ()=>{
-        this.game.sound.play('audio_btn_click');
+        this.audioClick.play();
         this.showLeaderboard();
     }
 
     clickMusicSetting = ()=>{
-        
+        this.audioClick.play();
+        if(this.music == true){
+            this.music = false;
+            this.Bgm.mute = true;
+            this.SettingView.BtnMusic.Image.setTexture('sound_off');
+        }else{
+            this.music = true;
+            this.Bgm.mute = false;
+            this.SettingView.BtnMusic.Image.setTexture('sound_on');
+        }
+    }
+
+    clickSfxSetting = ()=>{
+        this.audioClick.play();
+        if(this.sfx == true){
+            this.sfx = false;
+            this.muteAllSfx();
+            this.SettingView.BtnSfx.Image.setTexture('sound_off');
+        }else{
+            this.sfx = true;
+            this.unMuteAllSfx();
+            this.SettingView.BtnSfx.Image.setTexture('sound_on');
+        }
+    }
+
+    muteAllSfx(){
+        this.audioClick.mute = true;
+        this.audioClose.mute = true;
+    }
+
+    unMuteAllSfx(){
+        this.audioClick.mute = false;
+        this.audioClose.mute = false;
     }
 
     clickNext = ()=>{
-        this.game.sound.play('audio_btn_click');
+        this.audioClick.play();
         if(this.counterNext == 0){
             this.TutorialView.SetDescription(
                 "SCORE & HEALTH POINT",
@@ -137,18 +204,17 @@ export default class TitleSceneController extends Phaser.Scene {
     clickCloseTutorial = ()=>{
         this.counterNext = 0;
         this.TutorialView.OnClickNext(this.clickNext);
-        this.TutorialView.TxtContent2.setText("");
-        this.game.sound.play('audio_btn_close');
+        this.audioClose.play();
         this.TutorialView.Close();
     }
 
     clickCloseSetting = ()=>{
-        this.game.sound.play('audio_btn_close');
+        this.audioClose.play();
         this.SettingView.Close();
     }
 
     clickCloseLeaderboard = ()=>{
-        this.game.sound.play('audio_btn_close');
+        this.audioClose.play();
         this.LeaderView.Close();
     }
 }
