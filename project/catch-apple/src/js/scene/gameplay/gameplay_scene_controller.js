@@ -210,7 +210,6 @@ export default class GameplaySceneController extends Phaser.Scene {
         else if(this.life == 2){
             this.view.life3.setTexture('unlife');
         }
-
         this.time.addEvent({ 
             delay: 1000, 
             callback: this.setTextureDebby, 
@@ -231,6 +230,15 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.view.score.setText('' + this.score);
         this.view.ComboTxt.setText('x' + this.comboCounter);
         this.view.comboTextTween();
+
+        this.view.debby.setTexture('debby_happy');
+        
+        this.time.addEvent({ 
+            delay: 1000, 
+            callback: this.setTextureDebby, 
+            callbackScope: this, 
+            loop: false 
+        });
     }
 
     comboBreak(){

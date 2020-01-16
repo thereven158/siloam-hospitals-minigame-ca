@@ -11,6 +11,7 @@ export default class LoadingGameplayController {
      loadResource(){
       this.scene.load.image('debby',this.scene.CreatePath('/images/ingame/ingame_debby.png'));
       this.scene.load.image('debby_sad',this.scene.CreatePath('/images/ingame/ingame_debby_sad.png'));
+      this.scene.load.image('debby_happy',this.scene.CreatePath('/images/ingame/ingame_debby_happy.png'));
       this.scene.load.image('basket',this.scene.CreatePath('/images/ingame/ingame_basket.png'));
       this.scene.load.image('good',this.scene.CreatePath('/images/ingame/ingame_good_01.png'));
       this.scene.load.image('bad',this.scene.CreatePath('/images/ingame/ingame_bad_01.png'));
