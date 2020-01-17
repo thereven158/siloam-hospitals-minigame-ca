@@ -182,7 +182,7 @@ export default class SpawnerController {
         this.lvlOneMidGroup.add(this.spawn2);
         this.lvlOneRightGroup.add(this.spawn3);
 
-        let interval = setInterval(() => {
+        this.interval1 = setInterval(() => {
             this.rand = Phaser.Math.Between(0, 4);
 
             if(this.levelOneLeft[countah] == "good"){
@@ -230,7 +230,7 @@ export default class SpawnerController {
             this.setVelocity(400);
 
             if(countah >= 10){
-                clearInterval(interval);
+                clearInterval(this.interval1);
                 this.rateSpawn -= 500;
                 this.LevelTwo();
             }
@@ -246,7 +246,7 @@ export default class SpawnerController {
     LevelTwo(){
         let countah = 0;
 
-        let interval = setInterval(() => {
+        this.interval2 = setInterval(() => {
             this.rand = Phaser.Math.Between(0, 4);
 
             if(this.levelTwoLeft[countah] == "good"){
@@ -293,7 +293,7 @@ export default class SpawnerController {
             this.setVelocity(400);
 
             if(countah >= 10){
-                clearInterval(interval);
+                clearInterval(this.interval2);
                 this.rateSpawn -= 500;
                 this.LevelOne();
             }
@@ -305,6 +305,11 @@ export default class SpawnerController {
         this.spawn1.setVelocityY(speed);
         this.spawn2.setVelocityY(speed);
         this.spawn3.setVelocityY(speed);
+    }
+
+    clearAllInterval(){
+        clearInterval(this.interval1);
+        clearInterval(this.interval2);
     }
     
 }

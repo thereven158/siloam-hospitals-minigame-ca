@@ -275,18 +275,17 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     comboBreak(){
-        this.comboCounter = this.comboCounter / 3;
-        this.score += this.comboCounter;
-        this.comboScore += this.comboCounter;
+        if(this.comboCounter > this.comboScore){
+            this.comboScore = this.comboCounter;
+        }
         this.comboCounter = 0;
-        this.score = Math.trunc(this.score);
-        this.comboScore = Math.trunc(this.comboScore);
-        this.view.score.setText('' + this.score);
+        // this.comboScore = Math.trunc(this.comboScore);
         this.view.ComboTxt.setText('');
     }
 
     gameOver = ()=>{
         this.IsGameStarted = false;
+        this.spawner.clearAllInterval();
 
         this.Bgm.stop();
         this.gameoverBgm.play();
@@ -307,10 +306,10 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.ResultView.OnClickExit(this.ExitGame);
         this.ResultView.OnClickLeaderboard(this.clickLeaderboard);
 
-        this.ResultView.Score.setText(this.score - this.comboScore);
-        this.ResultView.ComboScore.setText(this.comboCounter * 3);
-        this.ResultView.BonusScore.setText(this.comboScore);
-        this.ResultView.TotalScore.setText(this.score);
+        this.ResultView.Score.setText(this.score);
+        this.ResultView.ComboScore.setText(this.comboScore);
+        this.ResultView.BonusScore.setText(this.comboScore / 3);
+        this.ResultView.TotalScore.setText(this.score + (this.comboScore / 3));
     }
 
     showLeaderboard = ()=>{

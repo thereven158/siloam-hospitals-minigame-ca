@@ -49,6 +49,10 @@ export default class ResultView extends Phaser.GameObjects.Container{
         let maxHeight = contentWidth * (this.ContentContainer.height / this.ContentContainer.width);
         let contentHeight = (this.ScreenUtility.GameHeight < (maxHeight * 1.1) ) ? this.ScreenUtility.GameHeight * 0.5 : maxHeight * 0.5;
 
+        console.log(this.ScreenUtility.GameHeight);
+        console.log(maxHeight);
+        console.log(contentHeight);
+
         this.ContentContainer.displayWidth = contentWidth;
         this.ContentContainer.displayHeight = contentHeight;
         this.MainCloud.add(this.ContentContainer);
@@ -155,12 +159,12 @@ export default class ResultView extends Phaser.GameObjects.Container{
         this.TxtExit.setPosition(this.BtnExit.x * 1.1, this.BtnExit.y);
         this.MainGroup.add(this.TxtExit);
 
-        this.buttonLeaderboard = new Button(this.scene, this.ScreenUtility.CenterX,  this.BtnExit.y * 1.145, 'btn_normal');
-        this.buttonLeaderboard.setPressedTexture('btn_pressed');
-        this.MainGroup.add(this.buttonLeaderboard);
+        this.BtnLeaderboard = new Button(this.scene, this.ScreenUtility.CenterX,  this.BtnExit.y * 1.145, 'btn_normal');
+        this.BtnLeaderboard.setPressedTexture('btn_pressed');
+        this.MainGroup.add(this.BtnLeaderboard);
 
         this.IconLeaderboard = new Image (this.scene, 0, 0, 'icon_leaderboard');
-        this.IconLeaderboard.setPosition(this.buttonLeaderboard.x * 0.65, this.buttonLeaderboard.y);
+        this.IconLeaderboard.setPosition(this.BtnLeaderboard.x * 0.65, this.BtnLeaderboard.y);
         this.IconLeaderboard.setDisplayWidth(this.IconLeaderboard.displayWidth, true);
         this.MainGroup.add(this.IconLeaderboard);
 
@@ -168,8 +172,42 @@ export default class ResultView extends Phaser.GameObjects.Container{
             "LEADERBOARD", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(50);
-        this.LeaderboardTxt.setPosition(this.buttonLeaderboard.x * 1.1, this.buttonLeaderboard.y);
+        this.LeaderboardTxt.setPosition(this.BtnLeaderboard.x * 1.1, this.BtnLeaderboard.y);
         this.MainGroup.add(this.LeaderboardTxt);
+
+        if(this.ScreenUtility.GameHeight > 2000 || this.ScreenUtility.GameHeight <= 1024){
+            this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterX);
+            this.ContentContainer.setPosition(this.ScreenUtility.CenterX , 0 - this.ScreenUtility.CenterX * 0.9);
+            this.TopText.setFontSizeRS(90);
+
+            this.ScoreTxt.setPosition(this.TopText.x * 0.45, this.TopText.y * 0.75);
+            this.Score.setPosition(this.ScreenUtility.GameWidth * 0.8, this.TopText.y * 0.75);
+
+            this.ComboTxt.setPosition(this.TopText.x * 0.45, this.ScoreTxt.y * 0.75);
+            this.ComboScore.setPosition(this.ScreenUtility.GameWidth * 0.8, this.ScoreTxt.y * 0.75);
+
+            this.BonusTxt.setPosition(this.TopText.x * 0.625, this.ComboTxt.y * 0.65);
+            this.BonusScore.setPosition(this.ScreenUtility.GameWidth * 0.8, this.ComboTxt.y * 0.65);
+
+            this.TotalTxt.setPosition(this.TopText.x, this.BonusTxt.y * 0.55);
+            this.TotalTxt.setFontSizeRS(60);
+            this.TotalScore.setPosition(this.TopText.x, this.TotalTxt.y * 0.15);
+            this.TotalScore.setFontSizeRS(150);
+
+            this.BtnRetry.Image.setScale(this.ScreenUtility.ScalePercentage * 0.8);
+            this.BtnLeaderboard.Image.setScale(this.ScreenUtility.ScalePercentage * 0.8);
+            this.BtnExit.Image.setScale(this.ScreenUtility.ScalePercentage * 0.8);
+            
+            this.IconRetry.setPosition(this.BtnRetry.x * 0.75, this.BtnRetry.y);
+            this.IconRetry.setDisplayWidth(this.IconRetry.displayWidth * 0.6, true);
+
+            this.IconExit.setPosition(this.BtnExit.x * 0.75, this.BtnExit.y);
+            this.IconExit.setDisplayWidth(this.IconExit.displayWidth * 0.6, true);
+
+            this.IconLeaderboard.setPosition(this.BtnLeaderboard.x * 0.75, this.BtnLeaderboard.y);
+            this.IconLeaderboard.setDisplayWidth(this.IconLeaderboard.displayWidth, true);
+            this.LeaderboardTxt.setFontSizeRS(35);
+        }
     }
 
     Open(){
@@ -215,7 +253,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
     }
 
     OnClickLeaderboard(event){
-        this.buttonLeaderboard.onClick(event);
+        this.BtnLeaderboard.onClick(event);
     }
 
     OnClickExit(event){
