@@ -47,7 +47,11 @@ export default class TutorialView extends Phaser.GameObjects.Container{
 
         let contentWidth = (this.ScreenUtility.GameWidth * 0.7);
         let maxHeight = contentWidth * (this.ContentContainer.height / this.ContentContainer.width);
-        let contentHeight = (this.ScreenUtility.GameHeight < (maxHeight * 1.1) ) ? this.ScreenUtility.GameHeight * 0.5 : maxHeight;
+        let contentHeight = (this.ScreenUtility.GameHeight < (maxHeight) ) ? this.ScreenUtility.GameHeight * 0.8 : maxHeight;
+        
+        console.log(this.ScreenUtility.GameHeight);
+        console.log(maxHeight);
+        console.log(contentHeight);
 
         this.ContentContainer.displayWidth = contentWidth;
         this.ContentContainer.displayHeight = contentHeight;
@@ -89,12 +93,12 @@ export default class TutorialView extends Phaser.GameObjects.Container{
             "", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.TxtContent2.setPosition(this.ContentContainer.x, this.TxtContent.y * 1.2);
+        this.TxtContent2.setPosition(this.ContentContainer.x, this.TxtContent.y * 1.15);
         this.TxtContent2.setWordWrapWidth(contentWidth);
         this.MainGroup.add(this.TxtContent2);
 
         this.BtnNext = new Button (this.scene, 0, 0, 'btn_normal');
-        this.BtnNext.setPosition(this.ContentContainer.x, this.ContentContainer.y * 1.5);
+        this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.15);
         this.BtnNext.setPressedTexture('btn_pressed');
         this.BtnNext.Image.setScale(this.ScreenUtility.ScalePercentage, this.ScreenUtility.ScalePercentage);
         this.MainGroup.add(this.BtnNext);
@@ -109,6 +113,37 @@ export default class TutorialView extends Phaser.GameObjects.Container{
             .setFontSizeRS(70);
         this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
         this.MainGroup.add(this.TxtBtn);
+
+        if(this.ScreenUtility.GameHeight > 2000){
+            this.TopText.setPosition(
+                this.ContentContainer.x - this.ContentContainer.displayWidth * 0.2, 
+                this.ContentContainer.y - this.ContentContainer.displayHeight * 0.5
+            );
+            this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
+            this.ContentContainer.displayHeight = contentHeight * 0.8;
+            this.TxtContent.setWordWrapWidth(contentWidth * 0.7);
+            this.TxtContent2.setWordWrapWidth(contentWidth * 0.7);
+            this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.175);
+            this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);
+            this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
+        }else if(this.ScreenUtility.GameHeight < 1024){
+            this.TopText.setPosition(
+                this.ContentContainer.x - this.ContentContainer.displayWidth * 0.2, 
+                this.ContentContainer.y - this.ContentContainer.displayHeight * 0.5
+            );
+            this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
+            this.ContentContainer.displayHeight = contentHeight * 0.9;
+
+            this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.2);
+            this.TxtContent.setWordWrapWidth(contentWidth * 1.3);
+
+            this.TxtContent2.setPosition(this.ContentContainer.x, this.TxtContent.y * 1.2);
+            this.TxtContent2.setWordWrapWidth(contentWidth * 1.3);
+
+            this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.15);
+            this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);
+            this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
+        }
     }
 
     Open(){

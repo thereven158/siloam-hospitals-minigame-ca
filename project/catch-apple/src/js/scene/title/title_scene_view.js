@@ -90,7 +90,7 @@ export default class TitleSceneView {
             .setFontSizeRS(50);
         this.TxtLeaderboard.setPosition(this.BtnLeaderboard.x * 1.1, this.BtnLeaderboard.y);
 
-        this.BtnSetting = new Button(this.scene, this.ScreenUtility.GameWidth * 0.1, this.ScreenUtility.GameHeight * 0.1, 'btn_setting');
+        this.BtnSetting = new Button(this.scene, this.ScreenUtility.GameWidth * 0.1, this.ScreenUtility.GameHeight * 0.05, 'btn_setting');
         this.BtnSetting.setPressedTexture('btn_setting_pressed');
     }
 
