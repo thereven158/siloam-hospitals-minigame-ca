@@ -351,9 +351,6 @@ export default class GameplaySceneController extends Phaser.Scene {
         
         this.AdsView.Close();
         this.scene.restart();
-
-        this.scene.stop();
-        this.scene.start('TitleScene', { music: this.music, sfx: this.sfx });
     }
 
     clickSkipExit = ()=>{
