@@ -174,6 +174,8 @@ export default class GameplaySceneController extends Phaser.Scene {
                 this.FirstPhase();
             }else if(this.phaseTwoActive == true){
                 this.SecondPhase();
+            }else if(this.phaseThreeActive == true){
+                this.ThirdPhase();
             }
             
             
@@ -214,6 +216,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.counter++;
 
         if(this.counter == 9){
+            this.ReduceRateSpawn();
             this.counter = 0;
             this.phaseOneActive = false;
             this.phaseTwoActive = true;
@@ -254,6 +257,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.counter++;
 
         if(this.counter == 9){
+            this.ReduceRateSpawn();
             this.counter = 0;
             this.phaseTwoActive = false;
             this.phaseThreeActive = true;
@@ -294,6 +298,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.counter++;
 
         if(this.counter == 9){
+            this.ReduceRateSpawn();
             this.counter = 0;
             this.phaseTwoActive = false;
             this.phaseThreeActive = true;
@@ -308,6 +313,21 @@ export default class GameplaySceneController extends Phaser.Scene {
     AddColliderBadFood(){
         this.physics.add.collider(this.view.basket, this.bad.food, this.onHitBadFood);
         this.physics.add.collider(this.view.bottomBound, this.bad.food, this.onBadOutOffBound);
+    }
+
+    ReduceRateSpawn(){
+        this.good.fallSpeed += 50;
+        this.bad.fallSpeed += 50;
+        this.spawner.rateSpawn -= 0.2;
+
+        console.log("ratespawn: "+ this.spawner.rateSpawn);
+        console.log("speed fall:" + this.good.fallSpeed);
+
+        if(this.spawner.rateSpawn <= 1){
+            this.spawner.rateSpawn = 1;
+            this.good.fallSpeed = 750;
+            this.bad.fallSpeed = 750;
+        }
     }
 
     onHitGoodFood = (basket, food) =>{
