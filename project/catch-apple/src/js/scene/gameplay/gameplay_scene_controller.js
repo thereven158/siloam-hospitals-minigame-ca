@@ -1,10 +1,12 @@
 import GameplaySceneView from './gameplay_scene_view';
 import ScreenUtility from '../../module/screen/screen_utility';
 import SpawnerController from '../../subcontroller/spawner_controller';
-import Apple from '../../subcontroller/apple';
+import SpawnPoint from '../../subcontroller/spawn_point';
 import ResultView from '../setting/result_view';
 import AdsView from '../setting/ads_view';
 import LeaderView from '../setting/leaderboard_view';
+import GoodFood from '../../subcontroller/good_food';
+import BadFood from '../../subcontroller/bad_food';
 
 export default class GameplaySceneController extends Phaser.Scene {
 	constructor() {
@@ -40,6 +42,11 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.comboCounter = 0;
         this.comboScore = 0;
         this.adsShowed = false;
+        this.spawnTimer = 0;
+        this.counter = 0;
+        this.phaseOneActive = true;
+        this.phaseTwoActive = false;
+        this.phaseThreeActive = false;
     }
 
     initAudio = ()=>{
@@ -55,9 +62,12 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.view.onClickPause(this.clickPause);
         this.spawner = new SpawnerController(this);
         this.spawner.create();
+        this.spawnPoint = new SpawnPoint(this.scene);
+        this.spawnPoint.create();
+        this.good = new GoodFood(this);
+        this.bad = new BadFood(this);
 
-        this.physics.world.setBoundsCollision(true, true, true, false);
-        this.view.basket.setCollideWorldBounds(true);
+        this.physics.world.setBoundsCollision(true, true, true, true);
 
         var downX, upX, downY, upY, threshold = 50;
 
@@ -135,23 +145,12 @@ export default class GameplaySceneController extends Phaser.Scene {
     clickPause = ()=>{
         this.audioClick.play();
         
-        // this.scene.switch('PauseScene', { music: this.music, sfx: this.sfx });
         this.scene.launch('PauseScene', { music: this.music, sfx: this.sfx });
         this.scene.pause();
     }
 
     startGame = ()=>{
         this.IsGameStarted = true;
-
-        this.spawner.LevelOne();
-        this.physics.add.collider(this.view.basket, this.spawner.lvlOneLeftGroup, this.onHitFood1);
-        this.physics.add.collider(this.view.basket, this.spawner.lvlOneMidGroup, this.onHitFood2);
-        this.physics.add.collider(this.view.basket, this.spawner.lvlOneRightGroup, this.onHitFood3);
-
-        this.physics.add.collider(this.view.basket, this.spawner.lvlTwoLeftGroup, this.onHitFood1);
-        this.physics.add.collider(this.view.basket, this.spawner.lvlTwoMidGroup, this.onHitFood2);
-        this.physics.add.collider(this.view.basket, this.spawner.lvlTwoRightGroup, this.onHitFood3);
-
     }
 
     update(timestep, delta){
@@ -159,10 +158,6 @@ export default class GameplaySceneController extends Phaser.Scene {
             this.gameUpdate(timestep, delta);
         }
 
-        if(this.spawner.spawn1.y > this.ScreenUtility.GameHeight || this.spawner.spawn2.y > this.ScreenUtility.GameHeight){
-            this.destroyObj();
-        } 
-        
         if(this.adsShowed == true){
             this.AdsView.TxtSkip.setText(5 - this.timerEvent.getElapsedSeconds().toString().substr(0, 1));
         }
@@ -171,6 +166,167 @@ export default class GameplaySceneController extends Phaser.Scene {
     gameUpdate(timestep, delta){
         this.view.debby.x = this.view.basket.x + this.view.basket.displayWidth * 0.5;
         
+        this.spawnTimer += (1 * delta) / 1000;
+        if(this.spawnTimer > this.spawner.rateSpawn){
+            this.spawnTimer = 0;
+            
+            if(this.phaseOneActive == true){
+                this.FirstPhase();
+            }else if(this.phaseTwoActive == true){
+                this.SecondPhase();
+            }
+            
+            
+        }
+    }
+
+    FirstPhase(){
+        if(this.spawner.phaseOneL[this.counter] == 2){
+            this.good.SpawnFood(this.spawnPoint.pointLeftX, this.spawnPoint.pointY);
+            this.AddColliderGoodFood();
+        }else if(this.spawner.phaseOneL[this.counter] == 1){
+            this.bad.SpawnFood(this.spawnPoint.pointLeftX, this.spawnPoint.pointY);
+            this.AddColliderBadFood();
+        }else{
+
+        }
+
+        if(this.spawner.phaseOneM[this.counter] == 2){
+            this.good.SpawnFood(this.spawnPoint.pointMidX, this.spawnPoint.pointY);
+            this.AddColliderGoodFood();
+        }else if(this.spawner.phaseOneM[this.counter] == 1){
+            this.bad.SpawnFood(this.spawnPoint.pointMidX, this.spawnPoint.pointY);
+            this.AddColliderBadFood();
+        }else{
+
+        }
+
+        if(this.spawner.phaseOneR[this.counter] == 2){
+            this.good.SpawnFood(this.spawnPoint.pointRightX, this.spawnPoint.pointY);
+            this.AddColliderGoodFood();
+        }else if(this.spawner.phaseOneR[this.counter] == 1){
+            this.bad.SpawnFood(this.spawnPoint.pointRightX, this.spawnPoint.pointY);
+            this.AddColliderBadFood();
+        }else{
+
+        }
+        
+        this.counter++;
+
+        if(this.counter == 9){
+            this.counter = 0;
+            this.phaseOneActive = false;
+            this.phaseTwoActive = true;
+        }
+    }
+
+    SecondPhase(){
+        if(this.spawner.phaseTwoL[this.counter] == 2){
+            this.good.SpawnFood(this.spawnPoint.pointLeftX, this.spawnPoint.pointY);
+            this.AddColliderGoodFood();
+        }else if(this.spawner.phaseTwoL[this.counter] == 1){
+            this.bad.SpawnFood(this.spawnPoint.pointLeftX, this.spawnPoint.pointY);
+            this.AddColliderBadFood();
+        }else{
+
+        }
+
+        if(this.spawner.phaseTwoM[this.counter] == 2){
+            this.good.SpawnFood(this.spawnPoint.pointMidX, this.spawnPoint.pointY);
+            this.AddColliderGoodFood();
+        }else if(this.spawner.phaseTwoM[this.counter] == 1){
+            this.bad.SpawnFood(this.spawnPoint.pointMidX, this.spawnPoint.pointY);
+            this.AddColliderBadFood();
+        }else{
+
+        }
+
+        if(this.spawner.phaseTwoR[this.counter] == 2){
+            this.good.SpawnFood(this.spawnPoint.pointRightX, this.spawnPoint.pointY);
+            this.AddColliderGoodFood();
+        }else if(this.spawner.phaseTwoR[this.counter] == 1){
+            this.bad.SpawnFood(this.spawnPoint.pointRightX, this.spawnPoint.pointY);
+            this.AddColliderBadFood();
+        }else{
+
+        }
+        
+        this.counter++;
+
+        if(this.counter == 9){
+            this.counter = 0;
+            this.phaseTwoActive = false;
+            this.phaseThreeActive = true;
+        }
+    }
+
+    ThirdPhase(){
+        if(this.spawner.phaseThreeL[this.counter] == 2){
+            this.good.SpawnFood(this.spawnPoint.pointLeftX, this.spawnPoint.pointY);
+            this.AddColliderGoodFood();
+        }else if(this.spawner.phaseThreeL[this.counter] == 1){
+            this.bad.SpawnFood(this.spawnPoint.pointLeftX, this.spawnPoint.pointY);
+            this.AddColliderBadFood();
+        }else{
+
+        }
+
+        if(this.spawner.phaseThreeM[this.counter] == 2){
+            this.good.SpawnFood(this.spawnPoint.pointMidX, this.spawnPoint.pointY);
+            this.AddColliderGoodFood();
+        }else if(this.spawner.phaseThreeM[this.counter] == 1){
+            this.bad.SpawnFood(this.spawnPoint.pointMidX, this.spawnPoint.pointY);
+            this.AddColliderBadFood();
+        }else{
+
+        }
+
+        if(this.spawner.phaseThreeR[this.counter] == 2){
+            this.good.SpawnFood(this.spawnPoint.pointRightX, this.spawnPoint.pointY);
+            this.AddColliderGoodFood();
+        }else if(this.spawner.phaseThreeR[this.counter] == 1){
+            this.bad.SpawnFood(this.spawnPoint.pointRightX, this.spawnPoint.pointY);
+            this.AddColliderBadFood();
+        }else{
+
+        }
+        
+        this.counter++;
+
+        if(this.counter == 9){
+            this.counter = 0;
+            this.phaseTwoActive = false;
+            this.phaseThreeActive = true;
+        }
+    }
+
+    AddColliderGoodFood(){
+        this.physics.add.collider(this.view.basket, this.good.fruit, this.onHitGoodFood);
+        this.physics.add.collider(this.view.bottomBound, this.good.fruit, this.onGoodOutOffBound);
+    }
+
+    AddColliderBadFood(){
+        this.physics.add.collider(this.view.basket, this.bad.food, this.onHitBadFood);
+        this.physics.add.collider(this.view.bottomBound, this.bad.food, this.onBadOutOffBound);
+    }
+
+    onHitGoodFood = (basket, food) =>{
+        food.destroy();
+        this.addScore();
+    }
+
+    onHitBadFood = (basket, food) =>{
+        food.destroy();
+        this.hpDown();
+    }
+
+    onGoodOutOffBound = (worldBound, food) =>{
+        food.destroy();
+        this.hpDown();
+    }
+
+    onBadOutOffBound = (worldBound, food) =>{
+        food.destroy();
     }
 
     muteAllSfx(){
@@ -186,45 +342,6 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.audioClose.mute = false;
         this.audioSwipe.mute = false;
         this.audioBadCatch.mute = false;
-    }
-
-    destroyObj(){
-        this.spawner.spawn1.destroy();
-        this.spawner.spawn2.destroy();
-        this.spawner.spawn3.destroy();
-    }
-
-    onHitFood1 = (basket, food) =>{
-        if(this.spawner.spawn1.texture.key == "good" || this.spawner.spawn1.texture.key == "good2" || this.spawner.spawn1.texture.key == "good3" || this.spawner.spawn1.texture.key == "good4" || this.spawner.spawn1.texture.key == "good5"){
-            this.addScore();
-            
-        }else if(this.spawner.spawn1.texture.key == "bad" || this.spawner.spawn1.texture.key == "bad2" || this.spawner.spawn1.texture.key == "bad3" || this.spawner.spawn1.texture.key == "bad4" || this.spawner.spawn1.texture.key == "bad5"){
-            this.hpDown();
-        }
-
-        food.destroy();
-    }
-
-    onHitFood2 = (basket, food) =>{
-        if(this.spawner.spawn2.texture.key == "good" || this.spawner.spawn2.texture.key == "good2" || this.spawner.spawn2.texture.key == "good3" || this.spawner.spawn2.texture.key == "good4" || this.spawner.spawn2.texture.key == "good5"){
-            this.addScore();
-            
-        }else if(this.spawner.spawn2.texture.key == "bad" || this.spawner.spawn2.texture.key == "bad2" || this.spawner.spawn2.texture.key == "bad3" || this.spawner.spawn2.texture.key == "bad4" || this.spawner.spawn2.texture.key == "bad5"){
-            this.hpDown();
-        }
-
-        food.destroy();
-    }
-
-    onHitFood3 = (basket, food) =>{
-        if(this.spawner.spawn3.texture.key == "good" || this.spawner.spawn3.texture.key == "good2" || this.spawner.spawn3.texture.key == "good3" || this.spawner.spawn3.texture.key == "good4" || this.spawner.spawn3.texture.key == "good5"){
-            this.addScore();
-            
-        }else if(this.spawner.spawn3.texture.key == "bad" || this.spawner.spawn3.texture.key == "bad2" || this.spawner.spawn3.texture.key == "bad3" || this.spawner.spawn3.texture.key == "bad4" || this.spawner.spawn3.texture.key == "bad5"){
-            this.hpDown();
-        }
-
-        food.destroy();
     }
 
     hpDown(){
@@ -285,7 +402,7 @@ export default class GameplaySceneController extends Phaser.Scene {
 
     gameOver = ()=>{
         this.IsGameStarted = false;
-        this.spawner.clearAllInterval();
+        this.physics.world.pause();
 
         this.Bgm.stop();
         this.gameoverBgm.play();
@@ -308,8 +425,8 @@ export default class GameplaySceneController extends Phaser.Scene {
 
         this.ResultView.Score.setText(this.score);
         this.ResultView.ComboScore.setText(this.comboScore);
-        this.ResultView.BonusScore.setText(this.comboScore / 3);
-        this.ResultView.TotalScore.setText(this.score + (this.comboScore / 3));
+        this.ResultView.BonusScore.setText(Math.floor(this.comboScore / 3));
+        this.ResultView.TotalScore.setText(Math.floor(this.score + (this.comboScore / 3)));
     }
 
     showLeaderboard = ()=>{

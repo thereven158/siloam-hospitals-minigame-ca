@@ -34,6 +34,13 @@ export default class GameplaySceneView {
         this.basket.displayHeight = this.basket.displayWidth * (this.basket.height / this.basket.width);
         this.basket.setDepth(2);
 
+        this.bottomBound = this.scene.physics.add.image(this.ScreenUtility.CenterX, 
+          this.ScreenUtility.GameHeight * 1.05, 
+          'bottom_bound').setImmovable();
+        this.bottomBound.displayWidth = this.ScreenUtility.GameWidth;
+        this.bottomBound.displayHeight = this.basket.displayWidth * (this.basket.height / this.basket.width);
+        this.bottomBound.setDepth(2);
+
         this.debby = new Image(this.scene, 0, 0, 'debby');
         this.debby.setPosition(this.basket.x * 1.25, this.basket.y * 1.01);
         this.debby.setDisplayWidth(this.ScreenUtility.GameWidth * 0.1, true);

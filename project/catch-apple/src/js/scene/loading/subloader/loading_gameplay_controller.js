@@ -23,6 +23,7 @@ export default class LoadingGameplayController {
       this.scene.load.image('bad4',this.scene.CreatePath('/images/ingame/ingame_bad_04.png'));
       this.scene.load.image('good5',this.scene.CreatePath('/images/ingame/ingame_good_05.png'));
       this.scene.load.image('bad5',this.scene.CreatePath('/images/ingame/ingame_bad_05.png'));
+      this.scene.load.image('bottom_bound',this.scene.CreatePath('/images/ingame/bottom_bound.png'));
 
       this.scene.load.image('kosong',this.scene.CreatePath('/images/ingame/trans.png'));
 
