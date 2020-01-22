@@ -13,6 +13,7 @@ export default class GoodFood {
 
     InitData(){
         this.goodStuff = [ 'good', 'good2', 'good3', 'good4', 'good5'];
+        this.fallSpeed = 500;
     }
 
     SpawnFood(x, y){
@@ -20,7 +21,7 @@ export default class GoodFood {
         this.fruit = this.scene.physics.add.image(x, y, this.goodStuff[this.rand]);
         this.fruit.displayWidth = this.ScreenUtility.GameWidth * 0.15;
         this.fruit.displayHeight = this.fruit.displayWidth;
-        this.SetFallingSpeed(500);
+        this.SetFallingSpeed(this.fallSpeed);
     }
 
     RandomTexture(){
