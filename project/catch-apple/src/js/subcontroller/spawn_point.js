@@ -10,13 +10,13 @@ export default class SpawnPoint {
     }
 
     create(){
-        this.point1X = this.ScreenUtility.GameWidth * 0.5 * 0.5;
+        this.pointLeftX = this.ScreenUtility.GameWidth * 0.5 * 0.5;
 
-        this.point1Y = 0;
+        this.pointY = 0;
         
-        this.point2X = this.ScreenUtility.CenterX;
+        this.pointMidX = this.ScreenUtility.CenterX;
 
-        this.point3X = this.ScreenUtility.CenterX + this.point1X;
+        this.pointRightX = this.ScreenUtility.CenterX + this.pointLeftX;
     }
 
 }
