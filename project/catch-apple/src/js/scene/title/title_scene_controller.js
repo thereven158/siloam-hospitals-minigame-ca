@@ -5,8 +5,6 @@ import TutorialView from '../setting/tutorial_view';
 import SettingView from '../setting/setting_view';
 import LeaderView from '../setting/leaderboard_view';
 
-import ResultView from '../setting/result_view';
-
 export default class TitleSceneController extends Phaser.Scene {
 	constructor() {
         super({key: 'TitleScene'});
