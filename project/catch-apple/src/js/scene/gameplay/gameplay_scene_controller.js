@@ -424,6 +424,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.IsGameStarted = false;
         this.physics.world.pause();
 
+        this.input.removeAllListeners();
         this.Bgm.stop();
         this.gameoverBgm.play();
 
