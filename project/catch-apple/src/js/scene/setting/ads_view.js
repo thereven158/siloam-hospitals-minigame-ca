@@ -45,9 +45,9 @@ export default class AdsView extends Phaser.GameObjects.Container{
 
         this.ContentContainer = new Image(this.scene, this.ScreenUtility.CenterX , this.ScreenUtility.CenterY, 'bg_white');
 
-        let contentWidth = (this.ScreenUtility.GameWidth * 0.7);
+        let contentWidth = (this.ScreenUtility.GameWidth * 0.9);
         let maxHeight = contentWidth * (this.ContentContainer.height / this.ContentContainer.width);
-        let contentHeight = (this.ScreenUtility.GameHeight < (maxHeight * 1.1) ) ? this.ScreenUtility.GameHeight * 0.7 : maxHeight;
+        let contentHeight = (this.ScreenUtility.GameHeight < (maxHeight * 1.1) ) ? this.ScreenUtility.GameHeight * 0.7 : maxHeight * 0.6;
 
         this.ContentContainer.displayWidth = contentWidth;
         this.ContentContainer.displayHeight = contentHeight;
@@ -61,7 +61,7 @@ export default class AdsView extends Phaser.GameObjects.Container{
         this.MainGroup.add(this.TxtTop);
 
         this.BtnSkip = new Button (this.scene, 0, 0, 'btn_skip');
-        this.BtnSkip.setPosition(this.ContentContainer.displayWidth * 1.025, this.TxtTop.y);
+        this.BtnSkip.setPosition(this.ContentContainer.x + this.ContentContainer.displayWidth * 0.35, this.TxtTop.y);
         this.BtnSkip.IsEnabled = false;
         this.MainGroup.add(this.BtnSkip);
 
@@ -72,10 +72,18 @@ export default class AdsView extends Phaser.GameObjects.Container{
         this.TxtSkip.setPosition(this.BtnSkip.x * 0.95, this.BtnSkip.y);
         this.MainGroup.add(this.TxtSkip);
 
-        this.VideoAds = this.scene.add.video(this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'cusotm');
-        this.VideoAds.setDisplaySize(this.ContentContainer.displayWidth, this.ContentContainer.displayHeight * 0.7);
+        this.VideoAds = this.scene.add.video(this.ContentContainer.x, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.2, 'cusotm');
+        this.VideoAds.setDisplaySize(this.ContentContainer.displayWidth * 0.925, this.ContentContainer.displayHeight * 0.5);
         this.VideoAds.play(true);
         this.MainGroup.add(this.VideoAds);
+
+        this.ContentTxt = new Text(this.scene, 0, 0, 
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
+            { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
+            .setFontSizeRS(40);
+        this.ContentTxt.setPosition(this.VideoAds.x, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.25);
+        this.ContentTxt.setWordWrapWidth(this.ContentContainer.displayWidth);
+        this.MainGroup.add(this.ContentTxt);
 
     }
 
