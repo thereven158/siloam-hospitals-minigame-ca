@@ -144,6 +144,7 @@ export default class GameplaySceneController extends Phaser.Scene {
 
     clickPause = ()=>{
         this.audioClick.play();
+        this.Bgm.pause();
         
         this.scene.launch('PauseScene', { music: this.music, sfx: this.sfx });
         this.scene.pause();
@@ -160,6 +161,10 @@ export default class GameplaySceneController extends Phaser.Scene {
 
         if(this.adsShowed == true){
             this.AdsView.TxtSkip.setText(5 - this.timerEvent.getElapsedSeconds().toString().substr(0, 1));
+        }
+
+        if(this.scene.isPaused() == false){
+            this.Bgm.resume();
         }
     }
 
