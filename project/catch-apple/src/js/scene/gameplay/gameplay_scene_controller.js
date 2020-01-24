@@ -170,15 +170,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         if(this.spawnTimer > this.spawner.rateSpawn){
             this.spawnTimer = 0;
             
-            if(this.phaseOneActive == true){
-                this.FirstPhase();
-            }else if(this.phaseTwoActive == true){
-                this.SecondPhase();
-            }else if(this.phaseThreeActive == true){
-                this.ThirdPhase();
-            }
-            
-            
+            this.FirstPhase();
         }
     }
 
@@ -218,90 +210,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         if(this.counter == 9){
             this.ReduceRateSpawn();
             this.counter = 0;
-            this.phaseOneActive = false;
-            this.phaseTwoActive = true;
-        }
-    }
-
-    SecondPhase(){
-        if(this.spawner.phaseTwoL[this.counter] == 2){
-            this.good.SpawnFood(this.spawnPoint.pointLeftX, this.spawnPoint.pointY);
-            this.AddColliderGoodFood();
-        }else if(this.spawner.phaseTwoL[this.counter] == 1){
-            this.bad.SpawnFood(this.spawnPoint.pointLeftX, this.spawnPoint.pointY);
-            this.AddColliderBadFood();
-        }else{
-
-        }
-
-        if(this.spawner.phaseTwoM[this.counter] == 2){
-            this.good.SpawnFood(this.spawnPoint.pointMidX, this.spawnPoint.pointY);
-            this.AddColliderGoodFood();
-        }else if(this.spawner.phaseTwoM[this.counter] == 1){
-            this.bad.SpawnFood(this.spawnPoint.pointMidX, this.spawnPoint.pointY);
-            this.AddColliderBadFood();
-        }else{
-
-        }
-
-        if(this.spawner.phaseTwoR[this.counter] == 2){
-            this.good.SpawnFood(this.spawnPoint.pointRightX, this.spawnPoint.pointY);
-            this.AddColliderGoodFood();
-        }else if(this.spawner.phaseTwoR[this.counter] == 1){
-            this.bad.SpawnFood(this.spawnPoint.pointRightX, this.spawnPoint.pointY);
-            this.AddColliderBadFood();
-        }else{
-
-        }
-        
-        this.counter++;
-
-        if(this.counter == 9){
-            this.ReduceRateSpawn();
-            this.counter = 0;
-            this.phaseTwoActive = false;
-            this.phaseThreeActive = true;
-        }
-    }
-
-    ThirdPhase(){
-        if(this.spawner.phaseThreeL[this.counter] == 2){
-            this.good.SpawnFood(this.spawnPoint.pointLeftX, this.spawnPoint.pointY);
-            this.AddColliderGoodFood();
-        }else if(this.spawner.phaseThreeL[this.counter] == 1){
-            this.bad.SpawnFood(this.spawnPoint.pointLeftX, this.spawnPoint.pointY);
-            this.AddColliderBadFood();
-        }else{
-
-        }
-
-        if(this.spawner.phaseThreeM[this.counter] == 2){
-            this.good.SpawnFood(this.spawnPoint.pointMidX, this.spawnPoint.pointY);
-            this.AddColliderGoodFood();
-        }else if(this.spawner.phaseThreeM[this.counter] == 1){
-            this.bad.SpawnFood(this.spawnPoint.pointMidX, this.spawnPoint.pointY);
-            this.AddColliderBadFood();
-        }else{
-
-        }
-
-        if(this.spawner.phaseThreeR[this.counter] == 2){
-            this.good.SpawnFood(this.spawnPoint.pointRightX, this.spawnPoint.pointY);
-            this.AddColliderGoodFood();
-        }else if(this.spawner.phaseThreeR[this.counter] == 1){
-            this.bad.SpawnFood(this.spawnPoint.pointRightX, this.spawnPoint.pointY);
-            this.AddColliderBadFood();
-        }else{
-
-        }
-        
-        this.counter++;
-
-        if(this.counter == 9){
-            this.ReduceRateSpawn();
-            this.counter = 0;
-            this.phaseTwoActive = false;
-            this.phaseThreeActive = true;
+            this.spawner.GenerateRandomPattern();
         }
     }
 
