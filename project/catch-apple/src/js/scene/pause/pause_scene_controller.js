@@ -15,7 +15,6 @@ export default class PauseSceneController extends Phaser.Scene {
         this.initAudio();
         this.music = data.music;
         this.sfx = data.sfx;
-        console.log(this.sfx);
     }
 
     initPause = ()=>{
@@ -51,7 +50,7 @@ export default class PauseSceneController extends Phaser.Scene {
         this.audioClick.play();
 
         this.scene.stop('GameScene');
-        this.scene.start('TitleScene');
+        this.scene.start('TitleScene', { music: this.music, sfx: this.sfx });
     }
 
     clickResume = ()=>{
