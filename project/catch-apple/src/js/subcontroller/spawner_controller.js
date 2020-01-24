@@ -16,43 +16,27 @@ export default class SpawnerController {
         this.rateSpawn = 2; // per second
         this.spawnTimer = 0;
 
-        this.GenerateRandomPattern();
-        // this.InitPhaseTwo();
-        // this.InitPhaseThree();
+        this.InitPhaseOne();
+        this.InitPhaseTwo();
+        this.InitPhaseThree();
     }
 
     InitPhaseOne(){
-        console.log("phase1");
         this.phaseOneL = [2, 1, 0, 0, 2, 1, 2, 0, 0, 2];
         this.phaseOneM = [0, 2, 0, 2, 0, 0, 0, 1, 0, 1];
         this.phaseOneR = [0, 0, 1, 0, 1, 2, 0, 0, 2, 0];
     }
 
     InitPhaseTwo(){
-        console.log("phase2");
-        this.phaseOneL = [0, 1, 0, 0, 2, 0, 0, 2, 1, 2];
-        this.phaseOneM = [2, 0, 0, 2, 1, 1, 0, 0, 0, 0];
-        this.phaseOneR = [0, 0, 2, 1, 0, 0, 2, 1, 2, 0];
+        this.phaseTwoL = [0, 1, 0, 0, 2, 0, 0, 2, 1, 2];
+        this.phaseTwoM = [2, 0, 0, 2, 1, 1, 0, 0, 0, 0];
+        this.phaseTwoR = [0, 0, 2, 1, 0, 0, 2, 1, 2, 0];
     }
 
     InitPhaseThree(){
-        console.log("phase3");
-        this.phaseOneL = [2, 0, 2, 0, 1, 0, 2, 0, 2, 0];
-        this.phaseOneM = [0, 2, 1, 0, 0, 0, 0, 2, 1, 0];
-        this.phaseOneR = [1, 0, 0, 1, 2, 2, 0, 0, 0, 1];
-    }
-
-    GenerateRandomPattern(){
-        console.log("generating");
-        this.randomNum = Phaser.Math.Between(0, 2);
-
-        if(this.randomNum == 0){
-            this.InitPhaseOne();
-        }else if(this.randomNum == 1){
-            this.InitPhaseTwo();
-        }else{
-            this.InitPhaseThree();
-        }
+        this.phaseThreeL = [2, 0, 2, 0, 1, 0, 2, 0, 2, 0];
+        this.phaseThreeM = [0, 2, 1, 0, 0, 0, 0, 2, 1, 0];
+        this.phaseThreeR = [1, 0, 0, 1, 2, 2, 0, 0, 0, 1];
     }
 
 }
