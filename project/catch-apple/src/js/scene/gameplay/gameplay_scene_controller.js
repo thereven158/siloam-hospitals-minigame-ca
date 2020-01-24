@@ -242,13 +242,17 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     onHitGoodFood = (basket, food) =>{
-        food.destroy();
-        this.addScore();
+        if(food.body.touching.down == true){
+            food.destroy();
+            this.addScore();
+        }
     }
 
     onHitBadFood = (basket, food) =>{
-        food.destroy();
-        this.hpDown();
+        if(food.body.touching.down == true){
+            food.destroy();
+            this.hpDown();  
+        }
     }
 
     onGoodOutOffBound = (worldBound, food) =>{
