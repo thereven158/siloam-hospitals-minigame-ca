@@ -1,6 +1,7 @@
 import LoaderController from '../../module/loader/loader_controller';
 import ScreenUtility from '../../module/screen/screen_utility';
 import AudioController from '../../module/audio/audio_controller';
+import ApiController from '../../module/api/api_controller';
 
 
 export default class BootSceneController extends Phaser.Scene{
@@ -24,6 +25,8 @@ export default class BootSceneController extends Phaser.Scene{
     preload(){
         Promise.all([
             LoaderController.getInstance().init(),
+            ApiController.getInstance().init(1),
+            ApiController.getInstance().AuthLogin(),
             LoaderController.getInstance()
 				.loadFonts([
 					{

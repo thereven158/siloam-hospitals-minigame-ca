@@ -8,6 +8,8 @@ import LeaderView from '../setting/leaderboard_view';
 import GoodFood from '../../subcontroller/good_food';
 import BadFood from '../../subcontroller/bad_food';
 
+import ApiController from '../../module/api/api_controller';
+
 export default class GameplaySceneController extends Phaser.Scene {
 	constructor() {
         super({key: 'GameScene'});
@@ -58,6 +60,7 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     create = ()=>{        
+        this.api = ApiController.getInstance();
         this.view = new GameplaySceneView(this).create();
         this.view.onClickPause(this.clickPause);
         this.spawner = new SpawnerController(this);
@@ -342,6 +345,11 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     gameOver = ()=>{
+        this.calculatingScore = Math.floor(this.score + (this.comboScore / 3));
+        this.api.Score(this.calculatingScore).then(() => {
+            console.log('send score');
+        });
+
         this.IsGameStarted = false;
         this.physics.world.pause();
 
@@ -376,6 +384,12 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.LeaderView.OnClickClose(this.clickCloseLeaderboard);
         
         this.LeaderView.Open();
+
+        this.api.Leaderboard().then(data => {
+            console.log(data.data.data);
+            this.LeaderView.Fill(data.data.data, data.myRank);
+        });
+
     }
 
     Restart = ()=>{
