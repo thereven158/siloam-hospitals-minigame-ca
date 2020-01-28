@@ -4,6 +4,7 @@ import TitleSceneView from './title_scene_view';
 import TutorialView from '../setting/tutorial_view';
 import SettingView from '../setting/setting_view';
 import LeaderView from '../setting/leaderboard_view';
+import ApiController from '../../module/api/api_controller';
 
 export default class TitleSceneController extends Phaser.Scene {
 	constructor() {
@@ -42,11 +43,12 @@ export default class TitleSceneController extends Phaser.Scene {
     }
     
     create = ()=>{
+        this.api = ApiController.getInstance();
         this.view = new TitleSceneView(this).create();
         this.view.OnClickPlay(this.clickPlay);
         this.view.OnCLickTutorial(this.clickTutorial);
         this.view.OnCLickSetting(this.clickSetting);
-        // this.view.OnClickLeaderboard(this.clickLeaderboard);
+        this.view.OnClickLeaderboard(this.clickLeaderboard);
 
         if(this.Bgm == null){
             this.Bgm = this.sound.add('menu_music',{
@@ -102,6 +104,11 @@ export default class TitleSceneController extends Phaser.Scene {
         this.LeaderView.OnClickClose(this.clickCloseLeaderboard);
         
         this.LeaderView.Open();
+
+        this.api.Leaderboard().then(data => {
+            console.log(data.data.data);
+            this.LeaderView.Fill(data.data.data, data.myRank);
+        });
     }
 
     clickPlay = ()=>{

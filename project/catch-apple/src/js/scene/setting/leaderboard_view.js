@@ -13,17 +13,36 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         /** @type {ScreenUtility}  */
         this.ScreenUtility = scene.ScreenUtility;
 
-		scene.add.existing(this);  
+        scene.add.existing(this);  
+        
+        // this.centerX = this.ScreenUtility.CenterX;
+        // this.centerY = this.ScreenUtility.CenterY;
+        // this.width = this.ScreenUtility.Width;
+        // this.height = this.ScreenUtility.Height;
+        // this.dwidth = this.ScreenUtility.DefaultWidth;
+        // this.dheight = this.ScreenUtility.DefaultHeight;
+        // this.scale = this.ScreenUtility.ScalePercentage;
+
 
         this.InitView();
     }
 
-    InitView(){
-        this.topThreeName = ["Yoga", "Putra", "Nugraha"];
-        this.topTenName = ["Diki", "Ari", "Dobleh", "Adit", "Kabur", "Satria", "Bangbang"];
+    SetResponsiveScale = (size) => {
+		if ((this.width / this.height) <= 9/16) {
+			return size*(this.width / this.dwidth);
+		}
+		else {
+			return size*(this.height / this.dheight);
+		}
+	}
 
-        this.topThreeScore = [999, 998, 997];
-        this.topTenScore = [900, 800, 700, 600, 500, 400, 300];
+
+    InitView(){
+        this.tempY = 1.6;
+
+        this.topName = [];
+
+        this.topScore = [];
 
         this.setDepth(10);
 
@@ -93,7 +112,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
             "NAME", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.TxtName.setPosition(this.TxtRank.x * 1.5, this.TxtRank.y);
+        this.TxtName.setPosition(this.ContentContainer.x, this.TxtRank.y);
         this.MainGroup.add(this.TxtName);
 
         this.TxtScore = new Text(this.scene, 0, 0, 
@@ -102,90 +121,107 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
             .setFontSizeRS(40);
         this.TxtScore.setPosition(this.ContentContainer.displayWidth * 1.05, this.TxtRank.y);
         this.MainGroup.add(this.TxtScore);
+        
+        // this.CreateCurrentBoxRank();
+    }
 
-        let temp1 = 1.6;
-        for(let i = 0; i < 3; i++){
-            this.topThree = new Image(this.scene, 0, 0, 'bg_top3');
-            this.topThree.setPosition(this.BannerImage.x, this.BannerImage.y * temp1);
-            this.MainGroup.add(this.topThree);
+    CreateBox(index, myRank){
+        this.boxPlayer = new Image(this.scene, 0, 0, 'bg_non_top3');
+        this.boxPlayer.setPosition(this.BannerImage.x, this.BannerImage.y * this.tempY);
+        this.MainGroup.add(this.boxPlayer);
 
-            this.Number = new Text(this.scene, 0, 0, 
-                "", 
-                { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
-                .setFontSizeRS(40);
-            this.Number.setPosition(this.TxtRank.x, this.topThree.y);
-            this.Number.setText(i + 1);
-            this.MainGroup.add(this.Number);
+        this.Number = new Text(this.scene, 0, 0, 
+            "", 
+            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
+            .setFontSizeRS(40);
+        this.Number.setPosition(this.boxPlayer.x * 0.5, this.boxPlayer.y);
+        this.Number.setText(index + 1);
+        this.MainGroup.add(this.Number);
 
-            this.NumberScore = new Text(this.scene, 0, 0, 
-                "", 
-                { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
-                .setFontSizeRS(40);
-            this.NumberScore.setPosition(this.TxtScore.x, this.topThree.y);
-            this.NumberScore.setText(this.topThreeScore[i]);
-            this.MainGroup.add(this.NumberScore);
+        this.TopTenName = new Text(this.scene, 0, 0, 
+            "-", 
+            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
+            .setFontSizeRS(40);
+        this.TopTenName.setPosition(this.boxPlayer.x, this.boxPlayer.y);
+        this.TopTenName.setText(this.topName[index]);
+        this.MainGroup.add(this.TopTenName);
 
-            this.LeadNameTop3 = new Text(this.scene, 0, 0, 
-                "", 
-                { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
-                .setFontSizeRS(40);
-            this.LeadNameTop3.setPosition(this.topThree.x, this.topThree.y);
-            this.LeadNameTop3.setText(this.topThreeName[i]);
-            this.MainGroup.add(this.LeadNameTop3);
+        this.TopTenScore = new Text(this.scene, 0, 0, 
+            "0", 
+            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
+            .setFontSizeRS(40);
+        this.TopTenScore.setPosition(this.boxPlayer.x * 1.45, this.boxPlayer.y);
+        this.TopTenScore.setText(this.topScore[index]);
+        this.MainGroup.add(this.TopTenScore);
 
-            temp1 += 0.25;
+        if(index < 3){
+            this.boxPlayer.setTexture('bg_top3');
         }
-
-        let temp2 = 2.35;
-        for(let i = 0; i < 7; i++){
-            if(i == 2){
-                this.topTen = new Image(this.scene, 0, 0, 'bg_current');
-                this.topTen.setPosition(this.BannerImage.x, this.BannerImage.y * temp2);
-                this.MainGroup.add(this.topTen);
-            } else{
-                this.topTen = new Image(this.scene, 0, 0, 'bg_non_top3');
-                this.topTen.setPosition(this.BannerImage.x, this.BannerImage.y * temp2);
-                this.MainGroup.add(this.topTen);
-            }
-                this.Number = new Text(this.scene, 0, 0, 
-                    "", 
-                    { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
-                    .setFontSizeRS(40);
-                this.Number.setPosition(this.TxtRank.x, this.topTen.y);
-                this.Number.setText(i + 4);
-                this.MainGroup.add(this.Number);
-
-                this.NumberScore = new Text(this.scene, 0, 0, 
-                    "", 
-                    { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
-                    .setFontSizeRS(40);
-                this.NumberScore.setPosition(this.TxtScore.x, this.topTen.y);
-                this.NumberScore.setText(this.topTenScore[i]);
-                this.MainGroup.add(this.NumberScore);
-
-                this.LeadNameTop10 = new Text(this.scene, 0, 0, 
-                    "", 
-                    { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
-                    .setFontSizeRS(40);
-                this.LeadNameTop10.setPosition(this.topTen.x, this.topTen.y);
-                this.LeadNameTop10.setText(this.topTenName[i]);
-                this.MainGroup.add(this.LeadNameTop10);
-
-            temp2 += 0.25;
+        if(index == myRank){
+            this.boxPlayer.setTexture('bg_current_rank');
         }
+        
+        this.tempY += 0.25;
+    }
 
-        this.CurrentRank = new Image(this.scene, 0, 0, 'bg_current_big');
+
+    CreateCurrentBoxRank(myName, myRank, myScore){
+        this.CurrentRank = new Image(this.scene, 0, 0, 'bg_current__rank_big');
         this.CurrentRank.setPosition(this.BannerImage.x, this.ContentContainer.displayHeight * 1.1);
         this.MainGroup.add(this.CurrentRank);
 
         this.YourName = new Text(this.scene, 0, 0, 
-            "DOBLEH", 
+            "-", 
             { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(70);
         this.YourName.setPosition(this.CurrentRank.x, this.CurrentRank.y);
+        this.YourName.setText(myName);
         this.MainGroup.add(this.YourName);
-        
+
+        this.YourRank = new Text(this.scene, 0, 0, 
+            "0", 
+            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
+            .setFontSizeRS(70);
+        this.YourRank.setPosition(this.CurrentRank.x * 0.5, this.CurrentRank.y);
+        this.YourRank.setText(myRank + 1);
+        this.MainGroup.add(this.YourRank);
+
+        this.YourScore = new Text(this.scene, 0, 0, 
+            "0", 
+            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
+            .setFontSizeRS(70);
+        this.YourScore.setPosition(this.CurrentRank.x * 1.5, this.CurrentRank.y);
+        this.YourScore.setText(myScore);
+        this.MainGroup.add(this.YourScore);
     }
+
+
+    Fill = (playerData, playerRank) => {
+        var myRank = playerRank.rank - 1;
+        var myName = window.localStorage.getItem("myName");
+        var myScore = playerRank.score;
+
+        console.log(myName);
+
+        for(let i = 0; i < 10; i++){
+            this.topName[i] = playerData[i].userName;
+            this.topScore[i] = playerData[i].score;
+            this.CreateBox(i, myRank);
+        }
+
+        this.CreateCurrentBoxRank(myName, myRank, myScore);
+        
+		// if (rank == -1) {
+		// 	innerboard.playerBox.rank.text = '-';
+		// }
+		// else {
+		// 	innerboard.playerBox.rank.text = playerRank.rank;
+		// 	innerboard.boxes[rank].box.setTexture('bg_current');
+		// }
+		// innerboard.playerBox.name.text = playerData[rank].userName;
+		// innerboard.playerBox.score.text = playerRank.score;
+	}
+
 
     Open(){
         this.setVisible(true);
