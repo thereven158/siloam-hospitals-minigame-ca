@@ -174,7 +174,7 @@ export default class TitleSceneController extends Phaser.Scene {
         if(this.counterNext == 0){
             this.TutorialView.SetDescription(
                 "SCORE & HEALTH POINT",
-                "Untuk mendapatkan point, tangkap buah dan sayur.",
+                "To get a point, catch the fruits, and veggies.",
                 "",
                 'tutorial2',
                 'btn_normal',
@@ -184,8 +184,8 @@ export default class TitleSceneController extends Phaser.Scene {
         }else if(this.counterNext == 1){
             this.TutorialView.SetDescription(
                 "SCORE & HEALTH POINT",
-                "Menangkap junk food atau gagal menangkap buah / sayur dapat mengurangi health point.",
-                "Game berakhir jika health point habis.",
+                "Catching the junk food or fail to catch fruits or veggies will make you lose a health point.",
+                "The game end when you lose all health point.",
                 'tutorial3',
                 'btn_normal',
                 'icon_next',
@@ -194,8 +194,8 @@ export default class TitleSceneController extends Phaser.Scene {
         }else{
             this.TutorialView.SetDescription(
                 "BONUS SCORE",
-                "Setiap kali kamu berhasil menangkap buah dan sayur berutur-turut, akan muncul combo.",
-                "Semakin banyak combo, semakin besar point bonus yang didapat.",
+                "Every time you catch fruit and veggies, in a row, you will trigger combo.",
+                "The highest combo will determine how much you get bonus score.",
                 'tutorial4',
                 'btn_play_pressed',
                 'icon_play',

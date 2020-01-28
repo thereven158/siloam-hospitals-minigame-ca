@@ -82,7 +82,7 @@ export default class TutorialView extends Phaser.GameObjects.Container{
         this.MainGroup.add(this.TxtTitle);
 
         this.TxtContent = new Text(this.scene, 0, 0, 
-            "Swipe layar ke kiri atau kanan untuk mengendalikan Debby ke kiri atau kanan", 
+            "Swipe the screen to move Dabby to right or left.", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
         this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.15);
