@@ -400,20 +400,28 @@ export default class GameplaySceneController extends Phaser.Scene {
         
         this.gameoverBgm.stop();
 
-        this.timerEvent = this.time.delayedCall(5000, this.eventCanClick, [], this);
+        this.timerEvent = this.time.delayedCall(5000, this.eventCanClickOnRetryAds, [], this);
     }
 
     ExitGame = ()=>{
         this.audioClick.play();
         this.AdsView = new AdsView(this);
         this.AdsView.Open();
-        this.AdsView.OnClickSkip(this.clickSkipExit);
+        this.adsShowed = true;
 
         this.gameoverBgm.stop();
+
+        this.timerEvent = this.time.delayedCall(5000, this.eventCanClickOnExitAds, [], this);
     }
 
-    eventCanClick = ()=>{
+    eventCanClickOnRetryAds = ()=>{
         this.AdsView.OnClickSkip(this.clickSkipRestart);
+        this.adsShowed = false;
+        this.timerEvent.remove();
+    }
+
+    eventCanClickOnExitAds = ()=>{
+        this.AdsView.OnClickSkip(this.clickSkipExit);
         this.adsShowed = false;
         this.timerEvent.remove();
     }
