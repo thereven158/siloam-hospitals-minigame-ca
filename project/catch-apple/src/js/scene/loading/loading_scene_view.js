@@ -29,7 +29,8 @@ export default class LoadingSceneView{
       this.Character.setDisplayWidth(this.ScreenUtility.GameWidth * 0.5, true);
 
       this.EmptyBar = new Image(this.scene, 0, 0, 'loading_emptybar');
-      this.EmptyBar.setDisplayWidth(this.ScreenUtility.GameWidth * 0.8, true);
+      this.EmptyBar.displayWidth = this.ScreenUtility.GameWidth * 0.8;
+      this.EmptyBar.displayHeight = this.EmptyBar.displayHeight * 0.6;
       this.EmptyBar.setPosition(this.ScreenUtility.CenterX, this.ScreenUtility.CenterY * 1.5)
 
       this.FullBar = new Image(this.scene, 0,0, 'loading_fullbar');
@@ -39,7 +40,7 @@ export default class LoadingSceneView{
 
       this.FullBarWidth = this.FullBar.displayWidth;
 
-      this.LoadingText = new Text(this.scene, this.ScreenUtility.CenterX * 0.5, this.FullBar.y - this.FullBar.displayHeight, "Loading..."
+      this.LoadingText = new Text(this.scene, this.ScreenUtility.CenterX * 0.5, this.FullBar.y - this.FullBar.displayHeight * 1.5 , "Loading..."
         ,{align:'center', fontFamily: 'helsinki', color: '#1849A0'}).setFontSizeR(70);
         
       this.LoadingText.setOrigin(0.5,0.5);
