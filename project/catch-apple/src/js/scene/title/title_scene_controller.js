@@ -107,10 +107,10 @@ export default class TitleSceneController extends Phaser.Scene {
 
         this.api.Leaderboard().then(data => {
             console.log(data.data.data);
-            this.LeaderView.Fill(data.data.data, data.myRank);
+            this.LeaderView.Fill(data.data.data, data.myRank, data.score);
         })
         .catch(() => {
-            this.LeaderView.Fill([], null);
+            this.LeaderView.Fill(null, null, null);
         });
 
     }

@@ -25,8 +25,8 @@ export default class BootSceneController extends Phaser.Scene{
     preload(){
         Promise.all([
             LoaderController.getInstance().init(),
-            // ApiController.getInstance().init(1),
-            // ApiController.getInstance().AuthLogin(),
+            ApiController.getInstance().init(1),
+            ApiController.getInstance().AuthLogin(),
             LoaderController.getInstance()
 				.loadFonts([
 					{
