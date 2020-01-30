@@ -122,15 +122,16 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         this.MainGroup.add(this.TxtScore);
 
         if(this.resolution >= 0.75){
-            this.ContentContainer.displayHeight = contentHeight * 0.7;
+            this.ContentContainer.displayHeight = contentHeight * 0.85;
+            this.ContentContainer.setPosition(this.ContentContainer.x, this.ContentContainer.y * 1.1);
 
-            this.BannerImage.setPosition(this.ContentContainer.x, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.35);
+            this.BannerImage.setPosition(this.ContentContainer.x, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.4);
             this.TitleText.setPosition(this.BannerImage.x * 1.05, this.BannerImage.y);
             this.TxtRank.setPosition(this.BannerImage.x * 0.5, this.BannerImage.y * 1.4);
             this.TxtName.setPosition(this.ContentContainer.x, this.TxtRank.y);
             this.TxtScore.setPosition(this.ContentContainer.displayWidth * 1.05, this.TxtRank.y);
 
-            this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.6);
+            this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.55);
             this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
         }
         
@@ -195,11 +196,16 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         if(index < 3){
             this.boxPlayer.setTexture('bg_top3');
         }
-        if(index == myRank){
+        if(index == myRank - 1){
             this.boxPlayer.setTexture('bg_current_rank');
         }
+
+        if(this.resolution >= 3/4){
+            this.tempY += 0.275;
+        }else{
+            this.tempY += 0.25;
+        }
         
-        this.tempY += 0.25;
     }
 
 
@@ -207,6 +213,10 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         this.CurrentRank = new Image(this.scene, 0, 0, 'bg_current__rank_big');
         this.CurrentRank.setPosition(this.BannerImage.x, this.ContentContainer.displayHeight * 1.1);
         this.MainGroup.add(this.CurrentRank);
+
+        if(this.resolution >= 3/4){
+            this.CurrentRank.setPosition(this.BannerImage.x, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.425);
+        }
 
         this.YourName = new Text(this.scene, 0, 0, 
             "-", 
@@ -229,25 +239,35 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
             { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(70);
         this.YourScore.setPosition(this.CurrentRank.x * 1.5, this.CurrentRank.y);
-        this.YourScore.setText(myScore);
+        this.YourScore.setText(myScore - 1);
         this.MainGroup.add(this.YourScore);
+
     }
 
 
-    Fill = (playerData, playerRank) => {
-        var myRank = playerRank.rank - 1;
+    Fill = (playerData, playerRank, playerScore) => {
+        // var myRank = playerRank.rank - 1;
         var myName = window.localStorage.getItem("myName");
-        var myScore = playerRank.score;
+        // var myScore = playerRank.score;
 
         console.log(myName);
-
-        for(let i = 0; i < 10; i++){
-            this.topName[i] = playerData[i].userName;
-            this.topScore[i] = playerData[i].score;
-            this.CreateBox(i, myRank);
+        if(playerData == null){
+            for(let i = 0; i < 10; i++){
+                this.topName[i] = "-";
+                this.topScore[i] = "0";
+                this.CreateBox(i, playerRank);
+            }
+            this.CreateCurrentBoxRank("-", "-", 0);
+        }else{
+            for(let i = 0; i < 10; i++){
+                this.topName[i] = playerData[i].userName;
+                this.topScore[i] = playerData[i].score;
+                this.CreateBox(i, myRank);
+            }
+            this.CreateCurrentBoxRank(myName, playerRank, playerScore);
         }
 
-        this.CreateCurrentBoxRank(myName, myRank, myScore);
+        
 	}
 
 

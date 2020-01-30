@@ -45,7 +45,7 @@ export default class ApiController {
 				request.setRequestHeader("Authorization", window.localStorage.getItem("token"));
 			}
 			request.onreadystatechange = function() { 
-				if (request.readyState == 4 && request.status == 200){
+				if (request.readyState == 4 && request.status >= 200 && request.status < 300){
 					resolve(request.responseText);
 				}
 				else if(request.readyState == 4 && request.status != 200){
@@ -94,6 +94,7 @@ export default class ApiController {
 				else{
 					alert("check your connection");
 				}
+				reject(fail.status);
 			});
 		});
 	}	
@@ -133,6 +134,7 @@ export default class ApiController {
 				else{
 					alert("check your connection");
 				}
+				reject(fail.status);
 			});
 		});
 	}	
@@ -172,6 +174,7 @@ export default class ApiController {
 				else{
 					alert("check your connection");
 				}
+				reject(fail.status);
 			});
 		});
 	}
