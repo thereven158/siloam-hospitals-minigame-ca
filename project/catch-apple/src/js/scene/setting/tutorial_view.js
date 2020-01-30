@@ -100,14 +100,14 @@ export default class TutorialView extends Phaser.GameObjects.Container{
             "DEBBY CONTROL", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.TxtTitle.setPosition(this.ContentContainer.x, this.ContentContainer.y * 0.97);
+        this.TxtTitle.setPosition(this.ContentContainer.x, this.ImageContent.y + this.ImageContent.displayHeight * 0.65);
         this.MainGroup.add(this.TxtTitle);
 
         this.TxtContent = new Text(this.scene, 0, 0, 
             "Swipe the screen to move Dabby to right or left.", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.1);
+        this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.2);
         this.TxtContent.setWordWrapWidth(contentWidth);
         this.MainGroup.add(this.TxtContent);
 
