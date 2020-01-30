@@ -19,6 +19,9 @@ console.log("pixel ratio: " + window.devicePixelRatio);
 console.log("innerHeigh: " + window.innerHeight);
 console.log("actual: " + actualHeight);
 
+console.log("innerWidth: " + window.innerWidth);
+console.log("actual: " + actualWidth);
+
 var config = {
 	type: phaserType,
 	canvas: document.getElementById('game'),

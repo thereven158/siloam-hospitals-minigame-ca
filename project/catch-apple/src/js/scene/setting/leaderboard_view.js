@@ -53,11 +53,11 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
             this.ScreenUtility.GameHeight);
         this.add(this.Background);
 
-        this.bgTree = new Image (this.scene, 
-            this.ScreenUtility.CenterX, 
-            this.ScreenUtility.GameHeight, 
-            'background_tree');
-        this.add(this.bgTree);
+        // this.bgTree = new Image (this.scene, 
+        //     this.ScreenUtility.CenterX, 
+        //     this.ScreenUtility.GameHeight, 
+        //     'background_tree');
+        // this.add(this.bgTree);
 
         this.Blackground = new Image(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'bg_black').setInteractive();
 		this.Blackground.setDisplaySize(this.ScreenUtility.GameWidth, this.ScreenUtility.GameHeight);
@@ -169,6 +169,10 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         this.boxPlayer.setPosition(this.BannerImage.x, this.BannerImage.y * this.tempY);
         this.MainGroup.add(this.boxPlayer);
 
+        if(this.resolution >= 3/4){
+            this.boxPlayer.displayHeight = this.boxPlayer.displayHeight * 0.8;
+        }
+
         this.Number = new Text(this.scene, 0, 0, 
             "", 
             { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
@@ -215,7 +219,8 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         this.MainGroup.add(this.CurrentRank);
 
         if(this.resolution >= 3/4){
-            this.CurrentRank.setPosition(this.BannerImage.x, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.425);
+            this.CurrentRank.displayHeight = this.CurrentRank.displayHeight * 0.8;
+            this.CurrentRank.setPosition(this.BannerImage.x, this.boxPlayer.y * 1.075);
         }
 
         this.YourName = new Text(this.scene, 0, 0, 

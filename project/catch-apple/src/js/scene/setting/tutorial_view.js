@@ -17,8 +17,8 @@ export default class TutorialView extends Phaser.GameObjects.Container{
         
         this.width = this.ScreenUtility.GameWidth;
         this.height = this.ScreenUtility.GameHeight;
-        this.dwidth = this.ScreenUtility.DefaultWidth;
-        this.dheight = this.ScreenUtility.DefaultHeight;
+        this.dwidth = this.ScreenUtility.GameDefaultWidth;
+        this.dheight = this.ScreenUtility.GameDefaultHeight;
         // this.scale = this.ScreenUtility.ScalePercentage;
 
         this.GetResolution();
@@ -34,6 +34,15 @@ export default class TutorialView extends Phaser.GameObjects.Container{
         console.log(this.height);
         console.log(this.resolution);
     }
+
+    SetResponsiveScale = (size) => {
+		if ((this.width / this.height) <= 9/16) {
+            return size*(this.width / this.dwidth);
+		}
+		else {
+            return size*(this.height / this.dheight);
+		}
+	}
 
     InitView(){
         this.setDepth(10);
@@ -128,23 +137,22 @@ export default class TutorialView extends Phaser.GameObjects.Container{
         this.MainGroup.add(this.TxtBtn);
 
         if(this.resolution >= 0.75){
+            this.ContentContainer.displayHeight = contentHeight * 0.9;
+            this.ContentContainer.setPosition(this.ContentContainer.x, this.ContentContainer.y * 1.1)
+
             this.TopText.setPosition(
                 this.ContentContainer.x - this.ContentContainer.displayWidth * 0.2, 
-                this.ContentContainer.y - this.ContentContainer.displayHeight * 0.5
+                this.ContentContainer.y - this.ContentContainer.displayHeight * 0.575
             );
-
+            
             this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
-            this.ContentContainer.displayHeight = contentHeight * 0.8;
-
             this.ImageContent.setDisplayHeight(this.ImageContent.displayHeight * 0.8);
 
-            this.TxtTitle.setPosition(this.ContentContainer.x, this.ImageContent.y * 1.425);
-            this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.1);
+            this.TxtTitle.setPosition(this.ContentContainer.x, this.ImageContent.y * 1.5);
+            this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.225);
+            this.TxtContent2.setPosition(this.ContentContainer.x, this.TxtContent.y * 1.2);
 
-            this.TxtContent.setWordWrapWidth(contentWidth * 0.7);
-            this.TxtContent2.setWordWrapWidth(contentWidth * 0.7);
-
-            this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.175);
+            this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.25);
             this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);
             this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
             console.log("check 1");
@@ -163,8 +171,9 @@ export default class TutorialView extends Phaser.GameObjects.Container{
                     this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);
                     this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
                 }else if(this.resolution >= 3/4){
-                    this.TxtTitle.setPosition(this.ContentContainer.x, this.ImageContent.y * 1.425);
-                    this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.15);
+                    this.TxtTitle.setPosition(this.ContentContainer.x, this.ImageContent.y * 1.5);
+                    this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.2);
+                    this.TxtContent2.setPosition(this.ContentContainer.x, this.TxtContent.y * 1.15);
 
                     this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.2);
                     this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);

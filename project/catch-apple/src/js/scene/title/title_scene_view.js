@@ -31,6 +31,7 @@ export default class TitleSceneView {
             this.ScreenUtility.CenterX, 
             this.ScreenUtility.GameHeight, 
             'background_tree');
+        this.BgTree.setDepth(0);
 
         this.BgCloud = new Image (this.scene, 
             this.ScreenUtility.GameWidth, 
@@ -51,7 +52,9 @@ export default class TitleSceneView {
             'main_picture');
         this.MainPicture.setDisplayWidth(this.ScreenUtility.GameWidth * 0.6, true);
 
-        this.BtnPlay = new Button(this.scene, this.ScreenUtility.CenterX,  this.MainPicture.y  + (this.ScreenUtility.CenterY + this.MainPicture.displayHeight * 0.5) * 0.5, 'btn_play_pressed');
+        this.BtnPlay = new Button(
+            this.scene, this.ScreenUtility.CenterX,  
+            this.MainPicture.y  + (this.ScreenUtility.CenterY + this.MainPicture.displayHeight * 0.5) * 0.5, 'btn_play_pressed');
         this.BtnPlay.setPressedTexture('btn_pressed');
 
         this.IconPlay = new Image (this.scene, 0, 0, 'icon_play');
@@ -64,7 +67,9 @@ export default class TitleSceneView {
             .setFontSizeRS(50);
         this.PlayTxt.setPosition(this.BtnPlay.x * 1.1, this.BtnPlay.y);
 
-        this.BtnTutorial = new Button(this.scene, this.ScreenUtility.CenterX,  this.BtnPlay.y  + (this.ScreenUtility.CenterY + this.BtnPlay.displayHeight * 0.5) * 0.25, 'btn_normal');
+        this.BtnTutorial = new Button(
+            this.scene, this.ScreenUtility.CenterX,  
+            this.BtnPlay.y  + (this.ScreenUtility.CenterY + this.BtnPlay.displayHeight * 0.5) * 0.275, 'btn_normal');
         this.BtnTutorial.setPressedTexture('btn_pressed');
 
         this.IconTutorial = new Image (this.scene, 0, 0, 'icon_tutorial');
@@ -77,7 +82,9 @@ export default class TitleSceneView {
             .setFontSizeRS(50);
         this.TxtTutorial.setPosition(this.BtnTutorial.x * 1.1, this.BtnTutorial.y);
 
-        this.BtnLeaderboard = new Button(this.scene, this.ScreenUtility.CenterX,  this.BtnTutorial.y  + (this.ScreenUtility.CenterY + this.BtnTutorial.displayHeight * 0.5) * 0.25, 'btn_normal');
+        this.BtnLeaderboard = new Button(
+            this.scene, this.ScreenUtility.CenterX,  
+            this.BtnTutorial.y  + (this.ScreenUtility.CenterY + this.BtnTutorial.displayHeight * 0.5) * 0.275, 'btn_normal');
         this.BtnLeaderboard.setPressedTexture('btn_pressed');
 
         this.IconLeaderboard = new Image (this.scene, 0, 0, 'icon_leaderboard');

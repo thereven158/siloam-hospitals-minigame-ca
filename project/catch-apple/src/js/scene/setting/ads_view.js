@@ -103,7 +103,6 @@ export default class AdsView extends Phaser.GameObjects.Container{
         this.MainGroup.add(this.ContentTxt);
 
         if(this.resolution >= 3/4){
-            this.ContentTxt.setWordWrapWidth(this.ContentContainer.displayWidth * 0.65);
         }
 
         if(this.iPhone == true){

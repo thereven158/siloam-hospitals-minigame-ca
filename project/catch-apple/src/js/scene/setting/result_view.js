@@ -54,12 +54,6 @@ export default class ResultView extends Phaser.GameObjects.Container{
 
         this.MainCloud = this.scene.add.container(0,0);
         this.add(this.MainCloud);
-
-        this.topCloudTrans = new Image(this.scene, 0, 0, 'window-top');
-        this.topCloudTrans.setPosition(this.ScreenUtility.CenterX, this.ScreenUtility.CenterY * 0.1);
-        this.topCloudTrans.setAlpha(0.5);
-        this.MainCloud.add(this.topCloudTrans);
-
         this.ContentContainer = new Image(this.scene, this.ScreenUtility.CenterX , 0 - this.ScreenUtility.CenterX, 'bg_white');
 
         let contentWidth = (this.ScreenUtility.GameWidth);
@@ -75,8 +69,13 @@ export default class ResultView extends Phaser.GameObjects.Container{
         this.MainCloud.add(this.ContentContainer);
 
         this.topCloud = new Image(this.scene, 0, 0, 'window-top');
-        this.topCloud.setPosition(this.ScreenUtility.CenterX, 0);
+        this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.75);
         this.MainCloud.add(this.topCloud);
+
+        this.topCloudTrans = new Image(this.scene, 0, 0, 'window-top');
+        this.topCloudTrans.setPosition(this.ScreenUtility.CenterX, this.topCloud.y + this.topCloud.displayHeight * 0.35);
+        this.topCloudTrans.setAlpha(0.5);
+        this.MainCloud.add(this.topCloudTrans);
 
         this.MainGroup = this.scene.add.container(0,0);
         this.add(this.MainGroup);
