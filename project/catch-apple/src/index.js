@@ -15,6 +15,10 @@ if(isLandscape){
 }
 let phaserType = (navigator.userAgent.match(/Mozilla/i)) ? Phaser.AUTO: Phaser.CANVAS;
 
+console.log("pixel ratio: " + window.devicePixelRatio);
+console.log("innerHeigh: " + window.innerHeight);
+console.log("actual: " + actualHeight);
+
 var config = {
 	type: phaserType,
 	canvas: document.getElementById('game'),

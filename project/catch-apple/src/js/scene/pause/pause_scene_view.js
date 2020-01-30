@@ -10,6 +10,22 @@ export default class PauseSceneView {
         this.scene = scene;
         this.ScreenUtility = scene.ScreenUtility;
 
+        this.width = this.ScreenUtility.GameWidth;
+        this.height = this.ScreenUtility.GameHeight;
+        this.dwidth = this.ScreenUtility.DefaultWidth;
+        this.dheight = this.ScreenUtility.DefaultHeight;
+        
+        this.GetResolution();
+    }
+
+    GetResolution(){
+        this.resolution = this.width/this.height;
+        if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
+            this.iPhone = true;
+        }
+        console.log(this.width);
+        console.log(this.height);
+        console.log(this.resolution);
     }
 
     /** @return {PauseSceneView} */
@@ -78,6 +94,16 @@ export default class PauseSceneView {
             .setFontSizeRS(60);
         this.TxtMenu.setPosition(this.BtnMainmenu.x * 1.1, this.BtnMainmenu.y);
         
+        if(this.resolution >= 2/3){
+            this.BtnResume.setPosition(this.ContentContainer.x, this.ContentContainer.y * 0.85);
+            this.BtnResume.setPosition(this.ContentContainer.x, this.ContentContainer.y * 0.9);
+            this.IconResume.setPosition(this.BtnResume.x * 0.65, this.BtnResume.y);
+
+            this.BtnMainmenu.setPosition(this.ContentContainer.x, this.ContentContainer.y * 1.15);
+            this.IconMainmenu.setPosition(this.BtnMainmenu.x * 0.65, this.BtnMainmenu.y);
+            this.TxtMenu.setPosition(this.BtnMainmenu.x * 1.1, this.BtnMainmenu.y);
+        }
+
         return this;
     }
 

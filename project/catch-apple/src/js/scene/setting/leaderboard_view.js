@@ -15,26 +15,25 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
 
         scene.add.existing(this);  
         
-        // this.centerX = this.ScreenUtility.CenterX;
-        // this.centerY = this.ScreenUtility.CenterY;
-        // this.width = this.ScreenUtility.Width;
-        // this.height = this.ScreenUtility.Height;
-        // this.dwidth = this.ScreenUtility.DefaultWidth;
-        // this.dheight = this.ScreenUtility.DefaultHeight;
-        // this.scale = this.ScreenUtility.ScalePercentage;
+        this.width = this.ScreenUtility.GameWidth;
+        this.height = this.ScreenUtility.GameHeight;
+        this.dwidth = this.ScreenUtility.DefaultWidth;
+        this.dheight = this.ScreenUtility.DefaultHeight;
 
+        this.GetResolution();
 
         this.InitView();
     }
 
-    SetResponsiveScale = (size) => {
-		if ((this.width / this.height) <= 9/16) {
-			return size*(this.width / this.dwidth);
-		}
-		else {
-			return size*(this.height / this.dheight);
-		}
-	}
+    GetResolution(){
+        this.resolution = this.width/this.height;
+        if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
+            this.iPhone = true;
+        }
+        console.log(this.width);
+        console.log(this.height);
+        console.log(this.resolution);
+    }
 
 
     InitView(){
@@ -94,12 +93,12 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         this.BannerImage.setPosition(this.ContentContainer.x, this.ContentContainer.y * 0.4);
         this.MainGroup.add(this.BannerImage);
 
-        this.TopText = new Text(this.scene, 0, 0, 
+        this.TitleText = new Text(this.scene, 0, 0, 
             "DEBBY GROCERIES", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(50);
-        this.TopText.setPosition(this.BannerImage.x * 1.05, this.BannerImage.y);
-        this.MainGroup.add(this.TopText);
+        this.TitleText.setPosition(this.BannerImage.x * 1.05, this.BannerImage.y);
+        this.MainGroup.add(this.TitleText);
 
         this.TxtRank = new Text(this.scene, 0, 0, 
             "RANK", 
@@ -121,8 +120,47 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
             .setFontSizeRS(40);
         this.TxtScore.setPosition(this.ContentContainer.displayWidth * 1.05, this.TxtRank.y);
         this.MainGroup.add(this.TxtScore);
+
+        if(this.resolution >= 0.75){
+            this.ContentContainer.displayHeight = contentHeight * 0.7;
+
+            this.BannerImage.setPosition(this.ContentContainer.x, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.35);
+            this.TitleText.setPosition(this.BannerImage.x * 1.05, this.BannerImage.y);
+            this.TxtRank.setPosition(this.BannerImage.x * 0.5, this.BannerImage.y * 1.4);
+            this.TxtName.setPosition(this.ContentContainer.x, this.TxtRank.y);
+            this.TxtScore.setPosition(this.ContentContainer.displayWidth * 1.05, this.TxtRank.y);
+
+            this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.6);
+            this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
+        }
         
-        // this.CreateCurrentBoxRank();
+        if(this.iPhone == true){
+            if(window.devicePixelRatio == 2){
+
+                if(this.resolution == 2/3){
+                    this.ContentContainer.displayHeight = contentHeight * 0.8;
+
+                    this.BannerImage.setPosition(this.ContentContainer.x, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.375);
+                    this.TitleText.setPosition(this.BannerImage.x * 1.05, this.BannerImage.y);
+                    this.TxtRank.setPosition(this.BannerImage.x * 0.5, this.BannerImage.y * 1.4);
+                    this.TxtName.setPosition(this.ContentContainer.x, this.TxtRank.y);
+                    this.TxtScore.setPosition(this.ContentContainer.displayWidth * 1.05, this.TxtRank.y);
+
+                    this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.6);
+                    this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
+                    
+                }else if(this.resolution >= 3/4){
+
+                }
+                
+            }else if(window.devicePixelRatio == 3){
+
+                if(this.resolution < 9/16){
+                    
+                }
+                
+            }
+        }
     }
 
     CreateBox(index, myRank){
@@ -210,16 +248,6 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         }
 
         this.CreateCurrentBoxRank(myName, myRank, myScore);
-        
-		// if (rank == -1) {
-		// 	innerboard.playerBox.rank.text = '-';
-		// }
-		// else {
-		// 	innerboard.playerBox.rank.text = playerRank.rank;
-		// 	innerboard.boxes[rank].box.setTexture('bg_current');
-		// }
-		// innerboard.playerBox.name.text = playerData[rank].userName;
-		// innerboard.playerBox.score.text = playerRank.score;
 	}
 
 

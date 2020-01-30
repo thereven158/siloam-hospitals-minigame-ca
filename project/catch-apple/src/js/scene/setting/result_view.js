@@ -13,9 +13,26 @@ export default class ResultView extends Phaser.GameObjects.Container{
         /** @type {ScreenUtility}  */
         this.ScreenUtility = scene.ScreenUtility;
 
-		scene.add.existing(this);  
+        scene.add.existing(this);  
+
+        this.width = this.ScreenUtility.GameWidth;
+        this.height = this.ScreenUtility.GameHeight;
+        this.dwidth = this.ScreenUtility.DefaultWidth;
+        this.dheight = this.ScreenUtility.DefaultHeight;
+        
+        this.GetResolution();
 
         this.InitView();
+    }
+
+    GetResolution(){
+        this.resolution = this.width/this.height;
+        if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
+            this.iPhone = true;
+        }
+        console.log(this.width);
+        console.log(this.height);
+        console.log(this.resolution);
     }
 
     InitView(){
@@ -175,7 +192,8 @@ export default class ResultView extends Phaser.GameObjects.Container{
         this.LeaderboardTxt.setPosition(this.BtnLeaderboard.x * 1.1, this.BtnLeaderboard.y);
         this.MainGroup.add(this.LeaderboardTxt);
 
-        if(this.ScreenUtility.GameHeight > 2000 || this.ScreenUtility.GameHeight <= 1024){
+
+        if(this.resolution >= 3/4){
             this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterX);
             this.ContentContainer.setPosition(this.ScreenUtility.CenterX , 0 - this.ScreenUtility.CenterX * 0.9);
             this.TopText.setFontSizeRS(90);
@@ -207,6 +225,27 @@ export default class ResultView extends Phaser.GameObjects.Container{
             this.IconLeaderboard.setPosition(this.BtnLeaderboard.x * 0.75, this.BtnLeaderboard.y);
             this.IconLeaderboard.setDisplayWidth(this.IconLeaderboard.displayWidth, true);
             this.LeaderboardTxt.setFontSizeRS(35);
+            console.log("check 1");
+        }
+
+        if(this.iPhone == true){
+            console.log("check 2");
+            if(window.devicePixelRatio == 2){
+                   
+                if(this.resolution == 2/3){
+                    this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterX * 1.2);
+                }else if(this.resolution >= 3/4){
+                    
+                }
+                
+            }else if(window.devicePixelRatio == 3){
+                
+
+                if(this.resolution < 9/16){
+                    
+                }
+                
+            }
         }
     }
 

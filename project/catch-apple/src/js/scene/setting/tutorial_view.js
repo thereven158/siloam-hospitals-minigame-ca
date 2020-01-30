@@ -13,9 +13,26 @@ export default class TutorialView extends Phaser.GameObjects.Container{
         /** @type {ScreenUtility}  */
         this.ScreenUtility = scene.ScreenUtility;
 
-		scene.add.existing(this);  
+        scene.add.existing(this);  
+        
+        this.width = this.ScreenUtility.GameWidth;
+        this.height = this.ScreenUtility.GameHeight;
+        this.dwidth = this.ScreenUtility.DefaultWidth;
+        this.dheight = this.ScreenUtility.DefaultHeight;
+        // this.scale = this.ScreenUtility.ScalePercentage;
 
+        this.GetResolution();
         this.InitView();
+    }
+
+    GetResolution(){
+        this.resolution = this.width/this.height;
+        if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
+            this.iPhone = true;
+        }
+        console.log(this.width);
+        console.log(this.height);
+        console.log(this.resolution);
     }
 
     InitView(){
@@ -49,10 +66,6 @@ export default class TutorialView extends Phaser.GameObjects.Container{
         let maxHeight = contentWidth * (this.ContentContainer.height / this.ContentContainer.width);
         let contentHeight = (this.ScreenUtility.GameHeight < (maxHeight) ) ? this.ScreenUtility.GameHeight * 0.8 : maxHeight;
         
-        console.log(this.ScreenUtility.GameHeight);
-        console.log(maxHeight);
-        console.log(contentHeight);
-
         this.ContentContainer.displayWidth = contentWidth;
         this.ContentContainer.displayHeight = contentHeight;
         this.MainGroup.add(this.ContentContainer);
@@ -85,7 +98,7 @@ export default class TutorialView extends Phaser.GameObjects.Container{
             "Swipe the screen to move Dabby to right or left.", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.15);
+        this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.1);
         this.TxtContent.setWordWrapWidth(contentWidth);
         this.MainGroup.add(this.TxtContent);
 
@@ -114,35 +127,65 @@ export default class TutorialView extends Phaser.GameObjects.Container{
         this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
         this.MainGroup.add(this.TxtBtn);
 
-        if(this.ScreenUtility.GameHeight > 2000){
+        if(this.resolution >= 0.75){
             this.TopText.setPosition(
                 this.ContentContainer.x - this.ContentContainer.displayWidth * 0.2, 
                 this.ContentContainer.y - this.ContentContainer.displayHeight * 0.5
             );
+
             this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
             this.ContentContainer.displayHeight = contentHeight * 0.8;
+
+            this.ImageContent.setDisplayHeight(this.ImageContent.displayHeight * 0.8);
+
+            this.TxtTitle.setPosition(this.ContentContainer.x, this.ImageContent.y * 1.425);
+            this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.1);
+
             this.TxtContent.setWordWrapWidth(contentWidth * 0.7);
             this.TxtContent2.setWordWrapWidth(contentWidth * 0.7);
+
             this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.175);
             this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);
             this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
-        }else if(this.ScreenUtility.GameHeight < 1024){
-            this.TopText.setPosition(
-                this.ContentContainer.x - this.ContentContainer.displayWidth * 0.2, 
-                this.ContentContainer.y - this.ContentContainer.displayHeight * 0.5
-            );
-            this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
-            this.ContentContainer.displayHeight = contentHeight * 0.9;
+            console.log("check 1");
+        }
 
-            this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.2);
-            this.TxtContent.setWordWrapWidth(contentWidth * 1.3);
+        if(this.iPhone == true){
+            console.log("check 2");
+            if(window.devicePixelRatio == 2){
+                    this.TxtTitle.setPosition(this.ContentContainer.x, this.ImageContent.y * 1.425);
+                    this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.15);
 
-            this.TxtContent2.setPosition(this.ContentContainer.x, this.TxtContent.y * 1.2);
-            this.TxtContent2.setWordWrapWidth(contentWidth * 1.3);
+                if(this.resolution == 2/3){
+                    this.ImageContent.setPosition(this.ContentContainer.x, this.ContentContainer.y * 0.6);
 
-            this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.15);
-            this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);
-            this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
+                    this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.175);
+                    this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);
+                    this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
+                }else if(this.resolution >= 3/4){
+                    this.TxtTitle.setPosition(this.ContentContainer.x, this.ImageContent.y * 1.425);
+                    this.TxtContent.setPosition(this.ContentContainer.x, this.TxtTitle.y * 1.15);
+
+                    this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.2);
+                    this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);
+                    this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
+                }
+                this.TxtContent.setWordWrapWidth(contentWidth * 1.3);
+                this.TxtContent2.setWordWrapWidth(contentWidth * 1.3);
+            }else if(window.devicePixelRatio == 3){
+                this.TxtTitle.setPosition(this.ContentContainer.x, this.ImageContent.y * 1.4);
+
+                if(this.resolution < 9/16){
+                    this.ImageContent.setPosition(this.ContentContainer.x, this.ContentContainer.y * 0.7);
+                    this.TxtTitle.setPosition(this.ContentContainer.x, this.ImageContent.y * 1.325);
+                    
+                    this.BtnNext.setPosition(this.ContentContainer.x, this.TxtContent2.y * 1.15);
+                    this.IconNext.setPosition(this.BtnNext.x * 0.65, this.BtnNext.y);
+                    this.TxtBtn.setPosition(this.BtnNext.x * 1.05, this.BtnNext.y);
+                }
+                this.TxtContent.setWordWrapWidth(contentWidth * 0.8);
+                this.TxtContent2.setWordWrapWidth(contentWidth * 0.8);
+            }
         }
     }
 
