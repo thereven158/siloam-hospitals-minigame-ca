@@ -13,9 +13,26 @@ export default class AdsView extends Phaser.GameObjects.Container{
         /** @type {ScreenUtility}  */
         this.ScreenUtility = scene.ScreenUtility;
 
-		scene.add.existing(this);  
+        scene.add.existing(this);  
+        
+        this.width = this.ScreenUtility.GameWidth;
+        this.height = this.ScreenUtility.GameHeight;
+        this.dwidth = this.ScreenUtility.DefaultWidth;
+        this.dheight = this.ScreenUtility.DefaultHeight;
+        
+        this.GetResolution();
 
         this.InitView();
+    }
+
+    GetResolution(){
+        this.resolution = this.width/this.height;
+        if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
+            this.iPhone = true;
+        }
+        console.log(this.width);
+        console.log(this.height);
+        console.log(this.resolution);
     }
 
     InitView(){
@@ -84,6 +101,30 @@ export default class AdsView extends Phaser.GameObjects.Container{
         this.ContentTxt.setPosition(this.VideoAds.x, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.25);
         this.ContentTxt.setWordWrapWidth(this.ContentContainer.displayWidth);
         this.MainGroup.add(this.ContentTxt);
+
+        if(this.resolution >= 3/4){
+            this.ContentTxt.setWordWrapWidth(this.ContentContainer.displayWidth * 0.65);
+        }
+
+        if(this.iPhone == true){
+            if(window.devicePixelRatio == 2){
+                this.ContentTxt.setWordWrapWidth(this.ContentContainer.displayWidth * 1.4);
+
+                if(this.resolution == 2/3){
+                    
+                }else if(this.resolution >= 3/4){
+
+                }
+                
+            }else if(window.devicePixelRatio == 3){
+                this.ContentTxt.setWordWrapWidth(this.ContentContainer.displayWidth * 0.8);
+
+                if(this.resolution < 9/16){
+                    
+                }
+                
+            }
+        }
 
     }
 

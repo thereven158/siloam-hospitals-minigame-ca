@@ -45,7 +45,7 @@ export default class BootSceneController extends Phaser.Scene{
         ]).then(() =>{
             this.scene.start('LoadingScene');    
         }).catch((err) =>{
-            console.log(err);
+            this.scene.start('LoadingScene');
         })
     }
 }
