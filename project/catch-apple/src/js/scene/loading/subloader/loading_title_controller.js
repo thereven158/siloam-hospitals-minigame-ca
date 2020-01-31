@@ -51,5 +51,13 @@ export default class LoadingTitleController {
         this.scene.load.image('tutorial2', this.scene.CreatePath('/images/tutorial/ui_illustration_tutorial_02.png'));
         this.scene.load.image('tutorial3', this.scene.CreatePath('/images/tutorial/ui_illustration_tutorial_03.png'));
         this.scene.load.image('tutorial4', this.scene.CreatePath('/images/tutorial/ui_illustration_tutorial_04.png'));
+
+        //warning screen
+        this.scene.load.image('background_warning', this.scene.CreatePath('/images/warning/background.png'));
+        this.scene.load.image('lb_outer_board', this.scene.CreatePath('/images/warning/lb_outer_board.png'));
+        this.scene.load.image('maintenance', this.scene.CreatePath('/images/warning/maintenance.png'));
+        this.scene.load.image('refresh_ico', this.scene.CreatePath('/images/warning/refresh_ico.png'));
+        this.scene.load.image('regular_btn_warning', this.scene.CreatePath('/images/warning/regular_btn.png'));
+        this.scene.load.image('regular_btn_pressed_warning', this.scene.CreatePath('/images/warning/regular_btn_pressed.png'));
      }
 }

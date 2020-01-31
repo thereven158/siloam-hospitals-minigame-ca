@@ -4,7 +4,8 @@ export default class ApiController {
 	constructor(){
         this.baseUrl;
         this.gameId;
-        this.siloamToken;
+		this.siloamToken;
+		this.isLogin = false;
     }
 
     /**
@@ -26,9 +27,15 @@ export default class ApiController {
 		Siloam token ini yang nantinya akan di kirimkan silaom Apps menuju game.
 		token ini dibutuhkan backend untuk mengecek user id dan juga nama pengguna		
 
-		note : masih belum ada info bagaimana apps mengirimkan data token ini ke web game (kemungkinan di set lngsng di window.localstorage?)
+		note : masih belum ada info bagaimana apps mengirimkan data token ini ke web game (kemungkinan di set lngsng di window.sessionStorage?)
 		*/
-		this.siloamToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NTksInBob25lTnVtYmVyIjoiKzYyODIxMTI0MDk1MTAiLCJwYXRpZW50SWQiOiI2YmNkZGNkOC1mMTY3LTQxMmEtYjYxZS1hMDU1MTgyNmNmN2YifSwiaWF0IjoxNTc2NTU4NjIxLCJleHAiOjE1ODUxOTg2MjF9.hsLNZOCH3OE7CXHBgaITFC5_6AptMrKEx07UFXzTpe8";
+		// this.siloamToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NTksInBob25lTnVtYmVyIjoiKzYyODIxMTI0MDk1MTAiLCJwYXRpZW50SWQiOiI2YmNkZGNkOC1mMTY3LTQxMmEtYjYxZS1hMDU1MTgyNmNmN2YifSwiaWF0IjoxNTc2NTU4NjIxLCJleHAiOjE1ODUxOTg2MjF9.hsLNZOCH3OE7CXHBgaITFC5_6AptMrKEx07UFXzTpe8";
+		
+		this.siloamToken = window.sessionStorage.getItem("siloam-token");
+		if (!this.siloamToken) {
+			window.sessionStorage.setItem("siloam-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NTksInBob25lTnVtYmVyIjoiKzYyODIxMTI0MDk1MTAiLCJwYXRpZW50SWQiOiI2YmNkZGNkOC1mMTY3LTQxMmEtYjYxZS1hMDU1MTgyNmNmN2YifSwiaWF0IjoxNTc2NTU4NjIxLCJleHAiOjE1ODUxOTg2MjF9.hsLNZOCH3OE7CXHBgaITFC5_6AptMrKEx07UFXzTpe8");
+			this.siloamToken = window.sessionStorage.getItem("siloam-token");
+		}
     }
 
     postRequest = (usetoken, url, parameters) => {
@@ -42,7 +49,7 @@ export default class ApiController {
 			request.setRequestHeader("Content-Type", "application/json");
 			request.setRequestHeader("Accept", "application/json");
 			if(usetoken == true){
-				request.setRequestHeader("Authorization", window.localStorage.getItem("token"));
+				request.setRequestHeader("Authorization", window.sessionStorage.getItem("token"));
 			}
 			request.onreadystatechange = function() { 
 				if (request.readyState == 4 && request.status >= 200 && request.status < 300){
@@ -52,8 +59,6 @@ export default class ApiController {
 					reject(request);
 				}
 			}	
-			
-
 			request.send(data);
     	});
 	}	
@@ -69,14 +74,18 @@ export default class ApiController {
 			};
 			this.postRequest(false, this.baseUrl+"Auth/Login", parameters)
 			.then(success => {
+				this.isLogin = true;
+				console.log("islogin? " + this.isLogin);
 				var data = JSON.parse(success);
 				console.log(data);
-				window.localStorage.setItem("myName", data.data.name);
-				window.localStorage.setItem("token", "Bearer " + data.data.token);
-				window.localStorage.setItem("userId", data.data.userId);
+				window.sessionStorage.setItem("myName", data.data.name);
+				window.sessionStorage.setItem("token", "Bearer " + data.data.token);
+				window.sessionStorage.setItem("userId", data.data.userId);
 				resolve(data);
 			})
 			.catch(fail => {
+				this.isLogin = false;
+				console.log("islogin? " + this.isLogin);
 				if(fail.status == 400){
 					var data = JSON.parse(fail.responseText);
 					console.log(data);
@@ -102,7 +111,7 @@ export default class ApiController {
 	Score = (score) => {
 		return new Promise((resolve, reject) => {
 			var parameters = {
-				"userId": window.localStorage.getItem("userId"),
+				"userId": window.sessionStorage.getItem("userId"),
 				"gameId": this.gameId,
 				"score": score,
 				"requestId": "random-string-dari-frontend",
@@ -142,7 +151,7 @@ export default class ApiController {
 	Leaderboard = () => {
 		return new Promise((resolve, reject) => {
 			var parameters = {
-				"userId": window.localStorage.getItem("userId"),
+				"userId": window.sessionStorage.getItem("userId"),
 				"gameId": this.gameId,
 				"period": 0, // set ke 0 untuk mendapatkan periode terbaru
 				"requestId": "random-string-dari-frontend",
