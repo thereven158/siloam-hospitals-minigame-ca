@@ -69,7 +69,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
         this.MainCloud.add(this.ContentContainer);
 
         this.topCloud = new Image(this.scene, 0, 0, 'window-top');
-        this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.75);
+        this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.50);
         this.MainCloud.add(this.topCloud);
 
         this.topCloudTrans = new Image(this.scene, 0, 0, 'window-top');
@@ -193,6 +193,9 @@ export default class ResultView extends Phaser.GameObjects.Container{
 
 
         if(this.resolution >= 3/4){
+            this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.75);
+            this.topCloudTrans.setPosition(this.ScreenUtility.CenterX, this.topCloud.y + this.topCloud.displayHeight * 0.35);
+
             this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterX);
             this.ContentContainer.setPosition(this.ScreenUtility.CenterX , 0 - this.ScreenUtility.CenterX * 0.9);
             this.TopText.setFontSizeRS(90);

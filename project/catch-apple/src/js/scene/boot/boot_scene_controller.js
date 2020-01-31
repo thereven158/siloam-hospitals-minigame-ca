@@ -26,7 +26,7 @@ export default class BootSceneController extends Phaser.Scene{
         Promise.all([
             LoaderController.getInstance().init(),
             ApiController.getInstance().init(1),
-            ApiController.getInstance().AuthLogin(),
+            // ApiController.getInstance().AuthLogin(),
             LoaderController.getInstance()
 				.loadFonts([
 					{
@@ -45,7 +45,7 @@ export default class BootSceneController extends Phaser.Scene{
         ]).then(() =>{
             this.scene.start('LoadingScene');    
         }).catch((err) =>{
-            this.scene.start('LoadingScene');
+            // this.scene.start('WarningScene');
         })
     }
 }

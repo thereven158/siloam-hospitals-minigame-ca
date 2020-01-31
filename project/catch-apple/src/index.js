@@ -5,6 +5,7 @@ import LoadingScene from '../src/js/scene/loading/loading_scene_controller';
 import TitleScene from '../src/js/scene/title/title_scene_controller';
 import GameplayScene from '../src/js/scene/gameplay/gameplay_scene_controller';
 import PauseScene from '../src/js/scene/pause/pause_scene_controller';
+import WarningSceneController from '../src/js/scene/disconnected/warning_scene_controller';
 
 let actualWidth = window.innerWidth < 480 ? window.innerWidth * window.devicePixelRatio : window.innerWidth;
 let actualHeight = window.innerWidth < 480 ? window.innerHeight * window.devicePixelRatio : window.innerHeight;
@@ -38,6 +39,7 @@ var config = {
 		BootScene,
 		LoadingScene, 
 		TitleScene,
+		WarningSceneController,
 		GameplayScene,
 		PauseScene
 	],

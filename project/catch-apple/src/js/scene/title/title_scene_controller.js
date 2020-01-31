@@ -68,6 +68,20 @@ export default class TitleSceneController extends Phaser.Scene {
         }else{
             this.muteAllSfx();
         }
+
+        if(this.api.isLogin == false){
+            this.api.AuthLogin()
+            .then(() => {
+                return console.log("loged in");
+            })
+            .catch(() => {
+                this.scene.start('WarningScene');
+            })
+        }else{
+            return console.log("has loged in");
+        }
+        
+
     }
 
     update = ()=>{
@@ -105,12 +119,14 @@ export default class TitleSceneController extends Phaser.Scene {
         
         this.LeaderView.Open();
 
-        this.api.Leaderboard().then(data => {
+        this.api.Leaderboard()
+        .then(data => {
+            console.log("check1");
             console.log(data.data.data);
-            this.LeaderView.Fill(data.data.data, data.myRank, data.score);
-        })
-        .catch(() => {
+            this.LeaderView.Fill(data.data.data, data.myRank, data.myRank);
+        }).catch(() => {
             this.LeaderView.Fill(null, null, null);
+            this.scene.start('WarningScene');
         });
 
     }

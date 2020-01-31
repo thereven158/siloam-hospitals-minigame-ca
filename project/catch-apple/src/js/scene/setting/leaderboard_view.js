@@ -236,7 +236,12 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
             { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(70);
         this.YourRank.setPosition(this.CurrentRank.x * 0.5, this.CurrentRank.y);
-        this.YourRank.setText(myRank + 1);
+        if(myRank == -1){
+            this.YourRank.setText("-");
+        }else{
+            this.YourRank.setText(myRank + 1);
+        }   
+        
         this.MainGroup.add(this.YourRank);
 
         this.YourScore = new Text(this.scene, 0, 0, 
@@ -244,7 +249,12 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
             { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(70);
         this.YourScore.setPosition(this.CurrentRank.x * 1.5, this.CurrentRank.y);
-        this.YourScore.setText(myScore - 1);
+        if(myScore == 0){
+            this.YourScore.setText("0");
+        }else{
+            this.YourScore.setText(myScore);
+        }  
+        
         this.MainGroup.add(this.YourScore);
 
     }
@@ -252,26 +262,38 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
 
     Fill = (playerData, playerRank, playerScore) => {
         // var myRank = playerRank.rank - 1;
-        var myName = window.localStorage.getItem("myName");
+        var myName = window.sessionStorage.getItem("myName");
         // var myScore = playerRank.score;
 
-        console.log(myName);
-        if(playerData == null){
-            for(let i = 0; i < 10; i++){
-                this.topName[i] = "-";
-                this.topScore[i] = "0";
-                this.CreateBox(i, playerRank);
+        // if(playerData == null){
+        //     for(let i = 0; i < 10; i++){
+        //         this.topName[i] = "-";
+        //         this.topScore[i] = "0";
+        //         this.CreateBox(i, playerRank);
+        //     }
+        //     this.CreateCurrentBoxRank("-", "-", 0);
+        // }else{
+        //     for(let i = 0; i < 10; i++){
+        //         this.topName[i] = playerData[i].userName;
+        //         this.topScore[i] = playerData[i].score;
+        //         this.CreateBox(i, myRank);
+        //     }
+        //     this.CreateCurrentBoxRank(myName, playerRank, playerScore);
+        // }
+
+        for(let i = 0; i < 10; i++){
+            if(playerData == null){
+                return console.log("data null");
+            }else if(playerData[i].userName == null){
+                return console.log("data null");
             }
-            this.CreateCurrentBoxRank("-", "-", 0);
-        }else{
-            for(let i = 0; i < 10; i++){
+            else{
                 this.topName[i] = playerData[i].userName;
                 this.topScore[i] = playerData[i].score;
-                this.CreateBox(i, myRank);
             }
-            this.CreateCurrentBoxRank(myName, playerRank, playerScore);
+            this.CreateBox(i, playerRank.rank);
         }
-
+        this.CreateCurrentBoxRank(myName, playerRank.rank - 1, playerScore.score);
         
 	}
 
