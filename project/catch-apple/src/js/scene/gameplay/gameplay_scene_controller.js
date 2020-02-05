@@ -395,7 +395,6 @@ export default class GameplaySceneController extends Phaser.Scene {
             this.LeaderView.Fill(null, null, null);
             this.scene.start('WarningScene');
         });
-
     }
 
     Restart = ()=>{
@@ -403,6 +402,14 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.AdsView = new AdsView(this);
         this.AdsView.Open();
         this.adsShowed = true;
+
+        this.api.Ads()
+        .then(data => {
+            console.log(data);
+            this.AdsView.CreateContentAds(data.data.description, data.data.type, data.data.file);
+        }).catch(() => {
+            this.AdsView.CreateContentAds(null, null, null);
+        });
         
         this.gameoverBgm.stop();
 

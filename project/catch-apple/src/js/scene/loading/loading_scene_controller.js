@@ -28,6 +28,9 @@ export default class LoadingSceneController extends Phaser.Scene{
 
     preload(){
         this.load.once('complete', this.LoadBootResoucesComplete);  
+        
+        this.load.crossOrigin = 'anonymous';
+        
         this.LoadBootResouces();
 
     }

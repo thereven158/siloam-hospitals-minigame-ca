@@ -17,7 +17,7 @@ export default class LoadingSceneView{
       this.loadingScreen.fillRect(0,0, this.ScreenUtility.GameWidth, this.ScreenUtility.GameHeight);
       
       return this;
-  }
+    }
 
     initLoading = ()=>{
       this.Background =  new Image(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'bg_loading');
