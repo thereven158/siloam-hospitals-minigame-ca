@@ -9,6 +9,7 @@ export default class LoadingTitleController {
      }
 
      loadResource(){
+        this.scene.load.crossOrigin = "Anonymous";
         this.scene.load.image('btn_play', this.scene.CreatePath('/images/uigame/ui_button_play_effect.png'));
         this.scene.load.image('btn_setting', this.scene.CreatePath('/images/uigame/ui_button_settings.png'));
         this.scene.load.image('btn_tutorial', this.scene.CreatePath('/images/uigame/ui_button_tutorial.png'));
@@ -59,5 +60,6 @@ export default class LoadingTitleController {
         this.scene.load.image('refresh_ico', this.scene.CreatePath('/images/warning/refresh_ico.png'));
         this.scene.load.image('regular_btn_warning', this.scene.CreatePath('/images/warning/regular_btn.png'));
         this.scene.load.image('regular_btn_pressed_warning', this.scene.CreatePath('/images/warning/regular_btn_pressed.png'));
+        
      }
 }

@@ -93,7 +93,7 @@ export default class TitleSceneController extends Phaser.Scene {
         this.TutorialView.OnClickClose(this.clickCloseTutorial);
         this.TutorialView.OnClickNext(this.clickNext);
 
-        this.TutorialView.Open();;
+        this.TutorialView.Open();
     }
 
     showSetting = ()=>{

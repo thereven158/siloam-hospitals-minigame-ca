@@ -80,6 +80,7 @@ export default class AdsView extends Phaser.GameObjects.Container{
         this.BtnSkip = new Button (this.scene, 0, 0, 'btn_skip');
         this.BtnSkip.setPosition(this.ContentContainer.x + this.ContentContainer.displayWidth * 0.35, this.TxtTop.y);
         this.BtnSkip.IsEnabled = false;
+        this.BtnSkip.setAlpha(0.5);
         this.MainGroup.add(this.BtnSkip);
 
         this.TxtSkip = new Text(this.scene, 0, 0, 
@@ -87,23 +88,51 @@ export default class AdsView extends Phaser.GameObjects.Container{
             { align:'center', fontFamily: 'helsinki', color: '#ffffff' })
             .setFontSizeRS(50);
         this.TxtSkip.setPosition(this.BtnSkip.x * 0.95, this.BtnSkip.y);
+        this.TxtSkip.setAlpha(0.5);
         this.MainGroup.add(this.TxtSkip);
 
-        this.VideoAds = this.scene.add.video(this.ContentContainer.x, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.2, 'cusotm');
-        this.VideoAds.setDisplaySize(this.ContentContainer.displayWidth * 0.925, this.ContentContainer.displayHeight * 0.5);
-        this.VideoAds.play(true);
-        this.MainGroup.add(this.VideoAds);
+    }
 
+    CreateContentAds(desc, type, file){
+        if(type == "Video"){
+            let video = document.createElement('video');
+            video.src = file;
+            video.width = this.ContentContainer.displayWidth * 0.925;
+            video.height = this.ContentContainer.displayHeight * 0.5;
+            
+            video.autoplay = true;
+            video.loop = true;
+            console.log();
+
+            let element = this.scene.add.dom(this.ScreenUtility.CenterX, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.2, video);
+            this.MainGroup.add(element);
+
+            this.blackBg = new Image(this.scene, this.ScreenUtility.CenterX, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.2, 'bg_black');
+            this.blackBg.setDisplaySize(this.ContentContainer.displayWidth * 0.925, this.ContentContainer.displayHeight * 0.5);
+            this.MainGroup.add(this.blackBg);
+
+        }else{
+            let image = document.createElement('img');
+
+            image.src = file;
+            image.width = this.ContentContainer.displayWidth * 0.925;
+            image.height = this.ContentContainer.displayHeight * 0.5;
+            let element = this.scene.add.dom(this.ScreenUtility.CenterX, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.2, image);
+            this.MainGroup.add(element);
+        }
+
+        this.CreateDescriptionAds(desc);
+    }
+
+    CreateDescriptionAds(desc){
         this.ContentTxt = new Text(this.scene, 0, 0, 
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
+            "The owner cat got confuse by his cat that always meowing, so he asked to his cat that want to walk into the park with him. But the cat keep meowing until the owner got annoyed and ask why he keep meow", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.ContentTxt.setPosition(this.VideoAds.x, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.25);
+        this.ContentTxt.setPosition(this.ContentContainer.x, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.25);
         this.ContentTxt.setWordWrapWidth(this.ContentContainer.displayWidth);
+        this.ContentTxt.setText(desc);
         this.MainGroup.add(this.ContentTxt);
-
-        if(this.resolution >= 3/4){
-        }
 
         if(this.iPhone == true){
             if(window.devicePixelRatio == 2){
@@ -124,7 +153,6 @@ export default class AdsView extends Phaser.GameObjects.Container{
                 
             }
         }
-
     }
 
     Open(){
@@ -155,6 +183,8 @@ export default class AdsView extends Phaser.GameObjects.Container{
     OnClickSkip(event){
         this.BtnSkip.onClick(event);
         this.BtnSkip.IsEnabled = true;
+        this.BtnSkip.setAlpha(1);
+        this.TxtSkip.setAlpha(1);
         this.BtnSkip.setPressedTexture('btn_skip_pressed');
         this.TxtSkip.setText("SKIP");
     }

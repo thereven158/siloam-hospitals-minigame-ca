@@ -188,4 +188,54 @@ export default class ApiController {
 		});
 	}
 
+	Ads = () => {
+		return new Promise((resolve, reject) => {
+			var parameters = {
+				"userId": window.sessionStorage.getItem("userId"),
+				"gameId": this.gameId,
+				"requestId": this.generateId(8),
+				"deviceId": "some-device-id"
+			}		
+
+			this.postRequest(true, this.baseUrl+"Game/AdsGame", parameters)
+			.then(success => {
+				var data = JSON.parse(success);
+				console.log(data);
+				console.table(data.data);
+				resolve(data);
+			})
+			.catch(fail => {
+				if(fail.status == 400){
+					var data = JSON.parse(fail.responseText);
+					console.log(data);
+					alert(data.error.code);
+				}
+				else if(fail.status == 401){
+					alert("401 unauthorized");
+				}
+				else if(fail.status == 403){
+					alert("403 forbidden");
+				}
+				else if(fail.status == 500){
+					alert("Internal server error");
+				}
+				else{
+					alert("cehck your connection");
+				}
+				reject(fail.status);
+			});
+		});
+	}
+
+	// Request id generator
+	generateId = (length) => {
+		var result           = '';
+		var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		var charactersLength = characters.length;
+		for ( var i = 0; i < length; i++ ) {
+		   result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+		return result;
+	 }
+
 }

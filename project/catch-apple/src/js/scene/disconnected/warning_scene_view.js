@@ -23,8 +23,6 @@ export default class WarningSceneView
 
 		var box = this.scene.add.rectangle(this.centerX, this.centerY, this.width, this.height, 0x000000);
 		box.setAlpha(0.5);
-		// box.visible = false;
-		console.log("create warning scene1");
 
 		return box;
 	}

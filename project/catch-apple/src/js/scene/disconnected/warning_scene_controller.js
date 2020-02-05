@@ -21,7 +21,6 @@ export default class WarningSceneController extends Phaser.Scene
 	}
 
 	create = () => {
-		console.log("create warning scene");
 		this.view = new WarningSceneView(this, this.assets);
 		this.view.CreateBackground();
 		this.board = this.view.CreateBoard(0,1);

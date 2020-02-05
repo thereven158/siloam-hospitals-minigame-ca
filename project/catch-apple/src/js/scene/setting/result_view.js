@@ -30,9 +30,6 @@ export default class ResultView extends Phaser.GameObjects.Container{
         if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
             this.iPhone = true;
         }
-        console.log(this.width);
-        console.log(this.height);
-        console.log(this.resolution);
     }
 
     InitView(){
