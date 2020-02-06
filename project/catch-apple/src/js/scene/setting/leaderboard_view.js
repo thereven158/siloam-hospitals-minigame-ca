@@ -94,7 +94,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         this.MainGroup.add(this.BannerImage);
 
         this.TitleText = new Text(this.scene, 0, 0, 
-            "DEBBY GROCERIES", 
+            "DEBBY'S GROCERIES", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(50);
         this.TitleText.setPosition(this.BannerImage.x * 1.05, this.BannerImage.y);
