@@ -69,17 +69,17 @@ export default class TitleSceneController extends Phaser.Scene {
             this.muteAllSfx();
         }
 
-        if(this.api.isLogin == false){
-            this.api.AuthLogin()
-            .then(() => {
-                return console.log("loged in");
-            })
-            .catch(() => {
-                this.scene.start('WarningScene');
-            })
-        }else{
-            return console.log("has loged in");
-        }
+        // if(this.api.isLogin == false){
+        //     this.api.AuthLogin()
+        //     .then(() => {
+        //         return console.log("loged in");
+        //     })
+        //     .catch(() => {
+        //         this.scene.start('WarningScene');
+        //     })
+        // }else{
+        //     return console.log("has loged in");
+        // }
         
 
     }

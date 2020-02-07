@@ -51,11 +51,11 @@ export default class ResultView extends Phaser.GameObjects.Container{
 
         this.MainCloud = this.scene.add.container(0,0);
         this.add(this.MainCloud);
-        this.ContentContainer = new Image(this.scene, this.ScreenUtility.CenterX , 0 - this.ScreenUtility.CenterX, 'bg_white');
+        this.ContentContainer = new Image(this.scene, this.ScreenUtility.CenterX , 0 - this.ScreenUtility.CenterY * 0.5, 'bg_white');
 
         let contentWidth = (this.ScreenUtility.GameWidth);
         let maxHeight = contentWidth * (this.ContentContainer.height / this.ContentContainer.width);
-        let contentHeight = (this.ScreenUtility.GameHeight < (maxHeight * 1.1) ) ? this.ScreenUtility.GameHeight * 0.5 : maxHeight * 0.5;
+        let contentHeight = (this.ScreenUtility.GameHeight < (maxHeight * 1.1) ) ? this.ScreenUtility.GameHeight * 0.5 : maxHeight * 0.6;
 
         console.log(this.ScreenUtility.GameHeight);
         console.log(maxHeight);
@@ -66,7 +66,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
         this.MainCloud.add(this.ContentContainer);
 
         this.topCloud = new Image(this.scene, 0, 0, 'window-top');
-        this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.50);
+        this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.55);
         this.MainCloud.add(this.topCloud);
 
         this.topCloudTrans = new Image(this.scene, 0, 0, 'window-top');
@@ -81,7 +81,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
             "GAME OVER", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(120);
-        this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterX * 1.3);
+        this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterY * 0.7);
         this.MainCloud.add(this.TopText);
 
         this.ScoreTxt = new Text(this.scene, 0, 0, 
@@ -190,7 +190,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
 
 
         if(this.resolution >= 3/4){
-            this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.75);
+            this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.495);
             this.topCloudTrans.setPosition(this.ScreenUtility.CenterX, this.topCloud.y + this.topCloud.displayHeight * 0.35);
 
             this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterX);

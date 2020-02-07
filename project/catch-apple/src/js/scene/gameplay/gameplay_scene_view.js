@@ -95,7 +95,7 @@ export default class GameplaySceneView {
 
         this.ComboTxt = new Text(this.scene, 
           this.ScreenUtility.CenterX, 
-          this.ScreenUtility.CenterY * 0.6, 
+          this.ScreenUtility.CenterY * 0.65, 
           "",
         { color: '#ffffff', fontFamily: 'helsinki' })
         .setFontSizeRS(300);
