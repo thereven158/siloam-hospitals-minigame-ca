@@ -66,7 +66,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
         this.MainCloud.add(this.ContentContainer);
 
         this.topCloud = new Image(this.scene, 0, 0, 'window-top');
-        this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.55);
+        this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.6);
         this.MainCloud.add(this.topCloud);
 
         this.topCloudTrans = new Image(this.scene, 0, 0, 'window-top');
@@ -88,56 +88,56 @@ export default class ResultView extends Phaser.GameObjects.Container{
             "SCORE", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.ScoreTxt.setPosition(this.TopText.x * 0.45, this.TopText.y * 0.75);
+        this.ScoreTxt.setPosition(this.TopText.x * 0.45, this.TopText.y * 0.70);
         this.MainCloud.add(this.ScoreTxt);
 
         this.Score = new Text(this.scene, 0, 0, 
             "300", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.Score.setPosition(this.ScreenUtility.GameWidth * 0.8, this.TopText.y * 0.75);
+        this.Score.setPosition(this.ScreenUtility.GameWidth * 0.8, this.ScoreTxt.y);
         this.MainCloud.add(this.Score);
         
         this.ComboTxt = new Text(this.scene, 0, 0, 
             "COMBO", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.ComboTxt.setPosition(this.TopText.x * 0.45, this.ScoreTxt.y * 0.75);
+        this.ComboTxt.setPosition(this.ScoreTxt.x, this.ScoreTxt.y * 0.65);
         this.MainCloud.add(this.ComboTxt);
 
         this.ComboScore = new Text(this.scene, 0, 0, 
             "50", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.ComboScore.setPosition(this.ScreenUtility.GameWidth * 0.8, this.ScoreTxt.y * 0.75);
+        this.ComboScore.setPosition(this.ScreenUtility.GameWidth * 0.8, this.ComboTxt.y);
         this.MainCloud.add(this.ComboScore);
 
         this.BonusTxt = new Text(this.scene, 0, 0, 
             "BONUS POINT", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.BonusTxt.setPosition(this.TopText.x * 0.625, this.ComboTxt.y * 0.65);
+        this.BonusTxt.setPosition(this.TopText.x * 0.625, this.ComboTxt.y * 0.50);
         this.MainCloud.add(this.BonusTxt);
 
         this.BonusScore = new Text(this.scene, 0, 0, 
             "120", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.BonusScore.setPosition(this.ScreenUtility.GameWidth * 0.8, this.ComboTxt.y * 0.65);
+        this.BonusScore.setPosition(this.ScreenUtility.GameWidth * 0.8, this.BonusTxt.y);
         this.MainCloud.add(this.BonusScore);
 
         this.TotalTxt = new Text(this.scene, 0, 0, 
             "TOTAL SCORE", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(75);
-        this.TotalTxt.setPosition(this.TopText.x, this.BonusTxt.y * 0.55);
+        this.TotalTxt.setPosition(this.TopText.x, this.BonusTxt.y * 0.35);
         this.MainCloud.add(this.TotalTxt);
 
         this.TotalScore = new Text(this.scene, 0, 0, 
             "470", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(180);
-        this.TotalScore.setPosition(this.TopText.x, this.TotalTxt.y * 0.15);
+        this.TotalScore.setPosition(this.TopText.x, this.TotalTxt.y + this.TotalTxt.displayHeight * 1.4);
         this.MainCloud.add(this.TotalScore);
 
         this.BtnRetry = new Button(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY * 1.3, 'btn_normal');
@@ -193,7 +193,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
             this.topCloud.setPosition(this.ScreenUtility.CenterX, this.ContentContainer.y + this.ContentContainer.displayHeight * 0.48);
             this.topCloudTrans.setPosition(this.ScreenUtility.CenterX, this.topCloud.y + this.topCloud.displayHeight * 0.35);
 
-            this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterX);
+            this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterY * 0.7);
             this.ContentContainer.setPosition(this.ScreenUtility.CenterX , 0 - this.ScreenUtility.CenterX * 0.9);
             this.TopText.setFontSizeRS(90);
 
