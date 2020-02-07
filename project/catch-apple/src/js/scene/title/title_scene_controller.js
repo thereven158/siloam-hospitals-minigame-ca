@@ -132,6 +132,7 @@ export default class TitleSceneController extends Phaser.Scene {
     }
 
     clickPlay = ()=>{
+        this.counterNext = 0;
         this.Bgm.stop();
         this.audioClick.play();
         this.scene.start('GameScene', { music: this.music, sfx: this.sfx });
@@ -191,7 +192,21 @@ export default class TitleSceneController extends Phaser.Scene {
 
     clickNext = ()=>{
         this.audioClick.play();
+        this.counterNext ++;
         if(this.counterNext == 0){
+            console.log(this.counterNext);
+            this.TutorialView.SetDescription(
+                "DEBBY CONTROL",
+                "Swipe the screen to move Dabby to right or left.",
+                "",
+                'tutorial2',
+                'btn_normal',
+                'icon_next',
+                "NEXT"
+            );
+        }
+        else if(this.counterNext == 1){
+            console.log(this.counterNext);
             this.TutorialView.SetDescription(
                 "SCORE & HEALTH POINT",
                 "To get a point, catch the fruits, and veggies.",
@@ -201,7 +216,8 @@ export default class TitleSceneController extends Phaser.Scene {
                 'icon_next',
                 "NEXT"
             );
-        }else if(this.counterNext == 1){
+        }else if(this.counterNext == 2){
+            console.log(this.counterNext);
             this.TutorialView.SetDescription(
                 "SCORE & HEALTH POINT",
                 "Catching the junk food or fail to catch fruits or veggies will make you lose a health point.",
@@ -212,6 +228,7 @@ export default class TitleSceneController extends Phaser.Scene {
                 "NEXT"
             );
         }else{
+            console.log(this.counterNext);
             this.TutorialView.SetDescription(
                 "BONUS SCORE",
                 "Every time you catch fruit and veggies, in a row, you will trigger combo.",
@@ -221,11 +238,8 @@ export default class TitleSceneController extends Phaser.Scene {
                 'icon_play',
                 "PLAY"
             );
-            
             this.TutorialView.OnClickNext(this.clickPlay);
         }
-
-        this.counterNext ++;
     }
 
     clickCloseTutorial = ()=>{
