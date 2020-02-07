@@ -424,6 +424,14 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.AdsView.Open();
         this.adsShowed = true;
 
+        this.api.Ads()
+        .then(data => {
+            console.log(data);
+            this.AdsView.CreateContentAds(data.data.description, data.data.type, data.data.file);
+        }).catch(() => {
+            this.AdsView.CreateContentAds(null, null, null);
+        });
+
         this.gameoverBgm.stop();
 
         this.timerEvent = this.time.delayedCall(5000, this.eventCanClickOnExitAds, [], this);
