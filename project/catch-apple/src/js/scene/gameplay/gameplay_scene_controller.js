@@ -346,12 +346,12 @@ export default class GameplaySceneController extends Phaser.Scene {
 
     gameOver = ()=>{
         this.calculatingScore = Math.floor(this.score + (this.comboScore / 3));
-        // this.api.Score(this.calculatingScore).then(() => {
-        //     console.log('send score');
-        // })
-        // .catch(() => {
-        //     this.scene.start('WarningScene');
-        // });
+        this.api.Score(this.calculatingScore).then(() => {
+            console.log('send score');
+        })
+        .catch(() => {
+            this.scene.start('WarningScene');
+        });
 
         this.IsGameStarted = false;
         this.physics.world.pause();
@@ -388,9 +388,11 @@ export default class GameplaySceneController extends Phaser.Scene {
         
         this.LeaderView.Open();
 
-        this.api.Leaderboard().then(data => {
+        this.api.Leaderboard()
+        .then(data => {
+            console.log("check1");
             console.log(data.data.data);
-            this.LeaderView.Fill(data.data.data, data.myRank);
+            this.LeaderView.Fill(data.data.data, data.myRank, data.myRank);
         }).catch(() => {
             this.LeaderView.Fill(null, null, null);
             this.scene.start('WarningScene');
