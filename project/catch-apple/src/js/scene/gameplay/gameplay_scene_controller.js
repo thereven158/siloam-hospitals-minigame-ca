@@ -23,6 +23,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.initGame();
         this.initGameData();
         this.initAudio();
+        this.initEvent();
         this.music = data.music;
         this.sfx = data.sfx;
     }
@@ -57,6 +58,22 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.audioSwipe = this.sound.add('swipe_sfx');
         this.audioGoodCatch = this.sound.add('catch_good');
         this.audioBadCatch = this.sound.add('catch_bad');
+    }
+
+    initEvent(){
+        window.addEventListener("orientationchange", () => 
+            {
+                if (screen.orientation.angle == 0 || screen.orientation.angle == 180)
+                {
+                    this.scene.resume();
+                }
+                else if (screen.orientation.angle == 90 || screen.orientation.angle == 270)
+                {
+                    this.scene.pause();
+                }
+    
+                if (this.onOrientationChange) this.onOrientationChange();
+            });
     }
 
     create = ()=>{        
