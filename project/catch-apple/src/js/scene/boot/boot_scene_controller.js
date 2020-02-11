@@ -2,6 +2,7 @@ import LoaderController from '../../module/loader/loader_controller';
 import ScreenUtility from '../../module/screen/screen_utility';
 import AudioController from '../../module/audio/audio_controller';
 import ApiController from '../../module/api/api_controller';
+import OrientationHTMLWarningController from '../../module/flip_screen/orientation_html_warning_controller';
 
 
 export default class BootSceneController extends Phaser.Scene{
@@ -26,7 +27,7 @@ export default class BootSceneController extends Phaser.Scene{
         Promise.all([
             LoaderController.getInstance().init(),
             ApiController.getInstance().init(1),
-            // ApiController.getInstance().AuthLogin(),
+            OrientationHTMLWarningController.getInstance().Init(),
             LoaderController.getInstance()
 				.loadFonts([
 					{
@@ -43,7 +44,15 @@ export default class BootSceneController extends Phaser.Scene{
 					}
 				])        
         ]).then(() =>{
-            this.scene.start('LoadingScene');    
+            if (ScreenUtility.getInstance().GameWidth > ScreenUtility.getInstance().GameHeight)
+            {
+                console.log("check landscape");
+                this.scene.start('OrientationWarningScene');
+            }
+            else
+            {
+                this.scene.start('LoadingScene');
+            }
         }).catch((err) =>{
             // this.scene.start('WarningScene');
         })
