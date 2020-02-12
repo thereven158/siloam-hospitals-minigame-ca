@@ -81,14 +81,14 @@ export default class ResultView extends Phaser.GameObjects.Container{
             "GAME OVER", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(120);
-        this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterY * 0.7);
+        this.TopText.setPosition(this.ScreenUtility.CenterX, 0 - this.ScreenUtility.CenterY * 0.8);
         this.MainCloud.add(this.TopText);
 
         this.ScoreTxt = new Text(this.scene, 0, 0, 
             "SCORE", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.ScoreTxt.setPosition(this.TopText.x * 0.45, this.TopText.y * 0.70);
+        this.ScoreTxt.setPosition(this.TopText.x * 0.45, this.TopText.y * 0.8);
         this.MainCloud.add(this.ScoreTxt);
 
         this.Score = new Text(this.scene, 0, 0, 
@@ -102,7 +102,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
             "COMBO", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.ComboTxt.setPosition(this.ScoreTxt.x, this.ScoreTxt.y * 0.65);
+        this.ComboTxt.setPosition(this.ScoreTxt.x, this.ScoreTxt.y * 0.75);
         this.MainCloud.add(this.ComboTxt);
 
         this.ComboScore = new Text(this.scene, 0, 0, 
@@ -116,7 +116,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
             "BONUS POINT", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(60);
-        this.BonusTxt.setPosition(this.TopText.x * 0.625, this.ComboTxt.y * 0.50);
+        this.BonusTxt.setPosition(this.TopText.x * 0.625, this.ComboTxt.y * 0.65);
         this.MainCloud.add(this.BonusTxt);
 
         this.BonusScore = new Text(this.scene, 0, 0, 
