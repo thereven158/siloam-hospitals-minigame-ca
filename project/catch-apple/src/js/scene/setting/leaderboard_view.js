@@ -156,6 +156,9 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
                 
             }else if(window.devicePixelRatio == 3){
 
+                this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.6);
+                this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
+
                 if(this.resolution < 9/16){
                     
                 }
@@ -175,7 +178,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
 
         this.Number = new Text(this.scene, 0, 0, 
             "", 
-            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
+            { align:'left', fontFamily: 'helsinki', color: '#ffffff' })
             .setFontSizeRS(40);
         this.Number.setPosition(this.boxPlayer.x * 0.5, this.boxPlayer.y);
         this.Number.setText(index + 1);
@@ -183,7 +186,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
 
         this.TopTenName = new Text(this.scene, 0, 0, 
             "-", 
-            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
+            { align:'left', fontFamily: 'helsinki', color: '#ffffff' })
             .setFontSizeRS(40);
         this.TopTenName.setPosition(this.boxPlayer.x, this.boxPlayer.y);
         this.TopTenName.setText(this.topName[index]);
@@ -191,7 +194,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
 
         this.TopTenScore = new Text(this.scene, 0, 0, 
             "0", 
-            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
+            { align:'left', fontFamily: 'helsinki', color: '#ffffff' })
             .setFontSizeRS(40);
         this.TopTenScore.setPosition(this.boxPlayer.x * 1.45, this.boxPlayer.y);
         this.TopTenScore.setText(this.topScore[index]);
@@ -206,7 +209,10 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
 
         if(this.resolution >= 3/4){
             this.tempY += 0.275;
-        }else{
+        }else if(this.iPhone){
+            this.tempY += 0.2;
+        }
+        else{
             this.tempY += 0.25;
         }
         
@@ -215,7 +221,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
 
     CreateCurrentBoxRank(myName, myRank, myScore){
         this.CurrentRank = new Image(this.scene, 0, 0, 'bg_current__rank_big');
-        this.CurrentRank.setPosition(this.BannerImage.x, this.ContentContainer.displayHeight * 1.1);
+        this.CurrentRank.setPosition(this.ContentContainer.x, this.boxPlayer.y * 1.075);
         this.MainGroup.add(this.CurrentRank);
 
         if(this.resolution >= 3/4){
@@ -225,16 +231,16 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
 
         this.YourName = new Text(this.scene, 0, 0, 
             "-", 
-            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
-            .setFontSizeRS(70);
+            { align:'left', fontFamily: 'helsinki', color: '#ffffff' })
+            .setFontSizeRS(40);
         this.YourName.setPosition(this.CurrentRank.x, this.CurrentRank.y);
         this.YourName.setText(myName);
         this.MainGroup.add(this.YourName);
 
         this.YourRank = new Text(this.scene, 0, 0, 
             "0", 
-            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
-            .setFontSizeRS(70);
+            { align:'left', fontFamily: 'helsinki', color: '#ffffff' })
+            .setFontSizeRS(40);
         this.YourRank.setPosition(this.CurrentRank.x * 0.5, this.CurrentRank.y);
         if(myRank == -1){
             this.YourRank.setText("-");
@@ -246,8 +252,8 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
 
         this.YourScore = new Text(this.scene, 0, 0, 
             "0", 
-            { align:'left', fontFamily: 'helsinki', color: '#1849A0' })
-            .setFontSizeRS(70);
+            { align:'left', fontFamily: 'helsinki', color: '#ffffff' })
+            .setFontSizeRS(40);
         this.YourScore.setPosition(this.CurrentRank.x * 1.5, this.CurrentRank.y);
         if(myScore == 0){
             this.YourScore.setText("0");

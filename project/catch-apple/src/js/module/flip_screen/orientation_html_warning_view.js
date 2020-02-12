@@ -55,7 +55,7 @@ export default class OrientationHTMLWarningView
         this.backgroundModal.appendChild(this.modalPanel);
 
         let image = document.createElement('img');
-        image.src = "images/orientation_warning/Warning.png";
+        image.src = "assets/images/orientation_warning/Warning.png";
         image.setAttribute("style", `width: 30%;
                             `);
 
