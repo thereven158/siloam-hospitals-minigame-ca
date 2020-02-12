@@ -7,6 +7,7 @@ import AdsView from '../setting/ads_view';
 import LeaderView from '../setting/leaderboard_view';
 import GoodFood from '../../subcontroller/good_food';
 import BadFood from '../../subcontroller/bad_food';
+import OrientationHTMLWarningController from "../../module/flip_screen/orientation_html_warning_controller";
 
 import ApiController from '../../module/api/api_controller';
 
@@ -61,19 +62,15 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     initEvent(){
-        window.addEventListener("orientationchange", () => 
-            {
-                if (screen.orientation.angle == 0 || screen.orientation.angle == 180)
-                {
-                    this.scene.resume();
-                }
-                else if (screen.orientation.angle == 90 || screen.orientation.angle == 270)
-                {
-                    this.scene.pause();
-                }
-    
-                if (this.onOrientationChange) this.onOrientationChange();
-            });
+        OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent(() => {
+			let orientation = window.orientation;
+
+			if (orientation == 90 || orientation == 270) 
+			{
+				if(this.IsGameStarted == true) this.clickPause();
+			} 
+		});
+
     }
 
     create = ()=>{        
@@ -478,6 +475,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.adsShowed = false;
         this.AdsView.Close();
 
+        OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent(null);
         this.scene.stop();
         this.scene.start('TitleScene', { music: this.music, sfx: this.sfx });
     }

@@ -1,6 +1,6 @@
 import OrientationHTMLWarningView from './orientation_html_warning_view';
 
-export default class OrientationHTMLWarningController extends Phaser.Scene
+export default class OrientationHTMLWarningController
 {    
 	static getInstance = () => {
 		if (!OrientationHTMLWarningController.instance) {
@@ -42,13 +42,16 @@ export default class OrientationHTMLWarningController extends Phaser.Scene
 
     initEvents()
     {
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent))
+        // if (/iPhone|iPad|iPod/i.test(navigator.userAgent))
+        if(true)
         {
             window.addEventListener("resize", () => 
             {
                 //console.log("the orientation of the device is now " + screen.orientation.angle);
              
-                if (window.innerWidth > window.innerHeight)
+                let isLandscape = window.innerWidth > window.innerHeight;
+
+                if (isLandscape)
                 {                    
                     this.hideGame(true);
                 }
@@ -57,25 +60,27 @@ export default class OrientationHTMLWarningController extends Phaser.Scene
                     this.hideGame(false);
                 }
     
-                if (this.onOrientationChange) this.onOrientationChange();
+                if (this.onOrientationChange) this.onOrientationChange(isLandscape);
             });
         }  
         else
         {
             window.addEventListener("orientationchange", () => 
             {
+                let isLandscape = screen.orientation.angle == 90 || screen.orientation.angle == 270;
+                
                 //console.log("the orientation of the device is now " + screen.orientation.angle);
             
-                if (screen.orientation.angle == 0 || screen.orientation.angle == 180)
+                if (!isLandscape)
                 {
                     this.hideGame(false);
                 }
-                else if (screen.orientation.angle == 90 || screen.orientation.angle == 270)
+                else if (isLandscape)
                 {
                     this.hideGame(true);
                 }
     
-                if (this.onOrientationChange) this.onOrientationChange();
+                if (this.onOrientationChange) this.onOrientationChange(isLandscape);
             });
         }
     }

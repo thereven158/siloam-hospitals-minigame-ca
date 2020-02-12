@@ -46,8 +46,11 @@ export default class BootSceneController extends Phaser.Scene{
         ]).then(() =>{
             if (ScreenUtility.getInstance().GameWidth > ScreenUtility.getInstance().GameHeight)
             {
-                console.log("check landscape");
-                this.scene.start('OrientationWarningScene');
+                OrientationHTMLWarningController.getInstance().hideGame(true);
+                OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent(() => {
+                    location.reload();
+                });
+
             }
             else
             {

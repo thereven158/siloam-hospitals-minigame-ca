@@ -5,6 +5,7 @@ import TutorialView from '../setting/tutorial_view';
 import SettingView from '../setting/setting_view';
 import LeaderView from '../setting/leaderboard_view';
 import ApiController from '../../module/api/api_controller';
+import OrientationHTMLWarningController from '../../module/flip_screen/orientation_html_warning_controller';
 
 export default class TitleSceneController extends Phaser.Scene {
 	constructor() {
@@ -85,7 +86,7 @@ export default class TitleSceneController extends Phaser.Scene {
     }
 
     update = ()=>{
-
+        
     }
 
     showTutorial = ()=>{

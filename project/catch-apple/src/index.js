@@ -6,15 +6,11 @@ import TitleScene from '../src/js/scene/title/title_scene_controller';
 import GameplayScene from '../src/js/scene/gameplay/gameplay_scene_controller';
 import PauseScene from '../src/js/scene/pause/pause_scene_controller';
 import WarningSceneController from '../src/js/scene/disconnected/warning_scene_controller';
-import OrientationWarningSceneController  from '../src/js/scene/flip_warning_scene/orientation_warning_scene_controller';
 
 let actualWidth = window.innerWidth < 480 ? window.innerWidth * window.devicePixelRatio : window.innerWidth;
 let actualHeight = window.innerWidth < 480 ? window.innerHeight * window.devicePixelRatio : window.innerHeight;
 let actualZoom = window.innerWidth < 480 ? 1 / window.devicePixelRatio : 1;
-// let isLandscape = window.innerWidth > window.innerHeight;
-// if(isLandscape){
-//   actualWidth = actualHeight * (3/4);
-// }
+
 let phaserType = (navigator.userAgent.match(/Mozilla/i)) ? Phaser.AUTO: Phaser.CANVAS;
 
 let renderType = Phaser.CANVAS;
@@ -53,7 +49,6 @@ var config = {
 	},
 	scene: [
 		BootScene,
-		OrientationWarningSceneController,
 		LoadingScene,
 		TitleScene,
 		WarningSceneController,
