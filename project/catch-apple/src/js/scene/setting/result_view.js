@@ -137,7 +137,7 @@ export default class ResultView extends Phaser.GameObjects.Container{
             "470", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(180);
-        this.TotalScore.setPosition(this.TopText.x, this.TotalTxt.y + this.TotalTxt.displayHeight * 1.4);
+        this.TotalScore.setPosition(this.TopText.x, this.TotalTxt.y + this.TotalTxt.displayHeight * 1.7);
         this.MainCloud.add(this.TotalScore);
 
         this.BtnRetry = new Button(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY * 1.3, 'btn_normal');

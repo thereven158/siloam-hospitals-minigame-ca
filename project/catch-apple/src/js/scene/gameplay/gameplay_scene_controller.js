@@ -62,14 +62,13 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     initEvent(){
-        OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent(() => {
-			let orientation = window.orientation;
-
-			if (orientation == 90 || orientation == 270) 
-			{
-				if(this.IsGameStarted == true) this.clickPause();
-			} 
-		});
+        OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent((isLandscape) => 
+        {
+            if (isLandscape) 
+            {
+                if(this.IsGameStarted == true) this.clickPause();
+            } 
+        });
 
     }
 
@@ -359,6 +358,8 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     gameOver = ()=>{
+        OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent(null);
+
         this.calculatingScore = Math.floor(this.score + (this.comboScore / 3));
         this.api.Score(this.calculatingScore).then(() => {
             console.log('send score');
@@ -467,6 +468,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.audioClose.play();
         
         this.AdsView.Close();
+        OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent(null);
         this.scene.restart();
     }
 
