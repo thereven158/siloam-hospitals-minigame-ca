@@ -44,6 +44,7 @@ export default class TitleSceneController extends Phaser.Scene {
     }
     
     create = ()=>{
+        OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent(null);
         this.api = ApiController.getInstance();
         this.view = new TitleSceneView(this).create();
         this.view.OnClickPlay(this.clickPlay);
