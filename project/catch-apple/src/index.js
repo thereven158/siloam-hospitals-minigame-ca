@@ -49,7 +49,7 @@ var config = {
 	canvas: document.getElementById('game'),
 	parent: 'content',
 	scale: {
-		mode: Phaser.Scale.FIT,
+		mode: Phaser.Scale.NONE,
 		autoCenter: Phaser.Scale.CENTER_BOTH,
 		width: actualWidth,
 		height: actualHeight,
