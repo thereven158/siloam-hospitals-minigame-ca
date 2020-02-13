@@ -24,7 +24,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.initGame();
         this.initGameData();
         this.initAudio();
-        this.initEvent();
+        this.initEventFlipScreen();
         this.music = data.music;
         this.sfx = data.sfx;
     }
@@ -61,7 +61,7 @@ export default class GameplaySceneController extends Phaser.Scene {
         this.audioBadCatch = this.sound.add('catch_bad');
     }
 
-    initEvent(){
+    initEventFlipScreen(){
         OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent((isLandscape) => 
         {
             if (isLandscape) 

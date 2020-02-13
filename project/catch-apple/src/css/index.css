@@ -1,0 +1,15 @@
+html, body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  body {
+    position: relative;
+  }
+/* body
+{
+    margin: 0px 0px 0px 0px;
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    background-color:#000000
+} */

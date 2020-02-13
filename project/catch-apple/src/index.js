@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import './css/index.css';
 
 import BootScene from '../src/js/scene/boot/boot_scene_controller';
 import LoadingScene from '../src/js/scene/loading/loading_scene_controller';
@@ -13,10 +14,17 @@ let actualZoom = window.innerWidth < 480 ? 1 / window.devicePixelRatio : 1;
 
 let phaserType = (navigator.userAgent.match(/Mozilla/i)) ? Phaser.AUTO: Phaser.CANVAS;
 
+let isLandscape = window.innerWidth > window.innerHeight;
 let renderType = Phaser.CANVAS;
 
 if (/Firefox/i.test(navigator.userAgent)){
 	renderType = Phaser.WEBGL;
+}
+
+if (isLandscape) {
+	if (!/Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+		actualWidth = actualHeight * (actualHeight/actualWidth);
+	}
 }
 
 if (document.getElementById('game') == null)
@@ -34,6 +42,7 @@ console.log("actual: " + actualHeight);
 console.log("innerWidth: " + window.innerWidth);
 console.log("actual: " + actualWidth);
 
+console.log("zoomed: " + actualZoom);
 
 var config = {
 	type: renderType,
