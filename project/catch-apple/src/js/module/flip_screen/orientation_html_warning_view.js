@@ -56,7 +56,8 @@ export default class OrientationHTMLWarningView
 
         let image = document.createElement('img');
         image.src = "assets/images/orientation_warning/Warning.png";
-        image.setAttribute("style", `width: 30%;
+        // image.src = "images/orientation_warning/Warning.png";
+        image.setAttribute("style", `width: 20%;
                             `);
 
         let newline = document.createElement("BR");
@@ -68,7 +69,7 @@ export default class OrientationHTMLWarningView
         newline = document.createElement("BR");
         let warningText2 = document.createTextNode("SILAKAN PUTAR DEVICE ANDA.");
 
-        this.modalPanel.style.font = "40px helsinki";
+        this.modalPanel.style.font = "5vh helsinki";
         this.modalPanel.style.color = "#f0526c";
         this.modalPanel.style.textAlign = "center";
 

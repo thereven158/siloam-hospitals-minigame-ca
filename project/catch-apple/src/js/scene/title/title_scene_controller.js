@@ -42,9 +42,21 @@ export default class TitleSceneController extends Phaser.Scene {
         ScreenUtility.ResetGameScreen();
         this.ScreenUtility = ScreenUtility.getInstance();
     }
+
+    initEventFlipScreen(){
+        OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent((isLandscape) => 
+        {
+            if (!isLandscape) 
+            {
+                console.log("scene restart");
+                this.scene.restart();
+            } 
+        });
+    }
     
     create = ()=>{
         OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent(null);
+        // this.initEventFlipScreen();
         this.api = ApiController.getInstance();
         this.view = new TitleSceneView(this).create();
         this.view.OnClickPlay(this.clickPlay);
