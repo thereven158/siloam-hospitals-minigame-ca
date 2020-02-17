@@ -34,12 +34,6 @@ export default class LoadingTitleController {
         this.scene.load.image('icon_leaderboard',this.scene.CreatePath('/images/uigame/ui_icon_leaderboard.png'));
         this.scene.load.image('banner_leaderboard',this.scene.CreatePath('/images/uigame/ui_illustration_long.png'));
         this.scene.load.image('icon_mainmenu',this.scene.CreatePath('/images/uigame/ui_icon_main_menu.png'));
-
-        this.scene.load.image('bg_top3',this.scene.CreatePath('/images/uigame/ui_panel_user_top.png'));
-        this.scene.load.image('bg_non_top3',this.scene.CreatePath('/images/uigame/ui_panel_user_regular.png'));
-        this.scene.load.image('bg_current_rank',this.scene.CreatePath('/images/uigame/ui_panel_user_main.png'));
-        this.scene.load.image('bg_current__rank_big',this.scene.CreatePath('/images/uigame/ui_panel_user_main_big.png'));
-        this.scene.load.image('bg_inner_box',this.scene.CreatePath('/images/uigame/ui_panel_large_leaderboard.png'));
            
         this.scene.load.image('background_menu', this.scene.CreatePath('/images/env/ingame_env_background_main.png'));
         this.scene.load.image('background_tree', this.scene.CreatePath('/images/env/ingame_env_background_second.png'));
@@ -61,5 +55,12 @@ export default class LoadingTitleController {
         this.scene.load.image('regular_btn_warning', this.scene.CreatePath('/images/warning/regular_btn.png'));
         this.scene.load.image('regular_btn_pressed_warning', this.scene.CreatePath('/images/warning/regular_btn_pressed.png'));
         
+        //leaderboard
+        this.scene.load.image('bg_top3',this.scene.CreatePath('/images/uigame/ui_panel_user_top.png'));
+        this.scene.load.image('bg_non_top3',this.scene.CreatePath('/images/uigame/ui_panel_user_regular.png'));
+        this.scene.load.image('bg_current_rank',this.scene.CreatePath('/images/uigame/ui_panel_user_main.png'));
+        this.scene.load.image('bg_current__rank_big',this.scene.CreatePath('/images/uigame/ui_panel_user_main_big.png'));
+        this.scene.load.image('lb_inner_board',this.scene.CreatePath('/images/uigame/ui_panel_large_leaderboard.png'));
+
      }
 }

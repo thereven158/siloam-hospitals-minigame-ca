@@ -7,6 +7,9 @@ import LeaderView from '../setting/leaderboard_view';
 import ApiController from '../../module/api/api_controller';
 import OrientationHTMLWarningController from '../../module/flip_screen/orientation_html_warning_controller';
 
+import LeaderboardController from '../leaderboard/leaderboard_controller';
+
+
 export default class TitleSceneController extends Phaser.Scene {
 	constructor() {
         super({key: 'TitleScene'});
@@ -63,6 +66,22 @@ export default class TitleSceneController extends Phaser.Scene {
         this.view.OnCLickTutorial(this.clickTutorial);
         this.view.OnCLickSetting(this.clickSetting);
         this.view.OnClickLeaderboard(this.clickLeaderboard);
+
+        var assets = {
+            outerboard: 'lb_outer_board',
+            innerboard: 'lb_inner_board',
+            closeButton: 'btn_close',
+            closeButtonPress: 'btn_close_pressed',
+            banner: 'banner_leaderboard',
+            playerBox: 'bg_current_rank',
+            topBox: 'bg_top3',
+            box: 'bg_non_top3',
+            playerBoxMain: 'bg_current__rank_big'
+        };
+        var title = "DEBBY'S GROCERIES";
+        this.leaderboardScreen = new LeaderboardController(this, assets, title);
+        this.leaderboardScreen.create();
+
 
         if(this.Bgm == null){
             this.Bgm = this.sound.add('menu_music',{
@@ -128,20 +147,21 @@ export default class TitleSceneController extends Phaser.Scene {
     }
 
     showLeaderboard = ()=>{
-        this.LeaderView = new LeaderView(this);
-        this.LeaderView.OnClickClose(this.clickCloseLeaderboard);
+        // this.LeaderView = new LeaderView(this);
+        // this.LeaderView.OnClickClose(this.clickCloseLeaderboard);
         
-        this.LeaderView.Open();
+        // this.LeaderView.Open();
 
-        this.api.Leaderboard()
-        .then(data => {
-            console.log("check1");
-            console.log(data.data.data);
-            this.LeaderView.Fill(data.data.data, data.myRank, data.myRank);
-        }).catch(() => {
-            this.LeaderView.Fill(null, null, null);
-            this.scene.start('WarningScene');
-        });
+        // this.api.Leaderboard()
+        // .then(data => {
+        //     console.log(data.data.data);
+        //     this.LeaderView.Fill(data.data.data, data.myRank, data.myRank);
+        // }).catch(() => {
+        //     this.LeaderView.Fill(null, null, null);
+        //     this.scene.start('WarningScene');
+        // });
+
+        this.leaderboardScreen.show();
 
     }
 
