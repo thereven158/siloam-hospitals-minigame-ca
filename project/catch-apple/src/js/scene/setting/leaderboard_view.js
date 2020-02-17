@@ -15,10 +15,12 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
 
         scene.add.existing(this);  
         
+        this.centerX = this.ScreenUtility.CenterX;
+        this.centerY = this.ScreenUtility.CenterY;
         this.width = this.ScreenUtility.GameWidth;
         this.height = this.ScreenUtility.GameHeight;
-        this.dwidth = this.ScreenUtility.DefaultWidth;
-        this.dheight = this.ScreenUtility.DefaultHeight;
+        this.dwidth = this.ScreenUtility.GameDefaultWidth;
+        this.dheight = this.ScreenUtility.GameDefaultHeight;
 
         this.GetResolution();
 
@@ -37,6 +39,14 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         console.log(this.resolution);
     }
 
+    SetResponsiveScale = (size) => {
+		if ((this.width / this.height) <= 9/16) {
+			return size*(this.width / this.dwidth);
+		}
+		else {
+			return size*(this.height / this.dheight);
+		}
+    }
 
     InitView(){
         this.tempY = 1.5;
@@ -54,12 +64,6 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
           this.Background.setDisplaySize(this.ScreenUtility.GameWidth, 
             this.ScreenUtility.GameHeight);
         this.add(this.Background);
-
-        // this.bgTree = new Image (this.scene, 
-        //     this.ScreenUtility.CenterX, 
-        //     this.ScreenUtility.GameHeight, 
-        //     'background_tree');
-        // this.add(this.bgTree);
 
         this.Blackground = new Image(this.scene, this.ScreenUtility.CenterX, this.ScreenUtility.CenterY, 'bg_black').setInteractive();
 		this.Blackground.setDisplaySize(this.ScreenUtility.GameWidth, this.ScreenUtility.GameHeight);
@@ -84,7 +88,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
             "LEADERBOARD", 
             { align:'center', fontFamily: 'helsinki', color: '#ffffff' })
             .setFontSizeRS(80);
-        this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.5 - this.TopText.displayHeight);
+        this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.5 - this.TopText.displayHeight * 1.25);
         this.MainGroup.add(this.TopText);
 
         this.BtnClose = new Button (this.scene, 0, 0, 'btn_close');
@@ -94,6 +98,7 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         this.BannerImage = new Image(this.scene, this.ContentContainer.x, this.ContentContainer.y, 'banner_leaderboard');
         this.BannerImage.setDisplayWidth(this.ContentContainer.displayWidth, true);
         this.BannerImage.setPosition(this.ContentContainer.x, this.ContentContainer.y -this.ContentContainer.displayHeight * 0.4);
+        this.BannerImage.setScale(this.SetResponsiveScale(1.1));
         this.MainGroup.add(this.BannerImage);
 
         this.TitleText = new Text(this.scene, 0, 0, 
@@ -121,25 +126,32 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
             "SCORE", 
             { align:'center', fontFamily: 'helsinki', color: '#1849A0' })
             .setFontSizeRS(40);
-        this.TxtScore.setPosition(this.ContentContainer.displayWidth * 1.05, this.TxtRank.y);
+        this.TxtScore.setPosition(this.ContentContainer.x + this.ContentContainer.x * 0.45, this.TxtRank.y);
         this.MainGroup.add(this.TxtScore);
 
-        if(this.resolution >= 0.75){
-            this.ContentContainer.displayHeight = contentHeight * 0.85;
-            this.ContentContainer.setPosition(this.ContentContainer.x, this.ContentContainer.y * 1.1);
-
-            this.BannerImage.setPosition(this.ContentContainer.x, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.4);
-            this.TitleText.setPosition(this.BannerImage.x * 1.05, this.BannerImage.y);
-            this.TxtRank.setPosition(this.BannerImage.x * 0.5, this.BannerImage.y * 1.4);
-            this.TxtName.setPosition(this.ContentContainer.x, this.TxtRank.y);
-            this.TxtScore.setPosition(this.ContentContainer.displayWidth * 1.05, this.TxtRank.y);
-
-            this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.55);
-            this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
+        if(this.iPhone == false){
+            if(this.resolution >= 0.75){
+                this.ContentContainer.displayHeight = contentHeight * 0.85;
+                this.ContentContainer.setPosition(this.ContentContainer.x, this.ContentContainer.y * 1.1);
+    
+                this.BannerImage.setPosition(this.ContentContainer.x, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.4);
+                this.BannerImage.setDisplayWidth(this.ContentContainer.displayWidth, true);
+                this.TitleText.setPosition(this.BannerImage.x * 1.05, this.BannerImage.y);
+                this.TxtRank.setPosition(this.BannerImage.x * 0.5, this.BannerImage.y * 1.4);
+                this.TxtName.setPosition(this.ContentContainer.x, this.TxtRank.y);
+                this.TxtScore.setPosition(this.ContentContainer.displayWidth * 1.05, this.TxtRank.y);
+    
+                this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.55);
+                this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
+            }else{
+                this.ContentContainer.setScale(this.SetResponsiveScale(0.8));
+            }
         }
         
         if(this.iPhone == true){
             if(window.devicePixelRatio == 2){
+                
+            this.BannerImage.setDisplayWidth(this.ContentContainer.displayWidth, true);
 
                 if(this.resolution == 2/3){
                     this.ContentContainer.displayHeight = contentHeight * 0.8;
@@ -153,11 +165,23 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
                     this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.6);
                     this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
                     
-                }else if(this.resolution >= 3/4){
+                }else if(this.resolution >= 0.749){
+                    this.ContentContainer.displayHeight = contentHeight * 0.85;
+                    this.ContentContainer.setPosition(this.ContentContainer.x, this.ContentContainer.y * 1.1);
 
+                    this.BannerImage.setPosition(this.ContentContainer.x, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.4);
+                    this.BannerImage.setDisplayWidth(this.ContentContainer.displayWidth, true);
+                    this.TitleText.setPosition(this.BannerImage.x * 1.05, this.BannerImage.y);
+                    this.TxtRank.setPosition(this.BannerImage.x * 0.5, this.BannerImage.y * 1.4);
+                    this.TxtName.setPosition(this.ContentContainer.x, this.TxtRank.y);
+                    this.TxtScore.setPosition(this.ContentContainer.displayWidth * 1.05, this.TxtRank.y);
+
+                    this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.5 - this.TopText.displayHeight * 1.2);
+                    this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
                 }
                 
             }else if(window.devicePixelRatio == 3){
+                this.BannerImage.setDisplayWidth(this.ContentContainer.displayWidth, true);
 
                 this.TopText.setPosition(this.ContentContainer.x - this.ContentContainer.displayWidth * 0.125, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.6);
                 this.BtnClose.setPosition(this.ContentContainer.displayWidth * 1.15, this.TopText.y);
@@ -225,15 +249,17 @@ export default class LeaderboardlView extends Phaser.GameObjects.Container{
         
         if(this.iPhone){
             if(window.devicePixelRatio == 2){
-                if(this.resolution >= 3/4){
+                if(this.resolution >= 0.749){
                     this.tempY = this.tempY - 1.75;
-                    this.tempY += 1.5;
+                    this.tempY += 3.25;
                 }else if(this.resolution == 2/3){
                     this.tempY += 1.5;
                 }
                 else{
                     this.tempY += 2;
                 }
+            }else{
+                this.tempY += 2;
             }
             
         }

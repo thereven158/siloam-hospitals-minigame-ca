@@ -50,7 +50,7 @@ var config = {
 	parent: 'content',
 	scale: {
 		mode: Phaser.Scale.NONE,
-		autoCenter: Phaser.Scale.CENTER_BOTH,
+		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
 		width: actualWidth,
 		height: actualHeight,
 		zoom: actualZoom
