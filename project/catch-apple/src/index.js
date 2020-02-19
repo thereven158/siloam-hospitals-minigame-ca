@@ -19,6 +19,7 @@ let renderType = Phaser.CANVAS;
 
 if (/Firefox/i.test(navigator.userAgent)){
 	renderType = Phaser.WEBGL;
+	// window.toolbar.visible
 }
 
 if (isLandscape) {

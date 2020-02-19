@@ -1,4 +1,3 @@
 {
-	"BASE_ASSET_URL": "../dist/assets",
-	"TUTORIAL" : 0
+	"BASE_ASSET_URL": "../dist/assets"
 }

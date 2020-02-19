@@ -42,8 +42,7 @@ export default class OrientationHTMLWarningController
 
     initEvents()
     {
-        // if (/iPhone|iPad|iPod/i.test(navigator.userAgent))
-        if(true)
+        if (true)//(/iPhone|iPad|iPod/i.test(navigator.userAgent))
         {
             window.addEventListener("resize", () => 
             {
@@ -62,8 +61,27 @@ export default class OrientationHTMLWarningController
     
                 if (this.onOrientationChange) this.onOrientationChange(isLandscape);
             });
-        }
-        
+        }  
+        /*else
+        {
+            window.addEventListener("orientationchange", () => 
+            {
+                let isLandscape = screen.orientation.angle == 90 || screen.orientation.angle == 270;
+
+                //console.log("the orientation of the device is now " + screen.orientation.angle);
+            
+                if (!isLandscape)
+                {
+                    this.hideGame(false);
+                }
+                else if (isLandscape)
+                {
+                    this.hideGame(true);
+                }
+    
+                if (this.onOrientationChange) this.onOrientationChange(isLandscape);
+            });
+        }*/
     }
 
     setOnOrientationChangeEvent(newEvent)
