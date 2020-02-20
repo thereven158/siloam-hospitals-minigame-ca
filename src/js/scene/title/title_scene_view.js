@@ -99,6 +99,7 @@ export default class TitleSceneView {
 
         this.BtnSetting = new Button(this.scene, this.ScreenUtility.GameWidth * 0.1, this.ScreenUtility.GameHeight * 0.05, 'btn_setting');
         this.BtnSetting.setPressedTexture('btn_setting_pressed');
+
     }
 
     OnClickPlay = (event) =>{

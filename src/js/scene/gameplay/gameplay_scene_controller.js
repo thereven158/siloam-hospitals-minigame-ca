@@ -65,6 +65,7 @@ export default class GameplaySceneController extends Phaser.Scene {
     initEventFlipScreen(){
         OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent((isLandscape) => 
         {
+            OrientationHTMLWarningController.getInstance().scrollToTOP();
             if (isLandscape) 
             {
                 if(this.IsGameStarted == true) this.clickPause();
@@ -395,6 +396,7 @@ export default class GameplaySceneController extends Phaser.Scene {
     }
 
     backToTitle = ()=>{
+        OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent(null);
         this.gameoverBgm.stop();
         this.scene.launch('TitleScene');
         this.scene.stop();

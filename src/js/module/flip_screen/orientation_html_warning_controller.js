@@ -50,6 +50,9 @@ export default class OrientationHTMLWarningController
              
                 let isLandscape = window.innerWidth > window.innerHeight;
 
+                console.log("orientation: "+ window.orientation);
+                this.scrollToTOP();
+
                 if (isLandscape)
                 {                    
                     this.hideGame(true);
@@ -87,6 +90,11 @@ export default class OrientationHTMLWarningController
     setOnOrientationChangeEvent(newEvent)
     {
         this.onOrientationChange = newEvent;
+    }
+
+    scrollToTOP(){
+        console.log("scroll to top ?");
+        window.scrollTo(0,1);
     }
 
 }

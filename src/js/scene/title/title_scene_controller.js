@@ -26,6 +26,7 @@ export default class TitleSceneController extends Phaser.Scene {
         this.initAudio();
         this.music = data.music;
         this.sfx = data.sfx;
+        this.flipped = false;
 
         if(this.music == null){
             this.music = true;

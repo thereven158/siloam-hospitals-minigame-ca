@@ -76,6 +76,8 @@ export default class OrientationHTMLWarningView
         this.modalPanel.appendChild(warningText);
         this.modalPanel.appendChild(newline);
         this.modalPanel.appendChild(warningText2);
+
+        this.parent = document.body;
     }
 
     hideElement(element, isHiding=true)

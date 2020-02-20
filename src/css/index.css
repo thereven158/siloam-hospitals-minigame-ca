@@ -1,8 +1,12 @@
 html, body {
-    overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-x: visible;
+    overflow-y: visible;
 }
 
 body #game {
   position: fixed;
 }
+/* 
+body #background_modal {
+  touch-action: double-tap-zoom;
+} */

@@ -103,7 +103,6 @@ export default class AdsView extends Phaser.GameObjects.Container{
             video.playsinline = true;
             video.autoplay = true;
             video.loop = true;
-            console.log();
 
             let element = this.scene.add.dom(this.ScreenUtility.CenterX, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.2, video);
             this.MainGroup.add(element);
