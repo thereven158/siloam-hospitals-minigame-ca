@@ -272,8 +272,8 @@ export default class LeaderboardView
 
 		playerData.forEach((data, index) => {
 			innerboard.boxes[index].name.text = data.userName;
-            innerboard.boxes[index].score.text = data.score;
-        });
+			innerboard.boxes[index].score.text = data.score;			
+		});
 
 		for (var i = playerData.length; i < innerboard.boxes.length; i++) {
 			innerboard.boxes[i].name.text = '(Empty)';
@@ -281,18 +281,24 @@ export default class LeaderboardView
 		}
 
 		if (playerRank == null) {
-			innerboard.playerBox.rank.text = '-';
+			innerboard.playerBox.rank.text = '---';
 			innerboard.playerBox.name.text = '(Empty)';
 			innerboard.playerBox.score.text = '-';
 		}
 		else {
 			var rank = playerRank.rank - 1;
 			if (rank == -1) {
-				innerboard.playerBox.rank.text = '-';
+				innerboard.playerBox.rank.text = '---';
+			}
+			else if (rank < -1) {
+				innerboard.playerBox.rank.text = '---';
+			}
+			else if (rank > 9) {
+				innerboard.playerBox.rank.text = playerRank.rank;
 			}
 			else {
 				innerboard.playerBox.rank.text = playerRank.rank;
-                innerboard.boxes[rank].box.setTexture(this.assets.playerBox);
+				innerboard.boxes[rank].box.setTexture(this.assets.playerBox);
 			}
 			innerboard.playerBox.name.text = playerRank.userName;
 			innerboard.playerBox.score.text = playerRank.score;

@@ -39,7 +39,7 @@ export default class LeaderboardController
 		this.api.Leaderboard()
 		.then(data => {
 			console.log(data.data.data);
-			// this.view.Fill(this.innerboard, data.data.data, data.myRank);
+			this.view.Fill(this.innerboard, data.data.data, data.myRank);
             this.view.Enable(this.box, this.container);
 		})
 		.catch(() => {

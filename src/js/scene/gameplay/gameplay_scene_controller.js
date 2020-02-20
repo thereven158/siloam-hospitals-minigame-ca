@@ -65,7 +65,7 @@ export default class GameplaySceneController extends Phaser.Scene {
     initEventFlipScreen(){
         OrientationHTMLWarningController.getInstance().setOnOrientationChangeEvent((isLandscape) => 
         {
-            OrientationHTMLWarningController.getInstance().scrollToTOP();
+            // OrientationHTMLWarningController.getInstance().scrollToTOP();
             if (isLandscape) 
             {
                 if(this.IsGameStarted == true) this.clickPause();

@@ -1,6 +1,6 @@
 html, body {
-    overflow-x: visible;
-    overflow-y: visible;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 body #game {
