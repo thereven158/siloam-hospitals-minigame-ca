@@ -95,13 +95,19 @@ export default class AdsView extends Phaser.GameObjects.Container{
 
     CreateContentAds(desc, type, file){
         if(type == "Video"){
+            let parent = document.body;
+            let getDiv = document.getElementsByTagName("div").item(0);
+            parent.insertBefore(getDiv, parent.childNodes[5]);
+
             let video = document.createElement('video');
+            video.setAttribute('playsinline', 'playsinline');
+
             video.src = file;
             video.width = this.ContentContainer.displayWidth * 0.925;
             video.height = this.ContentContainer.displayHeight * 0.5;
             
-            video.playsinline = true;
-            video.autoplay = true;
+            video.play();
+            
             video.loop = true;
 
             let element = this.scene.add.dom(this.ScreenUtility.CenterX, this.ContentContainer.y - this.ContentContainer.displayHeight * 0.2, video);

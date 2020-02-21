@@ -6,7 +6,3 @@ html, body {
 body #game {
   position: fixed;
 }
-/* 
-body #background_modal {
-  touch-action: double-tap-zoom;
-} */
