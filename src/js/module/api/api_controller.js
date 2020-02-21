@@ -33,7 +33,7 @@ export default class ApiController {
 		
 		this.siloamToken = window.sessionStorage.getItem("siloam-token");
 		if (!this.siloamToken) {
-			window.sessionStorage.setItem("siloam-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NTksInBob25lTnVtYmVyIjoiKzYyODIxMTI0MDk1MTAiLCJwYXRpZW50SWQiOiI2YmNkZGNkOC1mMTY3LTQxMmEtYjYxZS1hMDU1MTgyNmNmN2YifSwiaWF0IjoxNTc2NTU4NjIxLCJleHAiOjE1ODUxOTg2MjF9.hsLNZOCH3OE7CXHBgaITFC5_6AptMrKEx07UFXzTpe8");
+			window.sessionStorage.setItem("siloam-token", "");
 			this.siloamToken = window.sessionStorage.getItem("siloam-token");
 		}
     }
@@ -89,19 +89,14 @@ export default class ApiController {
 				if(fail.status == 400){
 					var data = JSON.parse(fail.responseText);
 					console.log(data);
-					alert(data.error.code);
 				}
 				else if(fail.status == 401){
-					alert("401 unauthorized");
 				}
 				else if(fail.status == 403){
-					alert("403 forbidden");
 				}
 				else if(fail.status == 500){
-					alert("Internal server error");
 				}
 				else{
-					alert("check your connection");
 				}
 				reject(fail.status);
 			});
@@ -129,19 +124,14 @@ export default class ApiController {
 				if(fail.status == 400){
 					var data = JSON.parse(fail.responseText);
 					console.log(data);
-					alert(data.error.code);
 				}
 				else if(fail.status == 401){
-					alert("401 unauthorized");
 				}
 				else if(fail.status == 403){
-					alert("403 forbidden");
 				}
 				else if(fail.status == 500){
-					alert("Internal server error");
 				}
 				else{
-					alert("check your connection");
 				}
 				reject(fail.status);
 			});
@@ -169,19 +159,14 @@ export default class ApiController {
 				if(fail.status == 400){
 					var data = JSON.parse(fail.responseText);
 					console.log(data);
-					alert(data.error.code);
 				}
 				else if(fail.status == 401){
-					alert("401 unauthorized");
 				}
 				else if(fail.status == 403){
-					alert("403 forbidden");
 				}
 				else if(fail.status == 500){
-					alert("Internal server error");
 				}
 				else{
-					alert("check your connection");
 				}
 				reject(fail.status);
 			});
@@ -208,19 +193,14 @@ export default class ApiController {
 				if(fail.status == 400){
 					var data = JSON.parse(fail.responseText);
 					console.log(data);
-					alert(data.error.code);
 				}
 				else if(fail.status == 401){
-					alert("401 unauthorized");
 				}
 				else if(fail.status == 403){
-					alert("403 forbidden");
 				}
 				else if(fail.status == 500){
-					alert("Internal server error");
 				}
 				else{
-					alert("cehck your connection");
 				}
 				reject(fail.status);
 			});
